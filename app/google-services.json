@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "1056470665303",
+    "project_id": "campus-collab",
+    "storage_bucket": "campus-collab.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1056470665303:android:69ebe9a0c8ca0c2dedfb12",
+        "android_client_info": {
+          "package_name": "com.example.campuscollab"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1056470665303-1g4nocgpd52gi16q2o297kp3i3gkgr15.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDjOHUFvRErdUDR7wVWoAKNROyKsYnF_mc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1056470665303-1g4nocgpd52gi16q2o297kp3i3gkgr15.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
