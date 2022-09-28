@@ -17,7 +17,7 @@ public class SchoolServiceTest {
     }
 
     @Test
-    public void getSchool() {
+    public void getSchoolTest() {
         fail();
     }
 }
