@@ -38,7 +38,7 @@
             android:layout_height="wrap_content"
             android:layout_marginVertical="10dp"
             android:paddingHorizontal="20dp"
-            android:background="@drawable/rounded_corner_input"/>
+            android:background="@drawable/rounded_corner_field"/>
 
         <EditText
             android:id="@+id/last_name"
@@ -50,7 +50,7 @@
             android:layout_height="wrap_content"
             android:layout_marginVertical="10dp"
             android:paddingHorizontal="20dp"
-            android:background="@drawable/rounded_corner_input"/>
+            android:background="@drawable/rounded_corner_field"/>
 
         <EditText
             android:id="@+id/email"
@@ -62,7 +62,7 @@
             android:layout_height="wrap_content"
             android:layout_marginVertical="10dp"
             android:paddingHorizontal="20dp"
-            android:background="@drawable/rounded_corner_input"/>
+            android:background="@drawable/rounded_corner_field"/>
 
         <EditText
             android:id="@+id/password"
@@ -74,7 +74,7 @@
             android:layout_height="wrap_content"
             android:layout_marginVertical="10dp"
             android:paddingHorizontal="20dp"
-            android:background="@drawable/rounded_corner_input"/>
+            android:background="@drawable/rounded_corner_field"/>
 
         <Button
             android:id="@+id/create_account_button"
@@ -84,7 +84,7 @@
             android:layout_height="wrap_content"
             android:layout_marginVertical="10dp"
             android:textAllCaps="false"
-            android:background="@drawable/rounded_corner_button" />
+            android:background="@drawable/rounded_corner_field" />
 
     </LinearLayout>
 
