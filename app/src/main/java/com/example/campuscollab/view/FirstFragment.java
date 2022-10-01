@@ -1,4 +1,4 @@
-package com.example.campuscollab;
+package com.example.campuscollab.view;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -9,6 +9,7 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.fragment.NavHostFragment;
 
+import com.example.campuscollab.R;
 import com.example.campuscollab.databinding.FragmentFirstBinding;
 
 public class FirstFragment extends Fragment {
