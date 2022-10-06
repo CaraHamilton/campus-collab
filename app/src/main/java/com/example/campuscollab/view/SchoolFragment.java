@@ -1,29 +1,20 @@
 package com.example.campuscollab.view;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.Layout;
-import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
 import android.widget.LinearLayout;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.navigation.NavAction;
 import androidx.navigation.fragment.NavHostFragment;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.campuscollab.R;
 import com.example.campuscollab.databinding.SchoolFragmentBinding;
-import com.example.campuscollab.service.SchoolService;
 
 public class SchoolFragment extends Fragment {
     private SchoolFragmentBinding binding;
-    private SchoolService schoolService;
     private LinearLayout byu;
     private LinearLayout byui;
     private LinearLayout byuh;
