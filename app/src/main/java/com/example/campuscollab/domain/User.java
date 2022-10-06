@@ -1,6 +1,7 @@
 package com.example.campuscollab.domain;
 
 public class User {
+    private String id;
     private String firstName;
     private String lastName;
     private String email;
@@ -105,5 +106,13 @@ public class User {
 
     public void setPictureUrl(String pictureUrl) {
         this.pictureUrl = pictureUrl;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 }

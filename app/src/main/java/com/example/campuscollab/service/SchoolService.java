@@ -4,9 +4,17 @@ import com.example.campuscollab.repository.SchoolRepository;
 
 public class SchoolService {
 
+    private static SchoolService instance;
     private final SchoolRepository schoolRepository;
 
-    public SchoolService() {
+    public static synchronized SchoolService getInstance() {
+        if(instance == null) {
+            instance = new SchoolService();
+        }
+        return instance;
+    }
+
+    private SchoolService() {
         schoolRepository = new SchoolRepository();
     }
 
