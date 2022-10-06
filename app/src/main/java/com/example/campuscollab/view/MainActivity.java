@@ -12,14 +12,20 @@ import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 import com.example.campuscollab.databinding.ActivityMainBinding;
+import com.example.campuscollab.service.AuthService;
+import com.google.firebase.auth.FirebaseUser;
 
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
+
+import java.util.concurrent.ExecutionException;
 
 public class MainActivity extends AppCompatActivity {
 
     private AppBarConfiguration appBarConfiguration;
     private ActivityMainBinding binding;
+    private AuthService authService = AuthService.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,6 +33,21 @@ public class MainActivity extends AppCompatActivity {
 
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+
+        binding.signInButton.setOnClickListener(view -> {
+            String email = binding.emailEntryBox.getText().toString();
+            String password = binding.passwordEntryBox.getText().toString();
+            try{
+                FirebaseUser user = authService.signIn(email, password).get();
+                if(user == null) {
+                    Toast.makeText(MainActivity.this, "failed to sign in", Toast.LENGTH_LONG).show();
+                } else {
+                    Toast.makeText(MainActivity.this, "successfully signed in!", Toast.LENGTH_LONG).show();
+                }
+            } catch (InterruptedException | ExecutionException e) {
+                Toast.makeText(MainActivity.this, "an error occurred", Toast.LENGTH_LONG);
+            }
+        });
 
         /*NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
         appBarConfiguration = new AppBarConfiguration.Builder(navController.getGraph()).build();
