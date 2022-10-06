@@ -13,4 +13,6 @@
     <string name="BYU_school_name">Brigham Young University</string>
     <string name="BYUI_school_name">Brigham Young University - Hawaii</string>
     <string name="BYUH_school_name">Brigham Young University - Idaho</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="account_information">Account Information</string>
 </resources>
