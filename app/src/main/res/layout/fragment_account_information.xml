@@ -1,114 +1,100 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/background"
-    tools:context=".view.AccountInformationFragment">
-
-    <View
-        android:id="@+id/view"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:background="@drawable/gradient"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".view.AccountInformationFragment"
+    android:background="@color/background">
 
     <TextView
         android:id="@+id/title"
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="30dp"
-        android:layout_marginStart="30dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="30dp"
-        android:fontFamily="sans-serif-medium"
-        android:paddingVertical="10dp"
         android:text="@string/account_information"
-        android:textColor="@color/white"
         android:textSize="32dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:fontFamily="sans-serif-medium"
+        android:textColor="@color/white"
+        android:layout_marginHorizontal="30dp"
+        android:layout_marginTop="20dp"
+        android:paddingVertical="10dp"
+        app:layout_constraintTop_toTopOf="parent"/>
 
     <LinearLayout
-        android:id="@+id/linearLayout"
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="30dp"
-        android:layout_marginStart="30dp"
-        android:layout_marginEnd="30dp"
         android:orientation="vertical"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        android:gravity="center"
+        android:layout_marginHorizontal="30dp"
         app:layout_constraintTop_toBottomOf="@+id/title">
 
         <EditText
             android:id="@+id/first_name"
+            android:hint="First Name"
+            android:textColorHint="@color/white"
+            android:textColor="@color/white"
+            android:fontFamily="sans-serif-light"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginVertical="10dp"
-            android:background="@drawable/rounded_corner_field"
-            android:backgroundTint="@color/input_gray"
-            android:fontFamily="sans-serif-light"
-            android:hint="First Name"
             android:paddingHorizontal="20dp"
-            android:textColor="@color/white"
-            android:textColorHint="@color/transparent_white" />
+            android:background="@drawable/rounded_corner_field"/>
 
         <EditText
             android:id="@+id/last_name"
+            android:hint="Last Name"
+            android:textColorHint="@color/white"
+            android:textColor="@color/white"
+            android:fontFamily="sans-serif-light"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginVertical="10dp"
-            android:background="@drawable/rounded_corner_field"
-            android:backgroundTint="@color/input_gray"
-            android:fontFamily="sans-serif-light"
-            android:hint="Last Name"
             android:paddingHorizontal="20dp"
-            android:textColor="@color/white"
-            android:textColorHint="@color/transparent_white" />
+            android:background="@drawable/rounded_corner_field"/>
 
         <EditText
             android:id="@+id/email"
+            android:hint="E-mail"
+            android:textColorHint="@color/white"
+            android:textColor="@color/white"
+            android:fontFamily="sans-serif-light"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginVertical="10dp"
-            android:background="@drawable/rounded_corner_field"
-            android:backgroundTint="@color/input_gray"
-            android:fontFamily="sans-serif-light"
-            android:hint="E-mail"
             android:paddingHorizontal="20dp"
-            android:textColor="@color/white"
-            android:textColorHint="@color/transparent_white" />
+            android:background="@drawable/rounded_corner_field"/>
 
         <EditText
             android:id="@+id/password"
+            android:hint="Password"
+            android:textColorHint="@color/white"
+            android:textColor="@color/white"
+            android:fontFamily="sans-serif-light"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginVertical="10dp"
-            android:background="@drawable/rounded_corner_field"
-            android:backgroundTint="@color/input_gray"
-            android:fontFamily="sans-serif-light"
-            android:hint="Password"
             android:paddingHorizontal="20dp"
-            android:textColor="@color/white"
-            android:textColorHint="@color/transparent_white" />
+            android:background="@drawable/rounded_corner_field"/>
 
         <Button
             android:id="@+id/create_account_button"
+            android:text="Create an account"
+            android:fontFamily="sans-serif-medium"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginVertical="10dp"
-            android:background="@drawable/rounded_corner_field"
-            android:fontFamily="sans-serif-medium"
-            android:text="Create an account"
-            android:textAllCaps="false" />
+            android:textAllCaps="false"
+            android:background="@drawable/rounded_corner_field" />
+
+        <ProgressBar
+            android:id="@+id/progressBar"
+            style="?android:attr/progressBarStyleLarge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="10dp"
+            android:visibility="gone"/>
 
     </LinearLayout>
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

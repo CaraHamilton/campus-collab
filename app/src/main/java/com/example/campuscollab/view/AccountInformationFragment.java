@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.campuscollab.databinding.FragmentAccountInformationBinding;
+import com.example.campuscollab.service.AuthService;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -19,6 +20,9 @@ import com.example.campuscollab.databinding.FragmentAccountInformationBinding;
 public class AccountInformationFragment extends Fragment {
 
     private FragmentAccountInformationBinding binding;
+    private String school;
+
+    private AuthService authService = new AuthService();
 
     public AccountInformationFragment() {
         // Required empty public constructor
@@ -40,6 +44,9 @@ public class AccountInformationFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (getArguments() != null) {
+            school = getArguments().getString("school_name");
+        }
     }
 
     @Override
@@ -56,7 +63,14 @@ public class AccountInformationFragment extends Fragment {
         binding.createAccountButton.setOnClickListener(new View.OnClickListener() {
                @Override
                public void onClick(View view) {
+                   binding.progressBar.setVisibility(View.VISIBLE);
 
+                   String firstName = binding.firstName.getText().toString();
+                   String lastName = binding.lastName.getText().toString();
+                   String email = binding.email.getText().toString();
+                   String password = binding.password.getText().toString();
+
+//                   authService.createUser(email, password);
                }
            }
         );
