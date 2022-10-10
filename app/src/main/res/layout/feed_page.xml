@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".view.MainActivity">
+
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:background="#323437" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="75dp"
+        android:background="#2A2B2E">
+
+        <SearchView
+            android:layout_width="250dp"
+            android:layout_height="30dp"
+            android:layout_centerInParent="true"
+            android:background="@drawable/rounded_corner_field"
+            android:foregroundTint="#FFFFFF"
+            android:iconifiedByDefault="false"
+            android:queryBackground="@null"
+            android:queryHint="Search" />
+
+        <View android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_alignParentBottom="true"
+            android:background="#555555" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_gravity="bottom"
+        android:layout_height="75dp"
+        android:background="#2A2B2E">
+
+        <View android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#555555" />
+    </RelativeLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
