@@ -12,20 +12,14 @@ import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 import com.example.campuscollab.databinding.ActivityMainBinding;
-import com.example.campuscollab.service.AuthService;
-import com.google.firebase.auth.FirebaseUser;
 
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Toast;
-
-import java.util.concurrent.ExecutionException;
 
 public class MainActivity extends AppCompatActivity {
 
     private AppBarConfiguration appBarConfiguration;
     private ActivityMainBinding binding;
-    private AuthService authService = AuthService.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
