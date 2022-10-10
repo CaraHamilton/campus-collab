@@ -34,21 +34,6 @@ public class MainActivity extends AppCompatActivity {
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        binding.signInButton.setOnClickListener(view -> {
-            String email = binding.emailEntryBox.getText().toString();
-            String password = binding.passwordEntryBox.getText().toString();
-            try{
-                FirebaseUser user = authService.signIn(email, password).get();
-                if(user == null) {
-                    Toast.makeText(MainActivity.this, "failed to sign in", Toast.LENGTH_LONG).show();
-                } else {
-                    Toast.makeText(MainActivity.this, "successfully signed in!", Toast.LENGTH_LONG).show();
-                }
-            } catch (InterruptedException | ExecutionException e) {
-                Toast.makeText(MainActivity.this, "an error occurred", Toast.LENGTH_LONG);
-            }
-        });
-
         /*NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
         appBarConfiguration = new AppBarConfiguration.Builder(navController.getGraph()).build();
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);*/
