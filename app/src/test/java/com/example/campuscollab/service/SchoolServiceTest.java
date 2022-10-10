@@ -8,7 +8,7 @@ public class SchoolServiceTest {
     private final SchoolService target;
 
     public SchoolServiceTest() {
-        target = new SchoolService();
+        target = SchoolService.getInstance();
     }
 
     @Test

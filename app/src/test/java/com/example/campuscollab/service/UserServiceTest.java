@@ -8,7 +8,7 @@ public class UserServiceTest {
     private final UserService target;
 
     public UserServiceTest() {
-        target = new UserService();
+        target = UserService.getInstance();
     }
 
     @Test

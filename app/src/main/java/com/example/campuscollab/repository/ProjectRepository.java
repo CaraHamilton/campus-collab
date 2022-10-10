@@ -1,6 +1,10 @@
 package com.example.campuscollab.repository;
 
+import com.example.campuscollab.domain.Project;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QuerySnapshot;
 
 public class ProjectRepository {
 
@@ -10,27 +14,27 @@ public class ProjectRepository {
         db = FirebaseFirestore.getInstance();
     }
 
-    public void getProject(String projectId) {
+    public Task<DocumentSnapshot> getProject(String projectId) {
         throw new RuntimeException("getProject not implemented");
     }
 
-    public void createProject() {
+    public Task<Void> createProject(Project project) {
         throw new RuntimeException("createProject not implemented");
     }
 
-    public void updateProject() {
+    public Task<Void> updateProject(Project project) {
         throw new RuntimeException("updateProject not implemented");
     }
 
-    public void getAllProjects() {
+    public Task<QuerySnapshot> getAllProjects() {
         throw new RuntimeException("getAllProjects not implemented");
     }
 
-    public void getProjectsByOwner(String userId) {
+    public Task<QuerySnapshot> getProjectsByOwner(String userId) {
         throw new RuntimeException("getProjectsByOwner not implemented");
     }
 
-    public void getProjectsByParticipant(String userId) {
+    public Task<QuerySnapshot> getProjectsByParticipant(String userId) {
         throw new RuntimeException("getProjectsByParticipant not implemented");
     }
 
