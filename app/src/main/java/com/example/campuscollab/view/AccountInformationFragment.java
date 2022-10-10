@@ -22,7 +22,7 @@ public class AccountInformationFragment extends Fragment {
     private FragmentAccountInformationBinding binding;
     private String school;
 
-    private AuthService authService = new AuthService();
+    private AuthService authService = AuthService.getInstance();
 
     public AccountInformationFragment() {
         // Required empty public constructor
