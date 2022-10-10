@@ -25,4 +25,21 @@
             android:id="@+id/action_SecondFragment_to_FirstFragment"
             app:destination="@id/FirstFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/schoolFragment"
+        android:name="com.example.campuscollab.view.SchoolFragment"
+        android:label="SchoolFragment" >
+        <action
+            android:id="@+id/action_schoolFragment_to_accountInformationFragment"
+            app:destination="@id/accountInformationFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/accountInformationFragment"
+        android:name="com.example.campuscollab.view.AccountInformationFragment"
+        android:label="fragment_account_information"
+        tools:layout="@layout/fragment_account_information" >
+        <argument
+            android:name="school_name"
+            app:argType="string" />
+    </fragment>
 </navigation>
