@@ -18,4 +18,5 @@
     <string name="create_project">Create Project</string>
     <string name="project_title">Project Title</string>
     <string name="project_description">Project Description</string>
+    <string name="project_member_num">Number of Group Members:</string>
 </resources>
