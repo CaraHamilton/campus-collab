@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -14,11 +15,13 @@ import androidx.navigation.fragment.NavHostFragment;
 
 import com.example.campuscollab.databinding.FragmentCreateProjectBinding;
 import com.example.campuscollab.domain.Project;
+import com.example.campuscollab.service.AuthService;
 import com.example.campuscollab.service.ProjectService;
 import com.example.campuscollab.service.UserService;
+import com.google.firebase.auth.FirebaseUser;
 
 public class CreateProjectFragment extends Fragment {
-    private UserService userService = UserService.getInstance();
+    private AuthService authService = AuthService.getInstance();
     private ProjectService projectService = ProjectService.getInstance();
     private FragmentCreateProjectBinding binding;
     private Button createProjectButton;
@@ -41,9 +44,23 @@ public class CreateProjectFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 if (isValidProject()) {
+                    //TODO add access of actual current user email through one of the services
+                    //TODO update declaration to include number of people added
+
+                    Integer numMembers = Integer.parseInt(groupMemberNumber.getText().toString());
+
                     Project newProject = new Project(projectNameInput.getText().toString(), "currentuseremail",
                                                      projectDescriptionInput.getText().toString(), new String[] {});
-                    //projectService.createProject(newProject);
+
+                    //TODO fix as needed once createProject is implemented
+                    try {
+                        projectService.createProject(newProject);
+                    } catch (Exception e) {
+                        Toast.makeText(getView().getContext(), e.getMessage().toString(), Toast.LENGTH_SHORT);
+                    }
+
+                } else {
+                    Toast.makeText(getView().getContext(), "Please provide a name and description for your project", Toast.LENGTH_SHORT);
                 }
             }
         });
