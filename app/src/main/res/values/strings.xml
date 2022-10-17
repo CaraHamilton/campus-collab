@@ -15,4 +15,8 @@
     <string name="BYUH_school_name">Brigham Young University - Hawaii</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="account_information">Account Information</string>
+    <string name="create_project">Create Project</string>
+    <string name="project_title">Project Title</string>
+    <string name="project_description">Project Description</string>
+    <string name="project_member_num">Number of Group Members:</string>
 </resources>
