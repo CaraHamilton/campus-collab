@@ -9,33 +9,47 @@ import com.google.firebase.firestore.QuerySnapshot;
 public class ProjectRepository {
 
     private final FirebaseFirestore db;
+    private final String projectsKey = "project";
+    private final String ownerKey = "ownerId";
+    private final String participantsKey = "participantIds";
 
     public ProjectRepository() {
         db = FirebaseFirestore.getInstance();
     }
 
     public Task<DocumentSnapshot> getProject(String projectId) {
-        throw new RuntimeException("getProject not implemented");
+        return db.collection(projectsKey).document(projectId).get();
     }
 
     public Task<Void> createProject(Project project) {
-        throw new RuntimeException("createProject not implemented");
+        String docId = db.collection(projectsKey).document().getId();
+        project.setProjectId(docId);
+        return db.collection(projectsKey).document(docId).set(project);
     }
 
     public Task<Void> updateProject(Project project) {
-        throw new RuntimeException("updateProject not implemented");
+        return db.collection(projectsKey).document(project.getProjectId()).set(project);
     }
 
     public Task<QuerySnapshot> getAllProjects() {
-        throw new RuntimeException("getAllProjects not implemented");
+        return db.collection(projectsKey).get();
     }
 
     public Task<QuerySnapshot> getProjectsByOwner(String userId) {
-        throw new RuntimeException("getProjectsByOwner not implemented");
+        return db.collection(projectsKey).whereEqualTo(ownerKey, userId).get();
     }
 
     public Task<QuerySnapshot> getProjectsByParticipant(String userId) {
-        throw new RuntimeException("getProjectsByParticipant not implemented");
+        return db.collection(projectsKey).whereArrayContains(participantsKey, userId).get();
+    }
+
+
+    public Task<QuerySnapshot> getProjectBySchool(String school) {
+        throw new RuntimeException("getProjectsBySchool not implemented");
+    }
+
+    public Task<QuerySnapshot> deleteProject(String projectId) {
+        throw new RuntimeException("deleteProject not implemented");
     }
 
 }
