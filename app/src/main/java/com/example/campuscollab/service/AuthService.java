@@ -28,6 +28,10 @@ public class AuthService {
         return instance;
     }
 
+    public FirebaseUser getCurrentUser() {
+        return auth.getCurrentUser();
+    }
+
     public AsyncTask<Void, Void, FirebaseUser> signIn(String email, String password) {
         AsyncTask<Void, Void, FirebaseUser> task = new AsyncTask<Void, Void, FirebaseUser>() {
             @Override
