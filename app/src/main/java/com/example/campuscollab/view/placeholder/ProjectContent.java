@@ -27,24 +27,24 @@ public class ProjectContent {
 
     private static final int COUNT = 15;
 
-    static {
+    /*static {
         // Add some sample items.
         for (int i = 1; i <= COUNT; i++) {
             addItem(createProjectItem(i));
         }
-    }
+    }*/
 
     private static void addItem(Project item) {
         ITEMS.add(item);
 //        ITEM_MAP.put(item.id, item);
     }
 
-    private static Project createProjectItem(int position) {
+    /*private static Project createProjectItem(int position) {
         String[] participantItems = {"test3","test4","test5"};
 
         return new Project("Project " + position, "test@email.com",
                 "This is a test description", participantItems);
-    }
+    }*/
 
     private static String makeDetails(int position) {
         StringBuilder builder = new StringBuilder();
