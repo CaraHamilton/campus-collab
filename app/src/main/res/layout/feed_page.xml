@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".view.MainActivity">
+    tools:context=".view.FeedActivity">
 
     <View
         android:layout_width="fill_parent"
@@ -49,6 +49,14 @@
             android:background="#555555" />
     </RelativeLayout>
 
+    <FrameLayout
+        android:id="@+id/fragment_container"
+        android:layout_width="match_parent"
+        android:layout_marginTop="75dp"
+        android:layout_marginBottom="75dp"
+        android:layout_height="match_parent">
+    </FrameLayout>
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_gravity="bottom"
@@ -70,6 +78,7 @@
                 android:layout_height="35dp" />
 
             <TextView
+                android:id="@+id/home_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
@@ -95,6 +104,7 @@
                 android:alpha=".5"/>
 
             <TextView
+                android:id="@+id/project_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center_horizontal"
@@ -105,6 +115,7 @@
         </LinearLayout>
 
         <ImageView
+            android:id="@+id/add_project_button"
             android:layout_centerInParent="true"
             android:layout_width="40dp"
             android:layout_height="40dp"
@@ -123,9 +134,10 @@
                 app:srcCompat="@drawable/people_icon"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
-                android:alpha="0.5"/>
+                android:alpha=".5"/>
 
             <TextView
+                android:id="@+id/request_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center_horizontal"
@@ -151,6 +163,7 @@
                 android:alpha="0.5"/>
 
             <TextView
+                android:id="@+id/settings_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"

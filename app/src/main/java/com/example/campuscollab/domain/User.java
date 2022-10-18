@@ -28,6 +28,8 @@ public class User {
         this.pictureUrl = pictureUrl;
     }
 
+    public User() {}
+
     public String getFirstName() {
         return firstName;
     }

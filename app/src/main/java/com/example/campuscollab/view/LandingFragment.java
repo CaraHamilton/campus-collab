@@ -1,5 +1,6 @@
 package com.example.campuscollab.view;
 
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 
@@ -95,11 +96,14 @@ public class LandingFragment extends Fragment {
                     else
                     {
                         Toast.makeText(getView().getContext(), "Sign in succeeded", Toast.LENGTH_SHORT).show();
+
+                        Intent feed_transition = new Intent(getActivity(), FeedActivity.class);
+                        startActivity(feed_transition);
                     }
                 }
                 catch(Exception e)
                 {
-                    Toast.makeText(getView().getContext(), "Sign in failed", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getView().getContext(), "Exception occurred", Toast.LENGTH_SHORT).show();
                 }
             }
         });
