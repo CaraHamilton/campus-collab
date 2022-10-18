@@ -4,6 +4,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.campuscollab.domain.Project;
@@ -30,6 +31,7 @@ public class FeedRecyclerViewAdapter extends RecyclerView.Adapter<FeedRecyclerVi
     public void onBindViewHolder(final ViewHolder holder, int position) {
         holder.title.setText(feedProjects.get(position).getProjectName());
         holder.description.setText(feedProjects.get(position).getDescription());
+//        holder.image.setImageDrawable( get user image based on project owner );
     }
 
     @Override
@@ -40,11 +42,13 @@ public class FeedRecyclerViewAdapter extends RecyclerView.Adapter<FeedRecyclerVi
     public class ViewHolder extends RecyclerView.ViewHolder {
         public TextView title;
         public TextView description;
+        public ImageView image;
 
         public ViewHolder(FragmentFeedBinding binding) {
             super(binding.getRoot());
             title = binding.title;
             description = binding.description;
+            image = binding.projectImage;
         }
     }
 }

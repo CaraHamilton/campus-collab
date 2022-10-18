@@ -25,7 +25,7 @@ public class ProjectContent {
      */
 //    public static final Map<String, Project> ITEM_MAP = new HashMap<String, Project>();
 
-    private static final int COUNT = 15;
+    private static final int COUNT = 5;
 
     static {
         // Add some sample items.
@@ -42,16 +42,11 @@ public class ProjectContent {
     private static Project createProjectItem(int position) {
         String[] participantItems = {"test3","test4","test5"};
 
-        return new Project("Project " + position, "test@email.com",
-                "This is a test description", participantItems);
-    }
-
-    private static String makeDetails(int position) {
-        StringBuilder builder = new StringBuilder();
-        builder.append("Details about Item: ").append(position);
-        for (int i = 0; i < position; i++) {
-            builder.append("\nMore details information here.");
-        }
-        return builder.toString();
+        return new Project("Project " + position,
+                "test@email.com",
+                "This is a test description of this project on your feed page. At the most " +
+                        "it should only show two lines. Lorem ipsum dolor sit amet, consectetur adipiscing " +
+                        "elit. Cras viverra ligula sed lectus ultricies, vitae suscipit nisl pulvinar.",
+                participantItems);
     }
 }
