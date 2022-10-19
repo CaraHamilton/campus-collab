@@ -1,8 +1,10 @@
 package com.example.campuscollab.view.placeholder;
 
 import com.example.campuscollab.domain.Project;
+import com.google.firebase.Timestamp;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -40,13 +42,12 @@ public class ProjectContent {
     }
 
     private static Project createProjectItem(int position) {
-        String[] participantItems = {"test3","test4","test5"};
 
         return new Project("Project " + position,
                 "test@email.com",
                 "This is a test description of this project on your feed page. At the most " +
                         "it should only show two lines. Lorem ipsum dolor sit amet, consectetur adipiscing " +
                         "elit. Cras viverra ligula sed lectus ultricies, vitae suscipit nisl pulvinar.",
-                participantItems);
+                new ArrayList<>(), new Timestamp(new Date()), new Timestamp(new Date()));
     }
 }
