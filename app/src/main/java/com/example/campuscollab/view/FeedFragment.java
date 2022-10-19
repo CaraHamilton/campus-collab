@@ -13,6 +13,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.campuscollab.R;
+import com.example.campuscollab.service.ProjectService;
+import com.example.campuscollab.service.UserService;
 import com.example.campuscollab.view.placeholder.ProjectContent;
 
 /**
@@ -24,6 +26,7 @@ public class FeedFragment extends Fragment {
     private static final String ARG_COLUMN_COUNT = "column-count";
     // TODO: Customize parameters
     private int mColumnCount = 1;
+    private ProjectService projectService = ProjectService.getInstance();
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
@@ -66,6 +69,7 @@ public class FeedFragment extends Fragment {
                 recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
             recyclerView.setAdapter(new FeedRecyclerViewAdapter(ProjectContent.ITEMS));
+//            recyclerView.setAdapter(new FeedRecyclerViewAdapter(projectService.getAllProjects()));
         }
         return view;
     }
