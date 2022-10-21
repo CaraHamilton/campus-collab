@@ -18,7 +18,10 @@ import com.example.campuscollab.domain.Project;
 import com.example.campuscollab.service.AuthService;
 import com.example.campuscollab.service.ProjectService;
 import com.example.campuscollab.service.UserService;
+import com.google.firebase.Timestamp;
 import com.google.firebase.auth.FirebaseUser;
+
+import java.util.ArrayList;
 
 public class CreateProjectFragment extends Fragment {
     private AuthService authService = AuthService.getInstance();
@@ -44,13 +47,11 @@ public class CreateProjectFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 if (isValidProject()) {
-                    //TODO add access of actual current user email through one of the services
-                    //TODO update declaration to include number of people added
-
                     Integer numMembers = Integer.parseInt(groupMemberNumber.getText().toString());
 
-                    Project newProject = new Project(projectNameInput.getText().toString(), "currentuseremail",
-                                                     projectDescriptionInput.getText().toString(), new String[] {});
+                    Project newProject = new Project(projectNameInput.getText().toString(), authService.getCurrentUser().getUid(),
+                                                     projectDescriptionInput.getText().toString(), new ArrayList<String>(),
+                                                     new Timestamp(Timestamp.now().toDate()), new Timestamp(Timestamp.now().toDate()), numMembers);
 
                     //TODO fix as needed once createProject is implemented
                     try {

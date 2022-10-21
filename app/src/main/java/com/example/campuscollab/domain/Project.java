@@ -12,17 +12,19 @@ public class Project {
     private Timestamp editedDate;
     private Timestamp createdDate;
     private List<String> participantIds;
+    private Integer maxParticipants;
 
-    public Project(String projectName, String ownerId, String description, List<String> participantIds, Timestamp createdDate, Timestamp editedDate) {
+    public Project(String projectName, String ownerId, String description, List<String> participantIds, Timestamp createdDate, Timestamp editedDate, Integer maxParticipants) {
         this.projectName = projectName;
         this.ownerId = ownerId;
         this.description = description;
         this.participantIds = participantIds;
         this.createdDate = createdDate;
         this.editedDate = editedDate;
+        this.maxParticipants = maxParticipants;
     }
 
-    public Project(String projectId, String projectName, String ownerId, String description, List<String> participantIds, Timestamp createdDate, Timestamp editedDate) {
+    public Project(String projectId, String projectName, String ownerId, String description, List<String> participantIds, Timestamp createdDate, Timestamp editedDate, Integer maxParticipants) {
         this.projectId = projectId;
         this.projectName = projectName;
         this.ownerId = ownerId;
@@ -30,6 +32,7 @@ public class Project {
         this.participantIds = participantIds;
         this.createdDate = createdDate;
         this.editedDate = editedDate;
+        this.maxParticipants = maxParticipants;
     }
 
     public String getProjectName() {
