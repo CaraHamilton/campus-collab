@@ -4,9 +4,12 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -22,15 +25,20 @@ import com.google.firebase.Timestamp;
 import com.google.firebase.auth.FirebaseUser;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
-public class CreateProjectFragment extends Fragment {
+public class CreateProjectFragment extends Fragment
+                                   implements AdapterView.OnItemSelectedListener {
     private AuthService authService = AuthService.getInstance();
     private ProjectService projectService = ProjectService.getInstance();
     private FragmentCreateProjectBinding binding;
     private Button createProjectButton;
     private EditText projectNameInput;
     private EditText projectDescriptionInput;
-    private EditText groupMemberNumber;
+    private Spinner groupMemberNumber;
+    private int maxGroupSize = 15;
+    private int[] maxGroupSizeOptions = {5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15};
 
     @Override
     public View onCreateView(
@@ -42,16 +50,20 @@ public class CreateProjectFragment extends Fragment {
         projectNameInput = binding.projectName;
         projectDescriptionInput = binding.projectDescription;
         groupMemberNumber = binding.groupSizeInput;
+        groupMemberNumber.setOnItemSelectedListener(this);
+
+        ArrayAdapter adapter = new ArrayAdapter(this.getContext(), android.R.layout.simple_spinner_item, Collections.singletonList(maxGroupSizeOptions));
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        groupMemberNumber.setAdapter(adapter);
 
         createProjectButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (isValidProject()) {
-                    Integer numMembers = Integer.parseInt(groupMemberNumber.getText().toString());
-
                     Project newProject = new Project(projectNameInput.getText().toString(), authService.getCurrentUser().getUid(),
                                                      projectDescriptionInput.getText().toString(), new ArrayList<String>(),
-                                                     new Timestamp(Timestamp.now().toDate()), new Timestamp(Timestamp.now().toDate()), numMembers);
+                                                     new Timestamp(Timestamp.now().toDate()), new Timestamp(Timestamp.now().toDate()), maxGroupSize);
 
                     //TODO fix as needed once createProject is implemented
                     try {
@@ -81,5 +93,16 @@ public class CreateProjectFragment extends Fragment {
 
     private boolean isValidProject() {
         return (projectNameInput.getText().length() > 0) && (projectDescriptionInput.getText().length() > 0);
+    }
+
+    @Override
+    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+        maxGroupSize = maxGroupSizeOptions[i];
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> adapterView) {
+        maxGroupSize = maxGroupSizeOptions[maxGroupSizeOptions.length - 1];
+        groupMemberNumber.setSelection(maxGroupSizeOptions.length - 1);
     }
 }
