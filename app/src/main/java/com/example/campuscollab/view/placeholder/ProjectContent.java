@@ -48,6 +48,6 @@ public class ProjectContent {
                 "This is a test description of this project on your feed page. At the most " +
                         "it should only show two lines. Lorem ipsum dolor sit amet, consectetur adipiscing " +
                         "elit. Cras viverra ligula sed lectus ultricies, vitae suscipit nisl pulvinar.",
-                new ArrayList<>(), new Timestamp(new Date()), new Timestamp(new Date()));
+                new ArrayList<>(), new Timestamp(new Date()), new Timestamp(new Date()), 10);
     }
 }

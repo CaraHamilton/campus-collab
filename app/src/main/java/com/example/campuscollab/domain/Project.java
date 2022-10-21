@@ -24,7 +24,7 @@ public class Project {
         this.maxParticipants = maxParticipants;
     }
 
-    public Project(String projectId, String projectName, String ownerId, String description, List<String> participantIds, Timestamp createdDate, Timestamp editedDate, Integer maxParticipants) {
+    public Project(String projectId, String projectName, String ownerId, String description, List<String> participantIds, Timestamp createdDate, Timestamp editedDate) {
         this.projectId = projectId;
         this.projectName = projectName;
         this.ownerId = ownerId;
@@ -32,7 +32,6 @@ public class Project {
         this.participantIds = participantIds;
         this.createdDate = createdDate;
         this.editedDate = editedDate;
-        this.maxParticipants = maxParticipants;
     }
 
     public String getProjectName() {
