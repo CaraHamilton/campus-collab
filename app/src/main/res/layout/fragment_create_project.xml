@@ -90,8 +90,10 @@
             <Spinner
                 android:id="@+id/groupSizeInput"
                 android:layout_width="fill_parent"
-                android:layout_height="50dp"
-                android:layout_marginLeft="15dp" />
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:background="@drawable/rounded_corner_field"
+                android:backgroundTint="@color/input_gray" />
 
         </LinearLayout>
 

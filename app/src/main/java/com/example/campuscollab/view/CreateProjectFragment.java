@@ -53,7 +53,7 @@ public class CreateProjectFragment extends Fragment
         groupMemberNumber = binding.groupSizeInput;
         groupMemberNumber.setOnItemSelectedListener(this);
 
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this.getContext(), R.array.group_size_options, android.R.layout.simple_spinner_item);
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this.getContext(), R.array.group_size_options, R.layout.custom_spinner_element);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
         groupMemberNumber.setAdapter(adapter);
