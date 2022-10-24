@@ -4,30 +4,42 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.fragment.NavHostFragment;
 
+import com.example.campuscollab.R;
 import com.example.campuscollab.databinding.FragmentCreateProjectBinding;
 import com.example.campuscollab.domain.Project;
 import com.example.campuscollab.service.AuthService;
 import com.example.campuscollab.service.ProjectService;
 import com.example.campuscollab.service.UserService;
+import com.google.firebase.Timestamp;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.rpc.context.AttributeContext;
 
-public class CreateProjectFragment extends Fragment {
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
+public class CreateProjectFragment extends Fragment
+                                   implements AdapterView.OnItemSelectedListener {
     private AuthService authService = AuthService.getInstance();
     private ProjectService projectService = ProjectService.getInstance();
     private FragmentCreateProjectBinding binding;
     private Button createProjectButton;
     private EditText projectNameInput;
     private EditText projectDescriptionInput;
-    private EditText groupMemberNumber;
+    private Spinner groupMemberNumber;
+    private int maxGroupSize;
 
     @Override
     public View onCreateView(
@@ -39,20 +51,23 @@ public class CreateProjectFragment extends Fragment {
         projectNameInput = binding.projectName;
         projectDescriptionInput = binding.projectDescription;
         groupMemberNumber = binding.groupSizeInput;
+        groupMemberNumber.setOnItemSelectedListener(this);
+
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this.getContext(), R.array.group_size_options, R.layout.custom_spinner_element);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        groupMemberNumber.setAdapter(adapter);
 
         /*createProjectButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (isValidProject()) {
-                    //TODO add access of actual current user email through one of the services
-                    //TODO update declaration to include number of people added
-
-                    Integer numMembers = Integer.parseInt(groupMemberNumber.getText().toString());
-
-                    Project newProject = new Project(projectNameInput.getText().toString(), "currentuseremail",
-                                                     projectDescriptionInput.getText().toString(), new String[] {});
+                    Project newProject = new Project(projectNameInput.getText().toString(), authService.getCurrentUser().getUid(),
+                                                     projectDescriptionInput.getText().toString(), new ArrayList<>(),
+                                                     Timestamp.now(), Timestamp.now(), maxGroupSize);
 
                     //TODO fix as needed once createProject is implemented
+                    //TODO add toast for project created
                     try {
                         projectService.createProject(newProject);
                     } catch (Exception e) {
@@ -80,5 +95,17 @@ public class CreateProjectFragment extends Fragment {
 
     private boolean isValidProject() {
         return (projectNameInput.getText().length() > 0) && (projectDescriptionInput.getText().length() > 0);
+    }
+
+    @Override
+    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+        maxGroupSize = getResources().getIntArray(R.array.group_size_values)[i];
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> adapterView) {
+        int[] options = getResources().getIntArray(R.array.group_size_values);
+        maxGroupSize = options[options.length - 1];
+        groupMemberNumber.setSelection(options.length - 1);
     }
 }
