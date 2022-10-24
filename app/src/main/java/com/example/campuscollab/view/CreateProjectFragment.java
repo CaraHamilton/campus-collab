@@ -64,7 +64,7 @@ public class CreateProjectFragment extends Fragment
                 if (isValidProject()) {
                     Project newProject = new Project(projectNameInput.getText().toString(), authService.getCurrentUser().getUid(),
                                                      projectDescriptionInput.getText().toString(), new ArrayList<>(),
-                                                     new Timestamp(Timestamp.now().toDate()), new Timestamp(Timestamp.now().toDate()), maxGroupSize);
+                                                     Timestamp.now(), Timestamp.now(), maxGroupSize);
 
                     //TODO fix as needed once createProject is implemented
                     //TODO add toast for project created
