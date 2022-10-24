@@ -11,11 +11,13 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.example.campuscollab.R;
+import com.example.campuscollab.domain.Project;
 import com.example.campuscollab.service.ProjectService;
-import com.example.campuscollab.service.UserService;
-import com.example.campuscollab.view.placeholder.ProjectContent;
+
+import java.util.List;
 
 /**
  * A fragment representing a list of Items.
@@ -68,8 +70,20 @@ public class FeedFragment extends Fragment {
             } else {
                 recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
-            recyclerView.setAdapter(new FeedRecyclerViewAdapter(ProjectContent.ITEMS));
-//            recyclerView.setAdapter(new FeedRecyclerViewAdapter(projectService.getAllProjects()));
+            try {
+                List<Project> projects = projectService.getAllProjects().get();
+
+                if (projects == null)
+                {
+                    Toast.makeText(getView().getContext(), "Couldn't retrieve any projects", Toast.LENGTH_SHORT).show();
+                }
+                else
+                {
+                    recyclerView.setAdapter(new FeedRecyclerViewAdapter(projects));
+                }
+            } catch(Exception e) {
+                Toast.makeText(getView().getContext(), "Exception occurred", Toast.LENGTH_SHORT).show();
+            }
         }
         return view;
     }

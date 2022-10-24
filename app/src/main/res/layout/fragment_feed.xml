@@ -7,10 +7,12 @@
     android:layout_marginVertical="20dp">
 
     <androidx.cardview.widget.CardView
+        android:id="@+id/project_card"
         android:layout_width="match_parent"
         android:layout_height="100dp"
         android:backgroundTint="@color/blue"
-        app:cardCornerRadius="15dp">
+        app:cardCornerRadius="15dp"
+        android:clickable="true">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
