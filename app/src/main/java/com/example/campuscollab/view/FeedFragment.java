@@ -11,9 +11,13 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.example.campuscollab.R;
-import com.example.campuscollab.view.placeholder.ProjectContent;
+import com.example.campuscollab.domain.Project;
+import com.example.campuscollab.service.ProjectService;
+
+import java.util.List;
 
 /**
  * A fragment representing a list of Items.
@@ -24,6 +28,7 @@ public class FeedFragment extends Fragment {
     private static final String ARG_COLUMN_COUNT = "column-count";
     // TODO: Customize parameters
     private int mColumnCount = 1;
+    private ProjectService projectService = ProjectService.getInstance();
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
@@ -65,7 +70,20 @@ public class FeedFragment extends Fragment {
             } else {
                 recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
-            recyclerView.setAdapter(new FeedRecyclerViewAdapter(ProjectContent.ITEMS));
+            try {
+                List<Project> projects = projectService.getAllProjects().get();
+
+                if (projects == null)
+                {
+                    Toast.makeText(getView().getContext(), "Couldn't retrieve any projects", Toast.LENGTH_SHORT).show();
+                }
+                else
+                {
+                    recyclerView.setAdapter(new FeedRecyclerViewAdapter(projects));
+                }
+            } catch(Exception e) {
+                Toast.makeText(getView().getContext(), "Exception occurred", Toast.LENGTH_SHORT).show();
+            }
         }
         return view;
     }
