@@ -185,4 +185,9 @@ public class FeedActivity extends AppCompatActivity {
             }
         });
     }
+
+    @Override
+    public void onBackPressed() {
+        return;
+    }
 }
