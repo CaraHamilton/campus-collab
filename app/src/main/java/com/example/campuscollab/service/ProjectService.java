@@ -4,18 +4,15 @@ import android.annotation.SuppressLint;
 import android.os.AsyncTask;
 
 import com.example.campuscollab.domain.Project;
-import com.example.campuscollab.domain.User;
 import com.example.campuscollab.repository.ProjectRepository;
 import com.google.android.gms.tasks.Task;
 import com.google.android.gms.tasks.Tasks;
 import com.google.firebase.Timestamp;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.concurrent.ExecutionException;
 
 @SuppressLint("StaticFieldLeak")
@@ -157,12 +154,44 @@ public class ProjectService {
         return task.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
     }
 
-    public AsyncTask<Void, Void, List<Project>> getProjectBySchool(String school) {
-        throw new RuntimeException("getProjectsBySchool not implemented");
+    public AsyncTask<Void, Void, List<Project>> getProjectsBySchool(String school) {
+        AsyncTask<Void, Void, List<Project>> task = new AsyncTask<Void, Void, List<Project>>() {
+            @Override
+            protected List<Project> doInBackground(Void... voids) {
+                try{
+                    Task<QuerySnapshot> getProjectsTask = projectRepository.getProjectsBySchool(school);
+                    QuerySnapshot projectDocs = Tasks.await(getProjectsTask);
+
+                    List<Project> projects = new ArrayList<>();
+                    for(DocumentSnapshot doc: projectDocs) {
+                        projects.add(mapDocToProject(doc));
+                    }
+
+                    return projects;
+                } catch (InterruptedException | ExecutionException e) {
+                    return null;
+                }
+            }
+        };
+
+        return task.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
     }
 
     public AsyncTask<Void, Void, Void> deleteProject(String projectId) {
-        throw new RuntimeException("deleteProject not implemented");
+        AsyncTask<Void, Void, Void> task = new AsyncTask<Void, Void, Void>() {
+            @Override
+            protected Void doInBackground(Void... voids) {
+                try{
+                    Task<Void> deleteProjectTask = projectRepository.deleteProject(projectId);
+                    Tasks.await(deleteProjectTask);
+                } catch (InterruptedException | ExecutionException e) {
+                    //Do something with the error message
+                }
+                return null;
+            }
+        };
+
+        return task.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
     }
 
     private Project mapDocToProject(DocumentSnapshot documentSnapshot){
