@@ -58,7 +58,7 @@ public class CreateProjectFragment extends Fragment
 
         groupMemberNumber.setAdapter(adapter);
 
-        /*createProjectButton.setOnClickListener(new View.OnClickListener() {
+        createProjectButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (isValidProject()) {
@@ -78,7 +78,7 @@ public class CreateProjectFragment extends Fragment
                     Toast.makeText(getView().getContext(), "Please provide a name and description for your project", Toast.LENGTH_SHORT);
                 }
             }
-        });*/
+        });
 
         return binding.getRoot();
     }

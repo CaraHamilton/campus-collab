@@ -10,6 +10,16 @@
         android:layout_height="fill_parent"
         android:background="@drawable/gradient" />
 
+    <TextView
+        android:id="@+id/settings_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        android:fontFamily="sans-serif-light"
+        android:text="Settings"
+        android:textColor="@color/white"
+        android:textSize="32dp" />
+
     <Button
         android:id="@+id/sign_out_button"
         android:layout_width="match_parent"
