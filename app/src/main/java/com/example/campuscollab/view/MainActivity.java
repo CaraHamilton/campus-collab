@@ -1,6 +1,9 @@
 package com.example.campuscollab.view;
 
+import android.app.ActionBar;
 import android.os.Bundle;
+import android.view.View;
+import android.view.WindowManager;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -16,5 +19,10 @@ public class MainActivity extends AppCompatActivity {
 
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+    }
+
+    @Override
+    public void onBackPressed() {
+        return;
     }
 }
