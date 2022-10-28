@@ -1,37 +1,55 @@
 package com.example.campuscollab.repository;
 
+import com.example.campuscollab.domain.Project;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QuerySnapshot;
 
 public class ProjectRepository {
 
     private final FirebaseFirestore db;
+    private final String projectsKey = "project";
+    private final String ownerKey = "ownerId";
+    private final String participantsKey = "participantIds";
+    private final String schoolKey = "schoolName";
 
     public ProjectRepository() {
         db = FirebaseFirestore.getInstance();
     }
 
-    public void getProject(String projectId) {
-        throw new RuntimeException("getProject not implemented");
+    public Task<DocumentSnapshot> getProject(String projectId) {
+        return db.collection(projectsKey).document(projectId).get();
     }
 
-    public void createProject() {
-        throw new RuntimeException("createProject not implemented");
+    public Task<Void> createProject(Project project) {
+        String docId = db.collection(projectsKey).document().getId();
+        project.setProjectId(docId);
+        return db.collection(projectsKey).document(docId).set(project);
     }
 
-    public void updateProject() {
-        throw new RuntimeException("updateProject not implemented");
+    public Task<Void> updateProject(Project project) {
+        return db.collection(projectsKey).document(project.getProjectId()).set(project);
     }
 
-    public void getAllProjects() {
-        throw new RuntimeException("getAllProjects not implemented");
+    public Task<QuerySnapshot> getAllProjects() {
+        return db.collection(projectsKey).get();
     }
 
-    public void getProjectsByOwner(String userId) {
-        throw new RuntimeException("getProjectsByOwner not implemented");
+    public Task<QuerySnapshot> getProjectsByOwner(String userId) {
+        return db.collection(projectsKey).whereEqualTo(ownerKey, userId).get();
     }
 
-    public void getProjectsByParticipant(String userId) {
-        throw new RuntimeException("getProjectsByParticipant not implemented");
+    public Task<QuerySnapshot> getProjectsByParticipant(String userId) {
+        return db.collection(projectsKey).whereArrayContains(participantsKey, userId).get();
+    }
+
+    public Task<QuerySnapshot> getProjectsBySchool(String school) {
+        return db.collection(projectsKey).whereEqualTo(schoolKey, school).get();
+    }
+
+    public Task<Void> deleteProject(String projectId) {
+        return db.collection(projectsKey).document(projectId).delete();
     }
 
 }

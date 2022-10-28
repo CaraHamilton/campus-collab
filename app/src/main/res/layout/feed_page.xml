@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".view.FeedActivity">
+
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:background="#323437" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="75dp"
+        android:background="#2A2B2E">
+
+        <ImageView
+            android:id="@+id/profile_picture"
+            app:srcCompat="@drawable/profile_picture"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="20dp"
+            android:layout_width="35dp"
+            android:layout_height="35dp" />
+
+        <SearchView
+            android:layout_width="250dp"
+            android:layout_height="30dp"
+            android:layout_centerInParent="true"
+            android:background="@drawable/rounded_corner_field"
+            android:foregroundTint="#FFFFFF"
+            android:iconifiedByDefault="false"
+            android:queryBackground="@null"
+            android:queryHint="Search" />
+
+        <ImageView
+            android:id="@+id/chat_icon"
+            app:srcCompat="@drawable/chat_icon"
+            android:layout_centerVertical="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginRight="20dp"
+            android:layout_width="35dp"
+            android:layout_height="35dp" />
+
+        <View android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_alignParentBottom="true"
+            android:background="#555555" />
+    </RelativeLayout>
+
+    <FrameLayout
+        android:id="@+id/fragment_container"
+        android:layout_width="match_parent"
+        android:layout_marginTop="75dp"
+        android:layout_marginBottom="75dp"
+        android:layout_height="match_parent">
+    </FrameLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_gravity="bottom"
+        android:layout_height="75dp"
+        android:background="#2A2B2E">
+
+        <LinearLayout
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:orientation="vertical"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="35dp">
+
+            <ImageView
+                android:id="@+id/home_icon"
+                app:srcCompat="@drawable/home_icon"
+                android:layout_gravity="center_horizontal"
+                android:layout_width="35dp"
+                android:layout_height="35dp" />
+
+            <TextView
+                android:id="@+id/home_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="1dp"
+                android:text="Home"
+                android:textSize="10sp"
+                android:textColor="#FFFFFF" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:orientation="vertical"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="110dp">
+
+            <ImageView
+                android:id="@+id/briefcase_icon"
+                app:srcCompat="@drawable/briefcase_icon"
+                android:layout_gravity="center_horizontal"
+                android:layout_width="38dp"
+                android:layout_height="38dp"
+                android:alpha=".5"/>
+
+            <TextView
+                android:id="@+id/project_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:text="Projects"
+                android:textSize="10sp"
+                android:textColor="#FFFFFF"
+                android:alpha=".5"/>
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/add_project_button"
+            android:layout_centerInParent="true"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            app:srcCompat="@drawable/add_project_button" />
+
+        <LinearLayout
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:orientation="vertical"
+            android:layout_centerVertical="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginRight="110dp">
+
+            <ImageView
+                android:id="@+id/people_icon"
+                app:srcCompat="@drawable/people_icon"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:alpha=".5"/>
+
+            <TextView
+                android:id="@+id/request_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:text="Requests"
+                android:textSize="10sp"
+                android:textColor="#FFFFFF"
+                android:alpha=".5"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:orientation="vertical"
+            android:layout_centerVertical="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginRight="35dp">
+
+            <ImageView
+                android:id="@+id/settings_icon"
+                app:srcCompat="@drawable/settings_icon"
+                android:layout_width="39dp"
+                android:layout_height="39dp"
+                android:alpha="0.5"/>
+
+            <TextView
+                android:id="@+id/settings_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="Settings"
+                android:textSize="10sp"
+                android:textColor="#FFFFFF"
+                android:alpha=".5"/>
+        </LinearLayout>
+
+        <View android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#555555" />
+    </RelativeLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

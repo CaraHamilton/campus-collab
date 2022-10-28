@@ -8,7 +8,7 @@ public class ProjectServiceTest {
     private final ProjectService target;
 
     public ProjectServiceTest() {
-        target = new ProjectService();
+        target = ProjectService.getInstance();
     }
 
     @Test

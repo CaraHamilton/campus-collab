@@ -8,7 +8,7 @@ public class AuthServiceTest {
     private final AuthService target;
 
     public AuthServiceTest() {
-        target = new AuthService();
+        target = AuthService.getInstance();
     }
 
     @Test
