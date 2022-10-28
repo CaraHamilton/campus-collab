@@ -12,6 +12,7 @@ public class ProjectRepository {
     private final String projectsKey = "project";
     private final String ownerKey = "ownerId";
     private final String participantsKey = "participantIds";
+    private final String schoolKey = "schoolName";
 
     public ProjectRepository() {
         db = FirebaseFirestore.getInstance();
@@ -43,13 +44,12 @@ public class ProjectRepository {
         return db.collection(projectsKey).whereArrayContains(participantsKey, userId).get();
     }
 
-
-    public Task<QuerySnapshot> getProjectBySchool(String school) {
-        throw new RuntimeException("getProjectsBySchool not implemented");
+    public Task<QuerySnapshot> getProjectsBySchool(String school) {
+        return db.collection(projectsKey).whereEqualTo(schoolKey, school).get();
     }
 
-    public Task<QuerySnapshot> deleteProject(String projectId) {
-        throw new RuntimeException("deleteProject not implemented");
+    public Task<Void> deleteProject(String projectId) {
+        return db.collection(projectsKey).document(projectId).delete();
     }
 
 }
