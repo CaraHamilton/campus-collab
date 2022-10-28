@@ -14,6 +14,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
 import androidx.navigation.fragment.NavHostFragment;
 
 import com.example.campuscollab.R;
@@ -70,12 +71,21 @@ public class CreateProjectFragment extends Fragment
                     //TODO add toast for project created
                     try {
                         projectService.createProject(newProject);
+                        Toast.makeText(getView().getContext(), "Project created!", Toast.LENGTH_SHORT).show();
+                        //TODO change to project fragment (where the project will appear) once it is implemented
+                        FeedFragment feedFragment = new FeedFragment();
+                        ((FragmentActivity) view.getContext())
+                                .getSupportFragmentManager()
+                                .beginTransaction()
+                                .replace(R.id.fragment_container, feedFragment)
+                                .addToBackStack(null)
+                                .commit();
                     } catch (Exception e) {
-                        Toast.makeText(getView().getContext(), e.getMessage().toString(), Toast.LENGTH_SHORT);
+                        Toast.makeText(getView().getContext(), e.getMessage().toString(), Toast.LENGTH_SHORT).show();
                     }
 
                 } else {
-                    Toast.makeText(getView().getContext(), "Please provide a name and description for your project", Toast.LENGTH_SHORT);
+                    Toast.makeText(getView().getContext(), "Please provide a name and description for your project", Toast.LENGTH_SHORT).show();
                 }
             }
         });
