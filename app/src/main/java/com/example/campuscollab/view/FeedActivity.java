@@ -160,7 +160,10 @@ public class FeedActivity extends AppCompatActivity {
                 settingsIcon.setAlpha(.5f);
                 settingsText.setAlpha(.5f);
 
-                //Include fragment transaction here
+                FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+                RequestsFragment requestsFragment = new RequestsFragment();
+                transaction.replace(R.id.fragment_container, requestsFragment);
+                transaction.commit();
             }
         });
 
