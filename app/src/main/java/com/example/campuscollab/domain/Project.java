@@ -5,16 +5,18 @@ import com.google.firebase.Timestamp;
 import java.util.List;
 
 public class Project {
-    private String projectId;
-    private String projectName;
-    private String ownerId;
+    private Timestamp createdDate;
     private String description;
     private Timestamp editedDate;
-    private Timestamp createdDate;
-    private List<String> participantIds;
+    private String imageUrl;
+    private String projectName;
     private Integer maxParticipants;
+    private String ownerId;
+    private List<String> participantIds;
+    private String projectId;
+    private String school;
 
-    public Project(String projectName, String ownerId, String description, List<String> participantIds, Timestamp createdDate, Timestamp editedDate, Integer maxParticipants) {
+    public Project(String projectName, String ownerId, String description, List<String> participantIds, Timestamp createdDate, Timestamp editedDate, Integer maxParticipants, String imageUrl, String school) {
         this.projectName = projectName;
         this.ownerId = ownerId;
         this.description = description;
@@ -24,7 +26,7 @@ public class Project {
         this.maxParticipants = maxParticipants;
     }
 
-    public Project(String projectId, String projectName, String ownerId, String description, List<String> participantIds, Timestamp createdDate, Timestamp editedDate) {
+    public Project(String projectId, String projectName, String ownerId, String description, List<String> participantIds, Timestamp createdDate, Timestamp editedDate, Integer maxParticipants, String imageUrl, String school) {
         this.projectId = projectId;
         this.projectName = projectName;
         this.ownerId = ownerId;
@@ -32,6 +34,9 @@ public class Project {
         this.participantIds = participantIds;
         this.createdDate = createdDate;
         this.editedDate = editedDate;
+        this.maxParticipants = maxParticipants;
+        this.imageUrl = imageUrl;
+        this.school = school;
     }
 
     public String getProjectName() {
