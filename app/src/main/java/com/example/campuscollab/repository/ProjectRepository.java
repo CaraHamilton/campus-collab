@@ -43,13 +43,12 @@ public class ProjectRepository {
         return db.collection(PROJECT_KEY).whereArrayContains(PARTICIPANTS_KEY, userId).get();
     }
 
-
-    public Task<QuerySnapshot> getProjectBySchool(String school) {
-        throw new RuntimeException("getProjectsBySchool not implemented");
+    public Task<QuerySnapshot> getProjectsBySchool(String school) {
+        return db.collection(PROJECT_KEY).whereEqualTo(schoolKey, school).get();
     }
 
-    public Task<QuerySnapshot> deleteProject(String projectId) {
-        throw new RuntimeException("deleteProject not implemented");
+    public Task<Void> deleteProject(String projectId) {
+        return db.collection(PROJECT_KEY).document(projectId).delete();
     }
 
 }

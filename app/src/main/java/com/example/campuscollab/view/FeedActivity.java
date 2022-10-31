@@ -178,7 +178,10 @@ public class FeedActivity extends AppCompatActivity {
                 peopleIcon.setAlpha(.5f);
                 requestText.setAlpha(.5f);
 
-                //Include fragment transaction here
+                FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+                SettingsFragment settingsFragment = new SettingsFragment();
+                transaction.replace(R.id.fragment_container, settingsFragment);
+                transaction.commit();
             }
         });
     }
