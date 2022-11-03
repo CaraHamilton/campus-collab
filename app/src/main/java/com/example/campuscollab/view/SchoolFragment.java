@@ -15,19 +15,16 @@ import com.example.campuscollab.databinding.SchoolFragmentBinding;
 
 public class SchoolFragment extends Fragment {
     private SchoolFragmentBinding binding;
-    private LinearLayout byu;
-    private LinearLayout byui;
-    private LinearLayout byuh;
 
     @Override
     public View onCreateView(
-            LayoutInflater inflater, ViewGroup container,
+            @NonNull LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState
     ) {
         binding = SchoolFragmentBinding.inflate(inflater, container, false);
-        byu = binding.byuSchool;
-        byui = binding.byuiSchool;
-        byuh = binding.byuhSchool;
+        LinearLayout byu = binding.byuSchool;
+        LinearLayout byui = binding.byuiSchool;
+        LinearLayout byuh = binding.byuhSchool;
 
         byu.setOnClickListener(new View.OnClickListener() {
             @Override

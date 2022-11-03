@@ -8,7 +8,7 @@
         <item name="cardBackgroundColor">#625672</item>
 
         <!-- Secondary brand color. -->
-        <item name="colorSecondary">#ee544e</item>
+        <item name="colorSecondary">#3882aa</item>
         <item name="colorOnSecondary">@color/white</item>
 
         <item name="colorTertiary">#625672</item>

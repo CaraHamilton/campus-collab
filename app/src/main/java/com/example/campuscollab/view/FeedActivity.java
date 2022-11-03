@@ -1,28 +1,18 @@
 package com.example.campuscollab.view;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentTransaction;
-import androidx.navigation.fragment.NavHostFragment;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.campuscollab.R;
-import com.example.campuscollab.databinding.ActivityMainBinding;
 import com.example.campuscollab.databinding.FeedPageBinding;
-import com.google.firebase.auth.FirebaseUser;
 
 public class FeedActivity extends AppCompatActivity {
-
-    private FeedPageBinding binding;
 
     ImageView addProjectButton;
     ImageView profileIcon;
@@ -31,10 +21,10 @@ public class FeedActivity extends AppCompatActivity {
     ImageView homeIcon;
     TextView homeText;
 
-    ImageView briefcaseIcon;
+    ImageView projectIcon;
     TextView projectText;
 
-    ImageView peopleIcon;
+    ImageView requestIcon;
     TextView requestText;
 
     ImageView settingsIcon;
@@ -44,7 +34,7 @@ public class FeedActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding = FeedPageBinding.inflate(getLayoutInflater());
+        com.example.campuscollab.databinding.FeedPageBinding binding = FeedPageBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
         addProjectButton = binding.addProjectButton;
@@ -54,10 +44,10 @@ public class FeedActivity extends AppCompatActivity {
         homeIcon = binding.homeIcon;
         homeText = binding.homeText;
 
-        briefcaseIcon = binding.briefcaseIcon;
+        projectIcon = binding.briefcaseIcon;
         projectText = binding.projectText;
 
-        peopleIcon = binding.peopleIcon;
+        requestIcon = binding.peopleIcon;
         requestText = binding.requestText;
 
         settingsIcon = binding.settingsIcon;
@@ -71,14 +61,7 @@ public class FeedActivity extends AppCompatActivity {
         addProjectButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                homeIcon.setAlpha(.5f);
-                homeText.setAlpha(.5f);
-                briefcaseIcon.setAlpha(.5f);
-                projectText.setAlpha(.5f);
-                peopleIcon.setAlpha(.5f);
-                requestText.setAlpha(.5f);
-                settingsIcon.setAlpha(.5f);
-                settingsText.setAlpha(.5f);
+                lowerOpacity();
 
                 FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
                 CreateProjectFragment createProjectFragment = new CreateProjectFragment();
@@ -92,7 +75,7 @@ public class FeedActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Toast.makeText(getApplicationContext(), "View User Profile", Toast.LENGTH_SHORT).show();
 
-                //Include fragment transaction here
+                //TODO Include switch to profile activity
             }
         });
 
@@ -101,7 +84,7 @@ public class FeedActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Toast.makeText(getApplicationContext(), "Messages", Toast.LENGTH_SHORT).show();
 
-                //Include fragment transaction here
+                //TODO Include switch to message activity
             }
         });
 
@@ -110,14 +93,7 @@ public class FeedActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Toast.makeText(getApplicationContext(), "Home", Toast.LENGTH_SHORT).show();
 
-                homeIcon.setAlpha(1f);
-                homeText.setAlpha(1f);
-                briefcaseIcon.setAlpha(.5f);
-                projectText.setAlpha(.5f);
-                peopleIcon.setAlpha(.5f);
-                requestText.setAlpha(.5f);
-                settingsIcon.setAlpha(.5f);
-                settingsText.setAlpha(.5f);
+                changeOpacity(homeIcon, homeText);
 
                 FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
                 FeedFragment feedFragment = new FeedFragment();
@@ -126,39 +102,25 @@ public class FeedActivity extends AppCompatActivity {
             }
         });
 
-        briefcaseIcon.setOnClickListener(new View.OnClickListener() {
+        projectIcon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Toast.makeText(getApplicationContext(), "Projects", Toast.LENGTH_SHORT).show();
 
-                briefcaseIcon.setAlpha(1f);
-                projectText.setAlpha(1f);
-                homeIcon.setAlpha(.5f);
-                homeText.setAlpha(.5f);
-                peopleIcon.setAlpha(.5f);
-                requestText.setAlpha(.5f);
-                settingsIcon.setAlpha(.5f);
-                settingsText.setAlpha(.5f);
+                changeOpacity(projectIcon, projectText);
 
-                //Include fragment transaction here
+                //TODO include transaction to project fragment
             }
         });
 
-        peopleIcon.setOnClickListener(new View.OnClickListener() {
+        requestIcon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Toast.makeText(getApplicationContext(), "Requests", Toast.LENGTH_SHORT).show();
 
-                peopleIcon.setAlpha(1f);
-                requestText.setAlpha(1f);
-                homeIcon.setAlpha(.5f);
-                homeText.setAlpha(.5f);
-                briefcaseIcon.setAlpha(.5f);
-                projectText.setAlpha(.5f);
-                settingsIcon.setAlpha(.5f);
-                settingsText.setAlpha(.5f);
+                changeOpacity(requestIcon, requestText);
 
-                //Include fragment transaction here
+                //TODO include transaction to request fragment
             }
         });
 
@@ -167,14 +129,7 @@ public class FeedActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Toast.makeText(getApplicationContext(), "Settings", Toast.LENGTH_SHORT).show();
 
-                settingsIcon.setAlpha(1f);
-                settingsText.setAlpha(1f);
-                homeIcon.setAlpha(.5f);
-                homeText.setAlpha(.5f);
-                briefcaseIcon.setAlpha(.5f);
-                projectText.setAlpha(.5f);
-                peopleIcon.setAlpha(.5f);
-                requestText.setAlpha(.5f);
+                changeOpacity(settingsIcon, settingsText);
 
                 FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
                 SettingsFragment settingsFragment = new SettingsFragment();
@@ -184,8 +139,28 @@ public class FeedActivity extends AppCompatActivity {
         });
     }
 
+    private void changeOpacity(ImageView image, TextView text)
+    {
+        lowerOpacity();
+
+        image.setAlpha(1f);
+        text.setAlpha(1f);
+    }
+
+    private void lowerOpacity()
+    {
+        homeIcon.setAlpha(.5f);
+        homeText.setAlpha(.5f);
+        projectIcon.setAlpha(.5f);
+        projectText.setAlpha(.5f);
+        requestIcon.setAlpha(.5f);
+        requestText.setAlpha(.5f);
+        settingsIcon.setAlpha(.5f);
+        settingsText.setAlpha(.5f);
+    }
+
     @Override
     public void onBackPressed() {
-        return;
+        //TODO determine which fragment was being shown and enable switching back
     }
 }
