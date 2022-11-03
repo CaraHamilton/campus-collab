@@ -33,7 +33,7 @@ import java.util.List;
 
 public class CreateProjectFragment extends Fragment
                                    implements AdapterView.OnItemSelectedListener {
-    private AuthService authService = AuthService.getInstance();
+    private UserService userService = UserService.getInstance();
     private ProjectService projectService = ProjectService.getInstance();
     private FragmentCreateProjectBinding binding;
     private Button createProjectButton;
@@ -63,9 +63,9 @@ public class CreateProjectFragment extends Fragment
             @Override
             public void onClick(View view) {
                 if (isValidProject()) {
-                    Project newProject = new Project(projectNameInput.getText().toString(), authService.getCurrentUser().getUid(),
+                    Project newProject = new Project(projectNameInput.getText().toString(), userService.getCurrentUser().getId(),
                                                      projectDescriptionInput.getText().toString(), new ArrayList<>(),
-                                                     Timestamp.now(), Timestamp.now(), maxGroupSize);
+                                                     Timestamp.now(), Timestamp.now(), maxGroupSize, null, userService.getCurrentUser().getSchool());
 
                     //TODO fix as needed once createProject is implemented
                     //TODO add toast for project created
