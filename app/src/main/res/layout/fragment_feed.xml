@@ -10,7 +10,7 @@
         android:id="@+id/project_card"
         android:layout_width="match_parent"
         android:layout_height="100dp"
-        android:backgroundTint="@color/blue"
+        android:backgroundTint="?attr/colorSecondary"
         app:cardCornerRadius="15dp"
         android:clickable="true">
 

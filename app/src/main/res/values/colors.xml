@@ -10,6 +10,7 @@
     <color name="input_gray">#99585858</color>
     <color name="background">#3F4145</color>
     <color name="blue">#003DA5</color>
+    <color name="navy">#002E5D</color>
     <color name="transparent_white">#99FFFFFF</color>
     <color name="button_gray">#2E3033</color>
 </resources>

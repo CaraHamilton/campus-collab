@@ -87,6 +87,12 @@ public class LandingFragment extends Fragment {
                 String email = emailField.getText().toString();
                 String password = passwordField.getText().toString();
 
+                if (email.equals("") || password.equals(""))
+                {
+                    Toast.makeText(getView().getContext(), "Please enter your email/password", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
                 try
                 {
                     User user = userService.signIn(email,password).get();

@@ -71,8 +71,6 @@ public class FeedActivity extends AppCompatActivity {
         addProjectButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(getApplicationContext(), "Add Project", Toast.LENGTH_SHORT).show();
-
                 homeIcon.setAlpha(.5f);
                 homeText.setAlpha(.5f);
                 briefcaseIcon.setAlpha(.5f);
@@ -184,5 +182,10 @@ public class FeedActivity extends AppCompatActivity {
                 transaction.commit();
             }
         });
+    }
+
+    @Override
+    public void onBackPressed() {
+        return;
     }
 }

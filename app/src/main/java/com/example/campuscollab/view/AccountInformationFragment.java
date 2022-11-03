@@ -75,6 +75,18 @@ public class AccountInformationFragment extends Fragment {
                    String email = binding.email.getText().toString();
                    String password = binding.password.getText().toString();
 
+                   if (firstName.equals("") || lastName.equals("") || email.equals("") || password.equals(""))
+                   {
+                       Toast.makeText(getView().getContext(), "Information Missing", Toast.LENGTH_SHORT).show();
+                       return;
+                   }
+
+                   if (password.length() < 6)
+                   {
+                       Toast.makeText(getView().getContext(), "Password must be longer than 6 characters", Toast.LENGTH_SHORT).show();
+                       return;
+                   }
+
                    User userWrite = new User();
                    userWrite.setFirstName(firstName);
                    userWrite.setLastName(lastName);
