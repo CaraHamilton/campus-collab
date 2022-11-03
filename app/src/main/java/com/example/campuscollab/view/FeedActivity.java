@@ -1,6 +1,7 @@
 package com.example.campuscollab.view;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.os.Bundle;
@@ -14,7 +15,7 @@ import com.example.campuscollab.databinding.FeedPageBinding;
 
 public class FeedActivity extends AppCompatActivity {
 
-    ImageView addProjectButton;
+    CardView addProjectButton;
     ImageView profileIcon;
     ImageView messageIcon;
 

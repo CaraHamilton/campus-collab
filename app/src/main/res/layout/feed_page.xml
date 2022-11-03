@@ -115,12 +115,22 @@
                 android:alpha=".5"/>
         </LinearLayout>
 
-        <ImageView
+        <com.google.android.material.card.MaterialCardView
             android:id="@+id/add_project_button"
             android:layout_centerInParent="true"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            app:srcCompat="@drawable/add_project_button" />
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            app:cardBackgroundColor="?attr/colorSecondary"
+            app:strokeWidth="3dp"
+            app:strokeColor="?attr/colorOnSecondary"
+            app:cardCornerRadius="10dp">
+
+            <ImageView
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_gravity="center"
+                android:src="@drawable/plus_sign"/>
+        </com.google.android.material.card.MaterialCardView>
 
         <LinearLayout
             android:layout_height="wrap_content"
