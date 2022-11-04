@@ -129,7 +129,7 @@
                 android:layout_width="25dp"
                 android:layout_height="25dp"
                 android:layout_gravity="center"
-                android:src="@drawable/app_icon"/>
+                android:src="@drawable/plus_sign"/>
         </com.google.android.material.card.MaterialCardView>
 
         <LinearLayout

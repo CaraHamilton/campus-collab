@@ -67,21 +67,21 @@ public class RequestsFragment extends Fragment {
             incomingRecycler.setAdapter(new RequestsRecyclerViewAdapter(incomingRequestsList));
             incomingRecycler.setLayoutManager(new LinearLayoutManager(incomingRecycler.getContext()));*/
 
-            List<Request> incomingRequestsList = requestService.getReceivedRequests().get();
+            List<Request> incomingRequestsList = requestService.getSentRequests().get();
             if (incomingRequests == null)
             {
                 Toast.makeText(requireView().getContext(), "Couldn't retrieve any incoming requests", Toast.LENGTH_SHORT).show();
             } else {
-                incomingRecycler.setAdapter(new RequestsRecyclerViewAdapter(incomingRequestsList));
+                incomingRecycler.setAdapter(new RequestsRecyclerViewAdapter(incomingRequestsList, true));
                 incomingRecycler.setLayoutManager(new LinearLayoutManager(incomingRecycler.getContext()));
             }
 
-            List<Request> pendingRequestsList = requestService.getSentRequests().get();
+            List<Request> pendingRequestsList = requestService.getReceivedRequests().get();
             if (pendingRequestsList == null)
             {
                 Toast.makeText(requireView().getContext(), "Couldn't retrieve any pending requests", Toast.LENGTH_SHORT).show();
             } else {
-                pendingRecycler.setAdapter(new RequestsRecyclerViewAdapter(pendingRequestsList));
+                pendingRecycler.setAdapter(new RequestsRecyclerViewAdapter(pendingRequestsList, false));
                 pendingRecycler.setLayoutManager(new LinearLayoutManager(pendingRecycler.getContext()));
             }
 

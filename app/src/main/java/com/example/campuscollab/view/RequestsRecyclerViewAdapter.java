@@ -15,14 +15,17 @@ import com.example.campuscollab.domain.Request;
 import com.example.campuscollab.service.RequestService;
 
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 public class RequestsRecyclerViewAdapter extends RecyclerView.Adapter<RequestsRecyclerViewAdapter.RequestViewHolder> {
     private List<Request> requests;
+    private boolean canAcceptReject;
 
     private final RequestService requestService = RequestService.getInstance();
 
-    public RequestsRecyclerViewAdapter(List<Request> requests) {
+    public RequestsRecyclerViewAdapter(List<Request> requests, boolean canAcceptReject) {
         this.requests = requests;
+        this.canAcceptReject = canAcceptReject;
     }
 
     @NonNull
@@ -36,23 +39,66 @@ public class RequestsRecyclerViewAdapter extends RecyclerView.Adapter<RequestsRe
         Request currReq = requests.get(position);
         holder.message.setText(currReq.getRequesterName() + " is requesting to join " + currReq.getProjectName());
 
-        holder.acceptButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //TODO remove request from user interface
-                Toast.makeText(view.getContext(), "Added to project", Toast.LENGTH_SHORT).show();
-                requestService.acceptRequest(currReq);
-            }
-        });
+        if (canAcceptReject) {
+            holder.acceptButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    //TODO remove request from user interface
+                    boolean isDeleted = false;
 
-        holder.rejectButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //TODO remove request from user interface
-                Toast.makeText(view.getContext(), "Request rejected", Toast.LENGTH_SHORT).show();
-                requestService.rejectRequest(currReq);
-            }
-        });
+                    try {
+                        requestService.acceptRequest(currReq).get();
+                    } catch (ExecutionException e) {
+                        e.printStackTrace();
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                    try {
+                        isDeleted = requestService.deleteRequest(currReq.getId()).get();
+                    } catch (ExecutionException e) {
+                        e.printStackTrace();
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                    if (isDeleted) {
+                        Toast.makeText(view.getContext(), "Request accepted", Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(view.getContext(), "Failed to delete request after accepting", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            });
+
+            holder.rejectButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    boolean isDeleted = false;
+                    //TODO remove request from user interface
+                    try {
+                        requestService.rejectRequest(currReq).get();
+                    } catch (ExecutionException e) {
+                        e.printStackTrace();
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                    try {
+                        isDeleted = requestService.deleteRequest(currReq.getId()).get();
+                    } catch (ExecutionException e) {
+                        e.printStackTrace();
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                    if (isDeleted) {
+                        Toast.makeText(view.getContext(), "Request rejected", Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(view.getContext(), "Failed to delete request after rejection", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            });
+        } else {
+            holder.rejectButton.setVisibility(View.GONE);
+            holder.acceptButton.setVisibility(View.GONE);
+            holder.message.setMaxWidth(375);
+        }
     }
 
     @Override
