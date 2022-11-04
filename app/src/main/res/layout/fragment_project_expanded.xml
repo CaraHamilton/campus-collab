@@ -99,11 +99,10 @@
         android:layout_marginHorizontal="25dp"
         android:layout_marginVertical="25dp"
         android:backgroundTint="?attr/colorSecondary"
+        app:layout_constraintBottom_toBottomOf="parent"
         android:text="@string/apply_to_project"
         android:textAllCaps="false"
-        android:textColor="?attr/colorOnSecondary"
-        app:layout_constraintBottom_toBottomOf="parent"
-        tools:layout_editor_absoluteX="25dp" />
+        android:textColor="?attr/colorOnSecondary"/>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -21,7 +21,7 @@
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:src="@drawable/app_icon" />
+            android:src="@drawable/app_icon"/>
     </com.google.android.material.card.MaterialCardView>
 
     <RelativeLayout
