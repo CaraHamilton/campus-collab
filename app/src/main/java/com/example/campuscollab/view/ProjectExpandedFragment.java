@@ -89,21 +89,27 @@ public class ProjectExpandedFragment extends Fragment {
 
                 User currentUser = userService.getCurrentUser();
 
-                applyToProjectButton.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        //TODO fill out constructor properly once we have user images and can get users by id
-                        Request req = new Request(project.getProjectId(), project.getProjectName(), project.getOwnerId(),
-                                project.getOwnerId(), "imageurl", currentUser.getId(),
-                                currentUser.getFirstName() + " " + currentUser.getLastName(),
-                                currentUser.getPictureUrl(), UUID.randomUUID().toString(), RequestService.PENDING_KEY,
-                                Timestamp.now());
+                if (currentUser.getId().equals(project.getOwnerId())) {
+                    applyToProjectButton.setEnabled(false);
+                    applyToProjectButton.setVisibility(View.INVISIBLE);
+                } else {
 
-                        requestService.createRequest(req);
+                    applyToProjectButton.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            //TODO fill out constructor properly once we have user images and can get users by id
+                            Request req = new Request(project.getProjectId(), project.getProjectName(), project.getOwnerId(),
+                                    project.getOwnerId(), "imageurl", currentUser.getId(),
+                                    currentUser.getFirstName() + " " + currentUser.getLastName(),
+                                    currentUser.getPictureUrl(), UUID.randomUUID().toString(), RequestService.PENDING_KEY,
+                                    Timestamp.now());
 
-                        Toast.makeText(view.getContext(), "Request sent", Toast.LENGTH_SHORT).show();
-                    }
-                });
+                            requestService.createRequest(req);
+
+                            Toast.makeText(view.getContext(), "Request sent", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                }
             }
 
         } catch (Exception e) {
