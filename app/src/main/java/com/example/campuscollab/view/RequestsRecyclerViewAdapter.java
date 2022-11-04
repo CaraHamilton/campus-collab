@@ -43,7 +43,6 @@ public class RequestsRecyclerViewAdapter extends RecyclerView.Adapter<RequestsRe
             holder.acceptButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    //TODO remove request from user interface
                     boolean isDeleted = false;
 
                     try {
@@ -61,6 +60,8 @@ public class RequestsRecyclerViewAdapter extends RecyclerView.Adapter<RequestsRe
                         e.printStackTrace();
                     }
                     if (isDeleted) {
+                        requests.remove(currReq);
+                        notifyDataSetChanged();
                         Toast.makeText(view.getContext(), "Request accepted", Toast.LENGTH_SHORT).show();
                     } else {
                         Toast.makeText(view.getContext(), "Failed to delete request after accepting", Toast.LENGTH_SHORT).show();
@@ -72,7 +73,6 @@ public class RequestsRecyclerViewAdapter extends RecyclerView.Adapter<RequestsRe
                 @Override
                 public void onClick(View view) {
                     boolean isDeleted = false;
-                    //TODO remove request from user interface
                     try {
                         requestService.rejectRequest(currReq).get();
                     } catch (ExecutionException e) {
@@ -88,6 +88,8 @@ public class RequestsRecyclerViewAdapter extends RecyclerView.Adapter<RequestsRe
                         e.printStackTrace();
                     }
                     if (isDeleted) {
+                        requests.remove(currReq);
+                        notifyDataSetChanged();
                         Toast.makeText(view.getContext(), "Request rejected", Toast.LENGTH_SHORT).show();
                     } else {
                         Toast.makeText(view.getContext(), "Failed to delete request after rejection", Toast.LENGTH_SHORT).show();
