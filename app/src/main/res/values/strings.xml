@@ -22,4 +22,5 @@
     <string name="title_activity_main2">MainActivity2</string>
     <string name="incoming_requests">Incoming Requests</string>
     <string name="pending_requests">Pending Requests</string>
+    <string name="apply_to_project">Request to Join Project</string>
 </resources>

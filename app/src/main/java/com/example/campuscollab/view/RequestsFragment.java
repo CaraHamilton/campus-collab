@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -16,6 +17,7 @@ import com.example.campuscollab.R;
 import com.example.campuscollab.databinding.FragmentRequestsBinding;
 import com.example.campuscollab.domain.Project;
 import com.example.campuscollab.domain.Request;
+import com.example.campuscollab.service.RequestService;
 import com.google.firebase.Timestamp;
 
 import java.util.ArrayList;
@@ -27,6 +29,8 @@ public class RequestsFragment extends Fragment {
     private TextView pendingRequests;
     private RecyclerView incomingRecycler;
     private RecyclerView pendingRecycler;
+
+    private final RequestService requestService = RequestService.getInstance();
 
     public RequestsFragment() {
     }
@@ -41,31 +45,49 @@ public class RequestsFragment extends Fragment {
         incomingRecycler = binding.incomingrecycler;
         pendingRecycler = binding.pendingrecycler;
 
-            //TODO make backend call of some kind or generate requests from projects
-            Project project = new Project("name", "ownerid", "description", new ArrayList<>(),
-                    Timestamp.now(), Timestamp.now(), 5);
-            List<Request> incomingRequests = new ArrayList<>();
+
+        try {
+            /*List<Request> incomingRequestsList = new ArrayList<>();
             List<Request> pendingRequestsList = new ArrayList<>();
 
-            incomingRequests.add(new Request("owner id1", "owner name1",
-                                  "requester id1", "requester name1", project));
-            incomingRequests.add(new Request("owner id2", "owner name2",
-                                  "requester id2", "requester name2", project));
-            incomingRequests.add(new Request("owner id3", "owner name3",
-                    "requester id3", "requester name3", project));
-            incomingRequests.add(new Request("owner id4", "owner name4",
-                    "requester id4", "requester name4", project));
-            incomingRequests.add(new Request("owner id5", "owner name5",
-                    "requester id5", "requester name5", project));
+            incomingRequestsList.add(new Request("owner id1", "project name1", "requester id1",
+                    "requester name1", "other", "other", "other",
+                    "other", "other", "other", Timestamp.now()));
+            incomingRequestsList.add(new Request("owner id2", "owner name2", "requester id2",
+                    "requester name1", "other", "other", "other",
+                    "other", "other", "other", Timestamp.now()));
 
-            pendingRequestsList.add(new Request("requesing one", "owner name5",
-                "requester id5", "pending page", project));
+            pendingRequestsList.add(new Request("requesting one", "requester id2",
+                    "requester name1", "other", "other", "other",
+                    "other", "other", "other", Timestamp.now()));
 
             pendingRecycler.setAdapter(new RequestsRecyclerViewAdapter(pendingRequestsList));
             pendingRecycler.setLayoutManager(new LinearLayoutManager(pendingRecycler.getContext()));
 
-            incomingRecycler.setAdapter(new RequestsRecyclerViewAdapter(incomingRequests));
-            incomingRecycler.setLayoutManager(new LinearLayoutManager(incomingRecycler.getContext()));
+            incomingRecycler.setAdapter(new RequestsRecyclerViewAdapter(incomingRequestsList));
+            incomingRecycler.setLayoutManager(new LinearLayoutManager(incomingRecycler.getContext()));*/
+
+            List<Request> incomingRequestsList = requestService.getReceivedRequests().get();
+            if (incomingRequests == null)
+            {
+                Toast.makeText(requireView().getContext(), "Couldn't retrieve any incoming requests", Toast.LENGTH_SHORT).show();
+            } else {
+                incomingRecycler.setAdapter(new RequestsRecyclerViewAdapter(incomingRequestsList));
+                incomingRecycler.setLayoutManager(new LinearLayoutManager(incomingRecycler.getContext()));
+            }
+
+            List<Request> pendingRequestsList = requestService.getSentRequests().get();
+            if (pendingRequestsList == null)
+            {
+                Toast.makeText(requireView().getContext(), "Couldn't retrieve any pending requests", Toast.LENGTH_SHORT).show();
+            } else {
+                pendingRecycler.setAdapter(new RequestsRecyclerViewAdapter(pendingRequestsList));
+                pendingRecycler.setLayoutManager(new LinearLayoutManager(pendingRecycler.getContext()));
+            }
+
+        } catch (Exception e) {
+            Toast.makeText(requireView().getContext(), e.getMessage() , Toast.LENGTH_SHORT).show();
+        }
 
         pendingRequests.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -12,11 +12,14 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.campuscollab.databinding.FragmentRequestItemBinding;
 import com.example.campuscollab.domain.Request;
+import com.example.campuscollab.service.RequestService;
 
 import java.util.List;
 
 public class RequestsRecyclerViewAdapter extends RecyclerView.Adapter<RequestsRecyclerViewAdapter.RequestViewHolder> {
     private List<Request> requests;
+
+    private final RequestService requestService = RequestService.getInstance();
 
     public RequestsRecyclerViewAdapter(List<Request> requests) {
         this.requests = requests;
@@ -31,21 +34,23 @@ public class RequestsRecyclerViewAdapter extends RecyclerView.Adapter<RequestsRe
     @Override
     public void onBindViewHolder(@NonNull RequestViewHolder holder, int position) {
         Request currReq = requests.get(position);
-        holder.message.setText(currReq.getRequesting_name() + " is requesting to join " + currReq.getProject().getProjectName());
+        holder.message.setText(currReq.getRequesterName() + " is requesting to join " + currReq.getProjectName());
 
         holder.acceptButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //TODO Add participant to project
+                //TODO remove request from user interface
                 Toast.makeText(view.getContext(), "Added to project", Toast.LENGTH_SHORT).show();
+                requestService.acceptRequest(currReq);
             }
         });
 
         holder.rejectButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //TODO remove request from project
+                //TODO remove request from user interface
                 Toast.makeText(view.getContext(), "Request rejected", Toast.LENGTH_SHORT).show();
+                requestService.rejectRequest(currReq);
             }
         });
     }

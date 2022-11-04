@@ -8,11 +8,19 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.Toast;
 
 import com.example.campuscollab.databinding.FragmentProjectExpandedBinding;
 import com.example.campuscollab.domain.Project;
+import com.example.campuscollab.domain.Request;
+import com.example.campuscollab.domain.User;
 import com.example.campuscollab.service.ProjectService;
+import com.example.campuscollab.service.RequestService;
+import com.example.campuscollab.service.UserService;
+import com.google.firebase.Timestamp;
+
+import java.util.UUID;
 
 /**
  * A fragment representing a list of Items.
@@ -25,12 +33,15 @@ public class ProjectExpandedFragment extends Fragment {
     private int mColumnCount = 1;
 
     private final ProjectService projectService = ProjectService.getInstance();
+    private final RequestService requestService = RequestService.getInstance();
+    private final UserService userService = UserService.getInstance();
 
     private FragmentProjectExpandedBinding binding;
     private Project project;
     private String projectId;
     private String projectTitle;
     private String projectDescription;
+    private Button applyToProjectButton;
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
@@ -73,12 +84,31 @@ public class ProjectExpandedFragment extends Fragment {
             } else {
                 projectTitle = project.getProjectName();
                 projectDescription = project.getDescription();
+
+                applyToProjectButton = binding.applyToProjectBtn;
+
+                User currentUser = userService.getCurrentUser();
+
+                applyToProjectButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        //TODO fill out constructor properly once we have user images and can get users by id
+                        Request req = new Request(project.getProjectId(), project.getProjectName(), project.getOwnerId(),
+                                project.getOwnerId(), "imageurl", currentUser.getId(),
+                                currentUser.getFirstName() + " " + currentUser.getLastName(),
+                                currentUser.getPictureUrl(), UUID.randomUUID().toString(), RequestService.PENDING_KEY,
+                                Timestamp.now());
+
+                        requestService.createRequest(req);
+
+                        Toast.makeText(view.getContext(), "Request sent", Toast.LENGTH_SHORT).show();
+                    }
+                });
             }
 
         } catch (Exception e) {
             Toast.makeText(requireView().getContext(), "Exception occurred", Toast.LENGTH_SHORT).show();
         }
-
 
         // Set the adapter
 //        if (view instanceof RecyclerView) {

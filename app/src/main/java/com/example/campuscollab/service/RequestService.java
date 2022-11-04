@@ -24,9 +24,10 @@ public class RequestService {
     private final RequestRepository requestRepository;
     private final ProjectService projectService;
     private final UserService userService;
-    private final String ACCEPTED_KEY = "ACCEPTED";
-    private final String REJECTED_KEY = "REJECTED";
-    private final String PENDING_KEY = "PENDING";
+
+    public static final String ACCEPTED_KEY = "ACCEPTED";
+    public static final String REJECTED_KEY = "REJECTED";
+    public static final String PENDING_KEY = "PENDING";
 
     public static synchronized RequestService getInstance() {
         if(instance == null) {
