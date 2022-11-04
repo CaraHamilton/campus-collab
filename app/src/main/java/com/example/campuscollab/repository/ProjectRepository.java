@@ -12,6 +12,7 @@ public class ProjectRepository {
     private final String PROJECT_KEY = "project";
     private final String OWNER_KEY = "ownerId";
     private final String PARTICIPANTS_KEY = "participantIds";
+    private final String SCHOOL_KEY = "school";
 
     public ProjectRepository() {
         db = FirebaseFirestore.getInstance();
@@ -44,7 +45,7 @@ public class ProjectRepository {
     }
 
     public Task<QuerySnapshot> getProjectsBySchool(String school) {
-        return db.collection(PROJECT_KEY).whereEqualTo(schoolKey, school).get();
+        return db.collection(PROJECT_KEY).whereEqualTo(SCHOOL_KEY, school).get();
     }
 
     public Task<Void> deleteProject(String projectId) {

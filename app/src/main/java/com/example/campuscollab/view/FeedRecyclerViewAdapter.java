@@ -1,10 +1,10 @@
 package com.example.campuscollab.view;
 
+import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.app.Fragment;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -26,8 +26,9 @@ public class FeedRecyclerViewAdapter extends RecyclerView.Adapter<FeedRecyclerVi
         feedProjects = items;
     }
 
+    @NonNull
     @Override
-    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
         return new ViewHolder(FragmentFeedBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false));
 
@@ -43,12 +44,12 @@ public class FeedRecyclerViewAdapter extends RecyclerView.Adapter<FeedRecyclerVi
             public void onClick(View view) {
                 Bundle bundle = new Bundle();
                 bundle.putString("project_id", feedProjects.get(holder.getAbsoluteAdapterPosition()).getProjectId());
-                GroupUserFragment groupUserFragment = new GroupUserFragment();
-                groupUserFragment.setArguments(bundle);
+                ProjectExpandedFragment projectExpandedFragment = new ProjectExpandedFragment();
+                projectExpandedFragment.setArguments(bundle);
                 ((FragmentActivity) view.getContext())
                         .getSupportFragmentManager()
                         .beginTransaction()
-                        .replace(R.id.fragment_container, groupUserFragment)
+                        .replace(R.id.fragment_container, projectExpandedFragment)
                         .addToBackStack(null)
                         .commit();
             }
@@ -60,7 +61,7 @@ public class FeedRecyclerViewAdapter extends RecyclerView.Adapter<FeedRecyclerVi
         return feedProjects.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    public static class ViewHolder extends RecyclerView.ViewHolder {
         public TextView title;
         public TextView description;
         public ImageView image;
