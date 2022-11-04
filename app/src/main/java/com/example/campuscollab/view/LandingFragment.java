@@ -19,7 +19,9 @@ import android.widget.Toast;
 
 import com.example.campuscollab.R;
 import com.example.campuscollab.databinding.FragmentLandingBinding;
+import com.example.campuscollab.domain.User;
 import com.example.campuscollab.service.AuthService;
+import com.example.campuscollab.service.UserService;
 import com.google.firebase.auth.FirebaseUser;
 
 /**
@@ -31,7 +33,7 @@ public class LandingFragment extends Fragment {
 
     private FragmentLandingBinding binding;
 
-    private AuthService authService = AuthService.getInstance();
+    private UserService userService = UserService.getInstance();
 
     Button registerButton;
     Button signInButton;
@@ -85,9 +87,15 @@ public class LandingFragment extends Fragment {
                 String email = emailField.getText().toString();
                 String password = passwordField.getText().toString();
 
+                if (email.equals("") || password.equals(""))
+                {
+                    Toast.makeText(getView().getContext(), "Please enter your email/password", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
                 try
                 {
-                    FirebaseUser user = authService.signIn(email,password).get();
+                    User user = userService.signIn(email,password).get();
 
                     if (user == null)
                     {
@@ -96,6 +104,7 @@ public class LandingFragment extends Fragment {
                     else
                     {
                         Toast.makeText(getView().getContext(), "Sign in succeeded", Toast.LENGTH_SHORT).show();
+                        System.out.println("User: " + user.getLastName());
 
                         Intent feed_transition = new Intent(getActivity(), FeedActivity.class);
                         startActivity(feed_transition);

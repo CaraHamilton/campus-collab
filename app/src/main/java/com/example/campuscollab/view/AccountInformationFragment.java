@@ -13,8 +13,9 @@ import android.widget.Toast;
 
 import com.example.campuscollab.databinding.FragmentAccountInformationBinding;
 import com.example.campuscollab.domain.User;
-import com.example.campuscollab.service.AuthService;
 import com.example.campuscollab.service.UserService;
+
+import java.util.Objects;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -24,14 +25,10 @@ import com.example.campuscollab.service.UserService;
 public class AccountInformationFragment extends Fragment {
 
     private FragmentAccountInformationBinding binding;
-    private String school;
 
-    private AuthService authService = AuthService.getInstance();
-    private UserService userService = UserService.getInstance();
+    private final UserService userService = UserService.getInstance();
 
-    public AccountInformationFragment() {
-        // Required empty public constructor
-    }
+    public AccountInformationFragment() { /*Required empty public constructor*/ }
 
     /**
      * Use this factory method to create a new instance of
@@ -50,15 +47,15 @@ public class AccountInformationFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            school = getArguments().getString("school_name");
+            String school = getArguments().getString("school_name");
         }
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        binding = FragmentAccountInformationBinding.inflate(inflater, container, false);
+        binding = FragmentAccountInformationBinding.inflate(Objects.requireNonNull(inflater), container, false);
         return binding.getRoot();
     }
 
@@ -68,12 +65,22 @@ public class AccountInformationFragment extends Fragment {
         binding.createAccountButton.setOnClickListener(new View.OnClickListener() {
                @Override
                public void onClick(View view) {
-                   binding.progressBar.setVisibility(View.VISIBLE);
-
                    String firstName = binding.firstName.getText().toString();
                    String lastName = binding.lastName.getText().toString();
                    String email = binding.email.getText().toString();
                    String password = binding.password.getText().toString();
+
+                   if (firstName.equals("") || lastName.equals("") || email.equals("") || password.equals(""))
+                   {
+                       Toast.makeText(requireView().getContext(), "Information Missing", Toast.LENGTH_SHORT).show();
+                       return;
+                   }
+
+                   if (password.length() < 6)
+                   {
+                       Toast.makeText(requireView().getContext(), "Password must be longer than 6 characters", Toast.LENGTH_SHORT).show();
+                       return;
+                   }
 
                    User userWrite = new User();
                    userWrite.setFirstName(firstName);
@@ -82,15 +89,17 @@ public class AccountInformationFragment extends Fragment {
 
                    try
                    {
+                       binding.progressBar.setVisibility(View.VISIBLE);
                        User newUser = userService.registerUser(userWrite, password).get();
+                       binding.progressBar.setVisibility(View.INVISIBLE);
 
                        if (newUser == null)
                        {
-                           Toast.makeText(getView().getContext(), "Register failed", Toast.LENGTH_SHORT).show();
+                           Toast.makeText(requireView().getContext(), "Register failed", Toast.LENGTH_SHORT).show();
                        }
                        else
                        {
-                           Toast.makeText(getView().getContext(), "Register succeeded", Toast.LENGTH_SHORT).show();
+                           Toast.makeText(requireView().getContext(), "Register succeeded", Toast.LENGTH_SHORT).show();
 
                            Intent feed_transition = new Intent(getActivity(), FeedActivity.class);
                            startActivity(feed_transition);

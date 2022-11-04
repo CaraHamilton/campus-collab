@@ -1,36 +1,30 @@
 package com.example.campuscollab.view;
 
-import android.content.Context;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import com.example.campuscollab.R;
 import com.example.campuscollab.databinding.FragmentProjectExpandedBinding;
 import com.example.campuscollab.domain.Project;
 import com.example.campuscollab.service.ProjectService;
-import com.example.campuscollab.view.placeholder.PlaceholderContent;
 
 /**
  * A fragment representing a list of Items.
  */
-public class GroupUserFragment extends Fragment {
+public class ProjectExpandedFragment extends Fragment {
 
     // TODO: Customize parameter argument names
     private static final String ARG_COLUMN_COUNT = "column-count";
     // TODO: Customize parameters
     private int mColumnCount = 1;
 
-    private ProjectService projectService = ProjectService.getInstance();
+    private final ProjectService projectService = ProjectService.getInstance();
 
     private FragmentProjectExpandedBinding binding;
     private Project project;
@@ -42,13 +36,13 @@ public class GroupUserFragment extends Fragment {
      * Mandatory empty constructor for the fragment manager to instantiate the
      * fragment (e.g. upon screen orientation changes).
      */
-    public GroupUserFragment() {
+    public ProjectExpandedFragment() {
     }
 
     // TODO: Customize parameter initialization
     @SuppressWarnings("unused")
-    public static GroupUserFragment newInstance(int columnCount) {
-        GroupUserFragment fragment = new GroupUserFragment();
+    public static ProjectExpandedFragment newInstance(int columnCount) {
+        ProjectExpandedFragment fragment = new ProjectExpandedFragment();
         Bundle args = new Bundle();
         args.putInt(ARG_COLUMN_COUNT, columnCount);
         fragment.setArguments(args);
@@ -66,7 +60,7 @@ public class GroupUserFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         binding = FragmentProjectExpandedBinding.inflate(inflater, container, false);
         View view = binding.getRoot();
@@ -75,14 +69,14 @@ public class GroupUserFragment extends Fragment {
             project = projectService.getProject(projectId).get();
 
             if (project == null) {
-                Toast.makeText(getView().getContext(), "Couldn't retrieve project", Toast.LENGTH_SHORT).show();
+                Toast.makeText(requireView().getContext(), "Couldn't retrieve project", Toast.LENGTH_SHORT).show();
             } else {
                 projectTitle = project.getProjectName();
                 projectDescription = project.getDescription();
             }
 
         } catch (Exception e) {
-            Toast.makeText(getView().getContext(), "Exception occurred", Toast.LENGTH_SHORT).show();
+            Toast.makeText(requireView().getContext(), "Exception occurred", Toast.LENGTH_SHORT).show();
         }
 
 

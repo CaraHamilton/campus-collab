@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".view.FeedActivity"
-    android:background="@drawable/gradient">
+    android:background="?attr/colorPrimary">
 
     <TextView
         android:id="@+id/project_title"
@@ -14,7 +14,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:text="Project Title"
-        android:textColor="@color/white"
+        android:textColor="?attr/colorOnPrimary"
         android:textSize="25dp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
@@ -31,7 +31,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/project_title"
-        app:strokeColor="@color/white"
+        app:strokeColor="?attr/cardBackgroundColor"
         app:strokeWidth="2dp">
 
         <ImageView
@@ -57,7 +57,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Description"
-            android:textColor="@color/white"
+            android:textColor="?attr/colorOnPrimary"
             android:textSize="20dp"
             android:textStyle="bold" />
 
@@ -67,7 +67,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:text="This is the full description"
-            android:textColor="@color/white" />
+            android:textColor="?attr/colorOnPrimary" />
 
         <TextView
             android:id="@+id/group_member_title"
@@ -75,7 +75,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="30dp"
             android:text="Group Members"
-            android:textColor="@color/white"
+            android:textColor="?attr/colorOnPrimary"
             android:textSize="20dp"
             android:textStyle="bold" />
 
@@ -83,7 +83,7 @@
 <!--            xmlns:app="http://schemas.android.com/apk/res-auto"-->
 <!--            xmlns:tools="http://schemas.android.com/tools"-->
 <!--            android:id="@+id/list"-->
-<!--            android:name="com.example.campuscollab.view.GroupUserFragment"-->
+<!--            android:name="com.example.campuscollab.view.ProjectExpandedFragment"-->
 <!--            android:layout_width="match_parent"-->
 <!--            android:layout_height="wrap_content"-->
 <!--            app:layoutManager="LinearLayoutManager"-->
@@ -97,9 +97,10 @@
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="25dp"
         android:layout_marginVertical="25dp"
-        android:background="@drawable/rounded_corner_field"
+        android:backgroundTint="?attr/colorSecondary"
         app:layout_constraintBottom_toBottomOf="parent"
         android:textAllCaps="false"
+        android:textColor="?attr/colorOnSecondary"
         android:text="Request to Join Project"/>
 
 

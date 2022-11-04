@@ -8,34 +8,28 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.navigation.fragment.NavHostFragment;
+import androidx.fragment.app.FragmentActivity;
 
 import com.example.campuscollab.R;
 import com.example.campuscollab.databinding.FragmentCreateProjectBinding;
 import com.example.campuscollab.domain.Project;
-import com.example.campuscollab.service.AuthService;
 import com.example.campuscollab.service.ProjectService;
 import com.example.campuscollab.service.UserService;
 import com.google.firebase.Timestamp;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.rpc.context.AttributeContext;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.Objects;
 
 public class CreateProjectFragment extends Fragment
                                    implements AdapterView.OnItemSelectedListener {
-    private AuthService authService = AuthService.getInstance();
-    private ProjectService projectService = ProjectService.getInstance();
+    private final UserService userService = UserService.getInstance();
+    private final ProjectService projectService = ProjectService.getInstance();
     private FragmentCreateProjectBinding binding;
-    private Button createProjectButton;
     private EditText projectNameInput;
     private EditText projectDescriptionInput;
     private Spinner groupMemberNumber;
@@ -43,11 +37,11 @@ public class CreateProjectFragment extends Fragment
 
     @Override
     public View onCreateView(
-            LayoutInflater inflater, ViewGroup container,
+            @NonNull LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState
     ) {
-        binding = FragmentCreateProjectBinding.inflate(inflater, container, false);
-        createProjectButton = binding.createProjectButton;
+        binding = FragmentCreateProjectBinding.inflate(Objects.requireNonNull(inflater), container, false);
+        Button createProjectButton = binding.createProjectButton;
         projectNameInput = binding.projectName;
         projectDescriptionInput = binding.projectDescription;
         groupMemberNumber = binding.groupSizeInput;
@@ -62,20 +56,26 @@ public class CreateProjectFragment extends Fragment
             @Override
             public void onClick(View view) {
                 if (isValidProject()) {
-                    Project newProject = new Project(projectNameInput.getText().toString(), authService.getCurrentUser().getUid(),
+                    Project newProject = new Project(projectNameInput.getText().toString(), userService.getCurrentUser().getId(),
                                                      projectDescriptionInput.getText().toString(), new ArrayList<>(),
-                                                     Timestamp.now(), Timestamp.now(), maxGroupSize);
+                                                     Timestamp.now(), Timestamp.now(), maxGroupSize, null, userService.getCurrentUser().getSchool());
 
-                    //TODO fix as needed once createProject is implemented
-                    //TODO add toast for project created
                     try {
                         projectService.createProject(newProject);
+                        Toast.makeText(requireView().getContext(), "Project created!", Toast.LENGTH_SHORT).show();
+                        FeedFragment feedFragment = new FeedFragment();
+                        ((FragmentActivity) view.getContext())
+                                .getSupportFragmentManager()
+                                .beginTransaction()
+                                .replace(R.id.fragment_container, feedFragment)
+                                .addToBackStack(null)
+                                .commit();
                     } catch (Exception e) {
-                        Toast.makeText(getView().getContext(), e.getMessage().toString(), Toast.LENGTH_SHORT);
+                        Toast.makeText(requireView().getContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
                     }
 
                 } else {
-                    Toast.makeText(getView().getContext(), "Please provide a name and description for your project", Toast.LENGTH_SHORT);
+                    Toast.makeText(requireView().getContext(), "Please provide a name and description for your project", Toast.LENGTH_SHORT).show();
                 }
             }
         });

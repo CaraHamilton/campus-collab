@@ -9,12 +9,12 @@
     <View
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:background="#323437" />
+        android:background="?attr/colorPrimary" />
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="75dp"
-        android:background="#2A2B2E">
+        android:background="?attr/colorAccent">
 
         <ImageView
             android:id="@+id/profile_picture"
@@ -29,7 +29,8 @@
             android:layout_height="30dp"
             android:layout_centerInParent="true"
             android:background="@drawable/rounded_corner_field"
-            android:foregroundTint="#FFFFFF"
+            android:backgroundTint="?attr/colorOnBackground"
+            android:textColor="?attr/colorOnPrimary"
             android:iconifiedByDefault="false"
             android:queryBackground="@null"
             android:queryHint="Search" />
@@ -61,7 +62,7 @@
         android:layout_width="match_parent"
         android:layout_gravity="bottom"
         android:layout_height="75dp"
-        android:background="#2A2B2E">
+        android:background="?attr/colorAccent">
 
         <LinearLayout
             android:layout_height="wrap_content"
@@ -114,12 +115,22 @@
                 android:alpha=".5"/>
         </LinearLayout>
 
-        <ImageView
+        <com.google.android.material.card.MaterialCardView
             android:id="@+id/add_project_button"
             android:layout_centerInParent="true"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            app:srcCompat="@drawable/add_project_button" />
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            app:cardBackgroundColor="?attr/colorSecondary"
+            app:strokeWidth="3dp"
+            app:strokeColor="?attr/colorOnSecondary"
+            app:cardCornerRadius="10dp">
+
+            <ImageView
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_gravity="center"
+                android:src="@drawable/plus_sign"/>
+        </com.google.android.material.card.MaterialCardView>
 
         <LinearLayout
             android:layout_height="wrap_content"

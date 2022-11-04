@@ -1,20 +1,25 @@
 package com.example.campuscollab.domain;
 
+import com.google.firebase.Timestamp;
+
+import java.util.List;
+
 public class User {
-    private String id;
-    private String firstName;
-    private String lastName;
-    private String email;
-    private String major;
-    private String school;
+    private Timestamp createdDate;
     private String description;
-    private String [] skills;
-    private String [] projects;
-    private String linkedInUrl;
+    private String email;
+    private String firstName;
+    private String id;
     private String pictureUrl;
+    private String lastName;
+    private String linkedInUrl;
+    private String major;
+    private String resumeUrl;
+    private String school;
+    private List<String> skills;
 
     public User(String firstName, String lastName, String email, String major, String school,
-                String description, String[] skills, String[] projects, String linkedInUrl,
+                String description, List<String> skills, String linkedInUrl,
                 String pictureUrl) {
         this.firstName = firstName;
         this.lastName = lastName;
@@ -23,7 +28,6 @@ public class User {
         this.school = school;
         this.description = description;
         this.skills = skills;
-        this.projects = projects;
         this.linkedInUrl = linkedInUrl;
         this.pictureUrl = pictureUrl;
     }
@@ -78,20 +82,12 @@ public class User {
         this.description = description;
     }
 
-    public String[] getSkills() {
+    public List<String> getSkills() {
         return skills;
     }
 
-    public void setSkills(String[] skills) {
+    public void setSkills(List<String> skills) {
         this.skills = skills;
-    }
-
-    public String[] getProjects() {
-        return projects;
-    }
-
-    public void setProjects(String[] projects) {
-        this.projects = projects;
     }
 
     public String getLinkedInUrl() {
@@ -116,5 +112,21 @@ public class User {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public String getResumeUrl() {
+        return resumeUrl;
+    }
+
+    public void setResumeUrl(String resumeUrl) {
+        this.resumeUrl = resumeUrl;
+    }
+
+    public Timestamp getCreatedDate() {
+        return createdDate;
+    }
+
+    public void setCreatedDate(Timestamp createdDate) {
+        this.createdDate = createdDate;
     }
 }

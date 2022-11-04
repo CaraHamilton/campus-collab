@@ -28,7 +28,7 @@ public class FeedFragment extends Fragment {
     private static final String ARG_COLUMN_COUNT = "column-count";
     // TODO: Customize parameters
     private int mColumnCount = 1;
-    private ProjectService projectService = ProjectService.getInstance();
+    private final ProjectService projectService = ProjectService.getInstance();
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
@@ -75,14 +75,14 @@ public class FeedFragment extends Fragment {
 
                 if (projects == null)
                 {
-                    Toast.makeText(getView().getContext(), "Couldn't retrieve any projects", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(requireView().getContext(), "Couldn't retrieve any projects", Toast.LENGTH_SHORT).show();
                 }
                 else
                 {
                     recyclerView.setAdapter(new FeedRecyclerViewAdapter(projects));
                 }
             } catch(Exception e) {
-                Toast.makeText(getView().getContext(), "Exception occurred", Toast.LENGTH_SHORT).show();
+                Toast.makeText(requireView().getContext(), "Exception occurred", Toast.LENGTH_SHORT).show();
             }
         }
         return view;

@@ -1,57 +1,135 @@
 package com.example.campuscollab.domain;
 
+import com.google.firebase.Timestamp;
+
 public class Request {
-    private String owner_id;
-    private String owner_name;
-    private String requesting_id;
-    private String requesting_name;
-    private Project project;
 
-    public Request(String owner_id, String owner_name, String requesting_id, String requesting_name, Project project) {
-        this.owner_id = owner_id;
-        this.owner_name = owner_name;
-        this.requesting_id = requesting_id;
-        this.requesting_name = requesting_name;
-        this.project = project;
+    private String projectId;
+    private String projectName;
+    private String projectOwnerId;
+    private String projectOwnerName;
+    private String projectOwnerImageUrl;
+    private String requesterId;
+    private String requesterName;
+    private String requesterImageUrl;
+    private String id;
+    private String status;
+    private Timestamp submittedDate;
+
+    public Request() {}
+
+    public Request(String projectId, String projectName, String projectOwnerId, String projectOwnerName, String projectOwnerImageUrl, String requesterId, String requesterName, String requesterImageUrl, String id, String status, Timestamp submittedDate) {
+        this.projectId = projectId;
+        this.projectName = projectName;
+        this.projectOwnerId = projectOwnerId;
+        this.projectOwnerName = projectOwnerName;
+        this.projectOwnerImageUrl = projectOwnerImageUrl;
+        this.requesterId = requesterId;
+        this.requesterName = requesterName;
+        this.requesterImageUrl = requesterImageUrl;
+        this.id = id;
+        this.status = status;
+        this.submittedDate = submittedDate;
     }
 
-    public String getOwner_id() {
-        return owner_id;
+    public Request(String projectName, String projectOwnerId, String projectOwnerName, String projectOwnerImageUrl, String requesterId, String requesterName, String requesterImageUrl, String id, String status, Timestamp submittedDate) {
+        this.projectName = projectName;
+        this.projectOwnerId = projectOwnerId;
+        this.projectOwnerName = projectOwnerName;
+        this.projectOwnerImageUrl = projectOwnerImageUrl;
+        this.requesterId = requesterId;
+        this.requesterName = requesterName;
+        this.requesterImageUrl = requesterImageUrl;
+        this.id = id;
+        this.status = status;
+        this.submittedDate = submittedDate;
     }
 
-    public void setOwner_id(String owner_id) {
-        this.owner_id = owner_id;
+    public String getProjectId() {
+        return projectId;
     }
 
-    public String getOwner_name() {
-        return owner_name;
+    public void setProjectId(String projectId) {
+        this.projectId = projectId;
     }
 
-    public void setOwner_name(String owner_name) {
-        this.owner_name = owner_name;
+    public String getProjectName() {
+        return projectName;
     }
 
-    public String getRequesting_id() {
-        return requesting_id;
+    public void setProjectName(String projectName) {
+        this.projectName = projectName;
     }
 
-    public void setRequesting_id(String requesting_id) {
-        this.requesting_id = requesting_id;
+    public String getProjectOwnerId() {
+        return projectOwnerId;
     }
 
-    public String getRequesting_name() {
-        return requesting_name;
+    public void setProjectOwnerId(String projectOwnerId) {
+        this.projectOwnerId = projectOwnerId;
     }
 
-    public void setRequesting_name(String requesting_name) {
-        this.requesting_name = requesting_name;
+    public String getProjectOwnerName() {
+        return projectOwnerName;
     }
 
-    public Project getProject() {
-        return project;
+    public void setProjectOwnerName(String projectOwnerName) {
+        this.projectOwnerName = projectOwnerName;
     }
 
-    public void setProject(Project project) {
-        this.project = project;
+    public String getProjectOwnerImageUrl() {
+        return projectOwnerImageUrl;
+    }
+
+    public void setProjectOwnerImageUrl(String projectOwnerImageUrl) {
+        this.projectOwnerImageUrl = projectOwnerImageUrl;
+    }
+
+    public String getRequesterId() {
+        return requesterId;
+    }
+
+    public void setRequesterId(String requesterId) {
+        this.requesterId = requesterId;
+    }
+
+    public String getRequesterName() {
+        return requesterName;
+    }
+
+    public void setRequesterName(String requesterName) {
+        this.requesterName = requesterName;
+    }
+
+    public String getRequesterImageUrl() {
+        return requesterImageUrl;
+    }
+
+    public void setRequesterImageUrl(String requesterImageUrl) {
+        this.requesterImageUrl = requesterImageUrl;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public Timestamp getSubmittedDate() {
+        return submittedDate;
+    }
+
+    public void setSubmittedDate(Timestamp submittedDate) {
+        this.submittedDate = submittedDate;
     }
 }
