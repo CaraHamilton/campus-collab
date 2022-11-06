@@ -16,19 +16,19 @@ import android.widget.Toast;
 import com.example.campuscollab.R;
 import com.example.campuscollab.domain.Project;
 import com.example.campuscollab.service.ProjectService;
+import com.example.campuscollab.service.UserService;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
-/**
- * A fragment representing a list of Items.
- */
 public class FeedFragment extends Fragment {
 
-    // TODO: Customize parameter argument names
     private static final String ARG_COLUMN_COUNT = "column-count";
-    // TODO: Customize parameters
     private int mColumnCount = 1;
-    private final ProjectService projectService = ProjectService.getInstance();
+    private ProjectService projectService = ProjectService.getInstance();
+    private UserService userService = UserService.getInstance();
+    private String school;
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
@@ -37,7 +37,6 @@ public class FeedFragment extends Fragment {
     public FeedFragment() {
     }
 
-    // TODO: Customize parameter initialization
     @SuppressWarnings("unused")
     public static FeedFragment newInstance(int columnCount) {
         FeedFragment fragment = new FeedFragment();
@@ -71,7 +70,10 @@ public class FeedFragment extends Fragment {
                 recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
             try {
+//                school = userService.getCurrentUser().getSchool();
+//                List<Project> projects = projectService.getProjectsBySchool(school).get();
                 List<Project> projects = projectService.getAllProjects().get();
+                List<Project> sortedProjects = sortProjects(projects);
 
                 if (projects == null)
                 {
@@ -79,12 +81,19 @@ public class FeedFragment extends Fragment {
                 }
                 else
                 {
-                    recyclerView.setAdapter(new FeedRecyclerViewAdapter(projects));
+                    recyclerView.setAdapter(new FeedRecyclerViewAdapter(sortedProjects));
                 }
             } catch(Exception e) {
                 Toast.makeText(requireView().getContext(), "Exception occurred", Toast.LENGTH_SHORT).show();
             }
         }
         return view;
+    }
+
+    public List<Project> sortProjects(List<Project> projects) {
+        List<Project> sortedProjects = new ArrayList<>(projects);
+        Collections.sort(sortedProjects, Collections.reverseOrder());
+
+        return sortedProjects;
     }
 }
