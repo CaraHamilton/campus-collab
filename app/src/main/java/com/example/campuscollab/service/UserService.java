@@ -82,6 +82,28 @@ public class UserService {
         return task.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
     }
 
+    public AsyncTask<Void, Void, User> getAnUser(String userId) {
+
+        AsyncTask<Void, Void, User> task = new AsyncTask<Void, Void, User>() {
+            @Override
+            protected User doInBackground(Void... voids) {
+                try{
+                    Task<DocumentSnapshot> getUserDocTask = userRepository.getUser(userId);
+                    DocumentSnapshot documentSnapshot = Tasks.await(getUserDocTask);
+                    User user = mapDocToUser(documentSnapshot);
+
+                    return user;
+                } catch (InterruptedException | ExecutionException | NullPointerException e) {
+                    return null;
+                }
+            }
+        };
+
+        return task.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+    }
+
+
+
     public void signOut() {
         authService.signOut();
         currentUser = null;
