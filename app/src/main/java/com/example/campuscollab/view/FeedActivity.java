@@ -121,7 +121,10 @@ public class FeedActivity extends AppCompatActivity {
 
                 changeOpacity(requestIcon, requestText);
 
-                //TODO include transaction to request fragment
+                FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+                RequestsFragment requestsFragment = new RequestsFragment();
+                transaction.replace(R.id.fragment_container, requestsFragment);
+                transaction.commit();
             }
         });
 

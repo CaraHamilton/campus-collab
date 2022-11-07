@@ -13,4 +13,7 @@
     <color name="navy">#002E5D</color>
     <color name="transparent_white">#99FFFFFF</color>
     <color name="button_gray">#2E3033</color>
+    <color name="accept_green">#4CAF50</color>
+    <color name="reject_red">#F44336</color>
+    <color name="dark_gray">#222222</color>
 </resources>
