@@ -17,14 +17,10 @@ import android.widget.Toast;
 
 import com.example.campuscollab.databinding.FragmentProjectExpandedBinding;
 import com.example.campuscollab.domain.Project;
-import com.example.campuscollab.domain.Request;
 import com.example.campuscollab.domain.User;
 import com.example.campuscollab.service.ProjectService;
 import com.example.campuscollab.service.RequestService;
 import com.example.campuscollab.service.UserService;
-import com.google.firebase.Timestamp;
-
-import java.util.UUID;
 
 import java.util.List;
 
@@ -130,7 +126,7 @@ public class ProjectExpandedFragment extends Fragment {
             } else {
                 recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
-            recyclerView.setAdapter(new GroupMemberRecyclerViewAdapter(project.getParticipantIds()));
+            recyclerView.setAdapter(new ParticipatingGroupMemberRecyclerViewAdapter(project.getParticipantIds()));
         }
         return view;
     }

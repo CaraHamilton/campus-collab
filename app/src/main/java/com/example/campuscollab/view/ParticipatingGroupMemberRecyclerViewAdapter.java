@@ -7,26 +7,26 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.campuscollab.databinding.FragmentGroupMemberBinding;
+import com.example.campuscollab.databinding.FragmentParticipatingGroupMemberCardBinding;
 import com.example.campuscollab.domain.User;
 import com.example.campuscollab.service.UserService;
 
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
-public class GroupMemberRecyclerViewAdapter extends RecyclerView.Adapter<GroupMemberRecyclerViewAdapter.ViewHolder> {
+public class ParticipatingGroupMemberRecyclerViewAdapter extends RecyclerView.Adapter<ParticipatingGroupMemberRecyclerViewAdapter.ViewHolder> {
 
     private final List<String> participants;
     private UserService userService = UserService.getInstance();
 
-    public GroupMemberRecyclerViewAdapter(List<String> participants) {
+    public ParticipatingGroupMemberRecyclerViewAdapter(List<String> participants) {
         this.participants = participants;
     }
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
-        return new ViewHolder(FragmentGroupMemberBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false));
+        return new ViewHolder(FragmentParticipatingGroupMemberCardBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false));
 
     }
 
@@ -53,7 +53,7 @@ public class GroupMemberRecyclerViewAdapter extends RecyclerView.Adapter<GroupMe
         public final TextView userName;
         public String participant;
 
-        public ViewHolder(FragmentGroupMemberBinding binding) {
+        public ViewHolder(FragmentParticipatingGroupMemberCardBinding binding) {
             super(binding.getRoot());
             userImage = binding.participatingUserImage;
             userName = binding.participatingUserName;

@@ -50,7 +50,6 @@
         android:layout_marginTop="30dp"
         android:orientation="vertical"
         app:layout_constraintTop_toBottomOf="@id/project_image"
-        app:layout_constraintBottom_toTopOf="@id/applyToProjectBtn"
         tools:layout_editor_absoluteX="25dp">
 
         <TextView
@@ -87,10 +86,10 @@
             android:id="@+id/list"
             android:name="com.example.campuscollab.view.ProjectExpandedFragment"
             android:layout_width="match_parent"
-            android:layout_height="300dp"
+            android:layout_height="160dp"
             app:layoutManager="LinearLayoutManager"
             tools:context=".view.GroupUserFragment"
-            tools:listitem="@layout/fragment_group_member" />
+            tools:listitem="@layout/fragment_participating_group_member_card" />
 
     </LinearLayout>
 
