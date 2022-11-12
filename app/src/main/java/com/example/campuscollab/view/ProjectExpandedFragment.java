@@ -17,12 +17,15 @@ import android.widget.Toast;
 
 import com.example.campuscollab.databinding.FragmentProjectExpandedBinding;
 import com.example.campuscollab.domain.Project;
+import com.example.campuscollab.domain.Request;
 import com.example.campuscollab.domain.User;
 import com.example.campuscollab.service.ProjectService;
 import com.example.campuscollab.service.RequestService;
 import com.example.campuscollab.service.UserService;
+import com.google.firebase.Timestamp;
 
 import java.util.List;
+import java.util.UUID;
 
 /**
  * A fragment representing a list of Items.
@@ -95,21 +98,21 @@ public class ProjectExpandedFragment extends Fragment {
                     applyToProjectButton.setVisibility(View.INVISIBLE);
                 } else {
 
-//                    applyToProjectButton.setOnClickListener(new View.OnClickListener() {
-//                        @Override
-//                        public void onClick(View view) {
-//                            //TODO fill out constructor properly once we have user images and can get users by id
-//                            Request req = new Request(project.getProjectId(), project.getProjectName(), project.getOwnerId(),
-//                                    project.getOwnerId(), "imageurl", currentUser.getId(),
-//                                    currentUser.getFirstName() + " " + currentUser.getLastName(),
-//                                    currentUser.getPictureUrl(), UUID.randomUUID().toString(), RequestService.PENDING_KEY,
-//                                    Timestamp.now());
-//
-//                            requestService.createRequest(req);
-//
-//                            Toast.makeText(view.getContext(), "Request sent", Toast.LENGTH_SHORT).show();
-//                        }
-//                    });
+                    applyToProjectButton.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            //TODO fill out constructor properly once we have user images and can get users by id
+                            Request req = new Request(project.getProjectId(), project.getProjectName(), project.getOwnerId(),
+                                    project.getOwnerId(), "imageurl", currentUser.getId(),
+                                    currentUser.getFirstName() + " " + currentUser.getLastName(),
+                                    currentUser.getPictureUrl(), UUID.randomUUID().toString(), RequestService.PENDING_KEY,
+                                    Timestamp.now());
+
+                            requestService.createRequest(req);
+
+                            Toast.makeText(view.getContext(), "Request sent", Toast.LENGTH_SHORT).show();
+                        }
+                    });
                 }
             }
 
