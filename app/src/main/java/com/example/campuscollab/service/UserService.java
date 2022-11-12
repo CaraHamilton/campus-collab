@@ -126,8 +126,29 @@ public class UserService {
         user.setSkills((List<String>) documentSnapshot.get("skills"));
         user.setResumeUrl((String) documentSnapshot.get("resumeUrl"));
         user.setCreatedDate((Timestamp) documentSnapshot.get("createdDate"));
+        user.setSchool((String) documentSnapshot.get("school"));
 
         return user;
+    }
+
+    public AsyncTask<Void, Void, User> getAnUser(String userId) {
+
+        AsyncTask<Void, Void, User> task = new AsyncTask<Void, Void, User>() {
+            @Override
+            protected User doInBackground(Void... voids) {
+                try{
+                    Task<DocumentSnapshot> getUserDocTask = userRepository.getUser(userId);
+                    DocumentSnapshot documentSnapshot = Tasks.await(getUserDocTask);
+                    User user = mapDocToUser(documentSnapshot);
+
+                    return user;
+                } catch (InterruptedException | ExecutionException | NullPointerException e) {
+                    return null;
+                }
+            }
+        };
+
+        return task.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
     }
 
 }

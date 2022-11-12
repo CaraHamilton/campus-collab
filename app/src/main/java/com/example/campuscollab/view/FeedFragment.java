@@ -70,11 +70,10 @@ public class FeedFragment extends Fragment {
                 recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
             try {
-//                school = userService.getCurrentUser().getSchool();
+                school = userService.getCurrentUser().getSchool();
 //                List<Project> projects = projectService.getProjectsBySchool(school).get();
                 List<Project> projects = projectService.getAllProjects().get();
                 List<Project> sortedProjects = sortProjects(projects);
-
                 if (projects == null)
                 {
                     Toast.makeText(requireView().getContext(), "Couldn't retrieve any projects", Toast.LENGTH_SHORT).show();

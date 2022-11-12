@@ -86,9 +86,9 @@ public class ProjectExpandedFragment extends Fragment {
 
 
         // Set the adapter
-        if (view instanceof RecyclerView) {
-            Context context = view.getContext();
-            RecyclerView recyclerView = (RecyclerView) view;
+        if (binding.list instanceof RecyclerView) {
+            Context context = binding.list.getContext();
+            RecyclerView recyclerView = (RecyclerView) binding.list;
             if (mColumnCount <= 1) {
                 recyclerView.setLayoutManager(new LinearLayoutManager(context));
             } else {

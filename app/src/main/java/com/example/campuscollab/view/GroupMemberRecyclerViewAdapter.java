@@ -8,9 +8,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.campuscollab.databinding.FragmentGroupMemberBinding;
+import com.example.campuscollab.domain.User;
 import com.example.campuscollab.service.UserService;
 
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 public class GroupMemberRecyclerViewAdapter extends RecyclerView.Adapter<GroupMemberRecyclerViewAdapter.ViewHolder> {
 
@@ -31,9 +33,14 @@ public class GroupMemberRecyclerViewAdapter extends RecyclerView.Adapter<GroupMe
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
         holder.participant = participants.get(position);
-        // Get user by their ID and set attributes in the view
-//        holder.mIdView.setText(mValues.get(position).id);
-//        holder.mContentView.setText(mValues.get(position).content);
+        try {
+            User user = userService.getAnUser(holder.participant).get();
+            holder.userName.setText(user.getFirstName() + " " + user.getLastName());
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
