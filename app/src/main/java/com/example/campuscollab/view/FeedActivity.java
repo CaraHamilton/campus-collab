@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
@@ -12,8 +13,13 @@ import android.widget.Toast;
 
 import com.example.campuscollab.R;
 import com.example.campuscollab.databinding.FeedPageBinding;
+import com.example.campuscollab.domain.User;
+import com.example.campuscollab.service.AuthService;
+import com.example.campuscollab.service.UserService;
 
 public class FeedActivity extends AppCompatActivity {
+
+    private final UserService userService = UserService.getInstance();
 
     CardView addProjectButton;
     ImageView profileIcon;
@@ -30,7 +36,6 @@ public class FeedActivity extends AppCompatActivity {
 
     ImageView settingsIcon;
     TextView settingsText;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,10 +59,21 @@ public class FeedActivity extends AppCompatActivity {
         settingsIcon = binding.settingsIcon;
         settingsText = binding.settingsText;
 
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        FeedFragment feedFragment = new FeedFragment();
-        transaction.replace(R.id.fragment_container, feedFragment);
-        transaction.commit();
+        if (userService.isFromSettings)
+        {
+            changeOpacity(settingsIcon, settingsText);
+            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+            SettingsFragment settingsFragment = new SettingsFragment();
+            transaction.replace(R.id.fragment_container, settingsFragment);
+            transaction.commit();
+        }
+        else
+        {
+            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+            FeedFragment feedFragment = new FeedFragment();
+            transaction.replace(R.id.fragment_container, feedFragment);
+            transaction.commit();
+        }
 
         addProjectButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -74,9 +90,8 @@ public class FeedActivity extends AppCompatActivity {
         profileIcon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(getApplicationContext(), "View User Profile", Toast.LENGTH_SHORT).show();
-
-                //TODO Include switch to profile activity
+                Intent feed_transition = new Intent(getApplicationContext(), ProfileActivity.class);
+                startActivity(feed_transition);
             }
         });
 
@@ -92,8 +107,6 @@ public class FeedActivity extends AppCompatActivity {
         homeIcon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(getApplicationContext(), "Home", Toast.LENGTH_SHORT).show();
-
                 changeOpacity(homeIcon, homeText);
 
                 FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
@@ -117,8 +130,6 @@ public class FeedActivity extends AppCompatActivity {
         requestIcon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(getApplicationContext(), "Requests", Toast.LENGTH_SHORT).show();
-
                 changeOpacity(requestIcon, requestText);
 
                 FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
@@ -131,8 +142,6 @@ public class FeedActivity extends AppCompatActivity {
         settingsIcon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(getApplicationContext(), "Settings", Toast.LENGTH_SHORT).show();
-
                 changeOpacity(settingsIcon, settingsText);
 
                 FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();

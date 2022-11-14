@@ -22,6 +22,9 @@ public class UserService {
     private final AuthService authService;
     private User currentUser;
 
+    public boolean isFromSettings = false;
+    public boolean isDarkMode = false;
+
     public static synchronized UserService getInstance() {
         if(instance == null) {
             instance = new UserService();
