@@ -45,6 +45,7 @@ public class ProjectExpandedFragment extends Fragment {
     private String projectTitle;
     private String projectDescription;
     private List<String> participants;
+
     private Button applyToProjectButton;
 
     /**
