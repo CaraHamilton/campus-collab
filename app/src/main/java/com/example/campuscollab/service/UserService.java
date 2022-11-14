@@ -10,6 +10,7 @@ import com.google.android.gms.tasks.Tasks;
 import com.google.firebase.Timestamp;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.storage.UploadTask;
 
 import java.util.List;
 import java.util.concurrent.ExecutionException;
@@ -85,6 +86,28 @@ public class UserService {
         return task.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
     }
 
+    public AsyncTask<Void, Void, User> getAnUser(String userId) {
+
+        AsyncTask<Void, Void, User> task = new AsyncTask<Void, Void, User>() {
+            @Override
+            protected User doInBackground(Void... voids) {
+                try{
+                    Task<DocumentSnapshot> getUserDocTask = userRepository.getUser(userId);
+                    DocumentSnapshot documentSnapshot = Tasks.await(getUserDocTask);
+                    User user = mapDocToUser(documentSnapshot);
+
+                    return user;
+                } catch (InterruptedException | ExecutionException | NullPointerException e) {
+                    return null;
+                }
+            }
+        };
+
+        return task.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+    }
+
+
+
     public void signOut() {
         authService.signOut();
         currentUser = null;
@@ -125,12 +148,50 @@ public class UserService {
         user.setDescription((String) documentSnapshot.get("description"));
         user.setLinkedInUrl((String) documentSnapshot.get("linkedInUrl"));
         user.setMajor((String) documentSnapshot.get("major"));
-        user.setPictureUrl((String) documentSnapshot.get("pictureUrl"));
+        user.setImagePath((String) documentSnapshot.get("imagePath"));
         user.setSkills((List<String>) documentSnapshot.get("skills"));
         user.setResumeUrl((String) documentSnapshot.get("resumeUrl"));
         user.setCreatedDate((Timestamp) documentSnapshot.get("createdDate"));
+        user.setSchool((String) documentSnapshot.get("school"));
 
         return user;
     }
 
+    public AsyncTask<Void, Void, byte[]> getImageBytes(String imagePath) {
+        AsyncTask<Void, Void, byte[]> task = new AsyncTask<Void, Void, byte[]>() {
+            @Override
+            protected byte[] doInBackground(Void... voids) {
+                try{
+                    Task<byte[]> getImageTask = userRepository.getImageBytes(imagePath);
+                    byte[] imageBytes = Tasks.await(getImageTask);
+
+                    return imageBytes;
+                } catch (InterruptedException | ExecutionException | NullPointerException e) {
+                    return null;
+                }
+            }
+        };
+
+        return task.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+    }
+
+    public AsyncTask<Void, Void, Void> uploadImageBytes(String imagePath, byte[] imageBytes) {
+        AsyncTask<Void, Void, Void> task = new AsyncTask<Void, Void, Void>() {
+            @Override
+            protected Void doInBackground(Void... voids) {
+                try{
+                    UploadTask getImageTask = userRepository.uploadImageBytes(imagePath, imageBytes);
+                    Tasks.await(getImageTask);
+
+                    currentUser.setImagePath(imagePath);
+                    updateUser(currentUser);
+                } catch (InterruptedException | ExecutionException | NullPointerException e) {
+                    //do something with the error message
+                }
+                return null;
+            }
+        };
+
+        return task.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+    }
 }

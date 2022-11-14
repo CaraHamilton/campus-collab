@@ -10,7 +10,7 @@ public class User {
     private String email;
     private String firstName;
     private String id;
-    private String pictureUrl;
+    private String imagePath;
     private String lastName;
     private String linkedInUrl;
     private String major;
@@ -20,7 +20,7 @@ public class User {
 
     public User(String firstName, String lastName, String email, String major, String school,
                 String description, List<String> skills, String linkedInUrl,
-                String pictureUrl) {
+                String imagePath) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
@@ -29,7 +29,7 @@ public class User {
         this.description = description;
         this.skills = skills;
         this.linkedInUrl = linkedInUrl;
-        this.pictureUrl = pictureUrl;
+        this.imagePath = imagePath;
     }
 
     public User() {}
@@ -98,12 +98,12 @@ public class User {
         this.linkedInUrl = linkedInUrl;
     }
 
-    public String getPictureUrl() {
-        return pictureUrl;
+    public String getImagePath() {
+        return imagePath;
     }
 
-    public void setPictureUrl(String pictureUrl) {
-        this.pictureUrl = pictureUrl;
+    public void setImagePath(String imagePath) {
+        this.imagePath = imagePath;
     }
 
     public String getId() {

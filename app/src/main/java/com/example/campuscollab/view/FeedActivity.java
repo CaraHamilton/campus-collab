@@ -123,7 +123,10 @@ public class FeedActivity extends AppCompatActivity {
 
                 changeOpacity(projectIcon, projectText);
 
-                //TODO include transaction to project fragment
+                FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+                ProjectsFragment projectsFragment = new ProjectsFragment();
+                transaction.replace(R.id.fragment_container, projectsFragment);
+                transaction.commit();
             }
         });
 

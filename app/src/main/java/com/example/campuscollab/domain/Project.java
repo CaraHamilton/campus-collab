@@ -4,7 +4,7 @@ import com.google.firebase.Timestamp;
 
 import java.util.List;
 
-public class Project {
+public class Project implements Comparable<Project> {
     private Timestamp createdDate;
     private String description;
     private Timestamp editedDate;
@@ -93,5 +93,10 @@ public class Project {
 
     public String getProjectId() {
         return projectId;
+    }
+
+    @Override
+    public int compareTo(Project o) {
+        return getCreatedDate().compareTo(o.getCreatedDate());
     }
 }

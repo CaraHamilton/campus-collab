@@ -1,9 +1,13 @@
 package com.example.campuscollab.view;
 
+import android.content.Context;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,6 +24,7 @@ import com.example.campuscollab.service.RequestService;
 import com.example.campuscollab.service.UserService;
 import com.google.firebase.Timestamp;
 
+import java.util.List;
 import java.util.UUID;
 
 /**
@@ -27,9 +32,7 @@ import java.util.UUID;
  */
 public class ProjectExpandedFragment extends Fragment {
 
-    // TODO: Customize parameter argument names
     private static final String ARG_COLUMN_COUNT = "column-count";
-    // TODO: Customize parameters
     private int mColumnCount = 1;
 
     private final ProjectService projectService = ProjectService.getInstance();
@@ -41,6 +44,8 @@ public class ProjectExpandedFragment extends Fragment {
     private String projectId;
     private String projectTitle;
     private String projectDescription;
+    private List<String> participants;
+
     private Button applyToProjectButton;
 
     /**
@@ -50,7 +55,6 @@ public class ProjectExpandedFragment extends Fragment {
     public ProjectExpandedFragment() {
     }
 
-    // TODO: Customize parameter initialization
     @SuppressWarnings("unused")
     public static ProjectExpandedFragment newInstance(int columnCount) {
         ProjectExpandedFragment fragment = new ProjectExpandedFragment();
@@ -84,6 +88,7 @@ public class ProjectExpandedFragment extends Fragment {
             } else {
                 projectTitle = project.getProjectName();
                 projectDescription = project.getDescription();
+                participants = project.getParticipantIds();
 
                 applyToProjectButton = binding.applyToProjectBtn;
 
@@ -101,7 +106,7 @@ public class ProjectExpandedFragment extends Fragment {
                             Request req = new Request(project.getProjectId(), project.getProjectName(), project.getOwnerId(),
                                     project.getOwnerId(), "imageurl", currentUser.getId(),
                                     currentUser.getFirstName() + " " + currentUser.getLastName(),
-                                    currentUser.getPictureUrl(), UUID.randomUUID().toString(), RequestService.PENDING_KEY,
+                                    currentUser.getImagePath(), UUID.randomUUID().toString(), RequestService.PENDING_KEY,
                                     Timestamp.now());
 
                             requestService.createRequest(req);
@@ -117,16 +122,16 @@ public class ProjectExpandedFragment extends Fragment {
         }
 
         // Set the adapter
-//        if (view instanceof RecyclerView) {
-//            Context context = view.getContext();
-//            RecyclerView recyclerView = (RecyclerView) view;
-//            if (mColumnCount <= 1) {
-//                recyclerView.setLayoutManager(new LinearLayoutManager(context));
-//            } else {
-//                recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
-//            }
-//            recyclerView.setAdapter(new GroupMemberRecyclerViewAdapter(PlaceholderContent.ITEMS));
-//        }
+        if (binding.list instanceof RecyclerView) {
+            Context context = binding.list.getContext();
+            RecyclerView recyclerView = (RecyclerView) binding.list;
+            if (mColumnCount <= 1) {
+                recyclerView.setLayoutManager(new LinearLayoutManager(context));
+            } else {
+                recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
+            }
+            recyclerView.setAdapter(new ParticipatingGroupMemberRecyclerViewAdapter(project.getParticipantIds()));
+        }
         return view;
     }
 
