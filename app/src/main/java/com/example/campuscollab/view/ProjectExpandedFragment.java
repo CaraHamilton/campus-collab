@@ -106,7 +106,7 @@ public class ProjectExpandedFragment extends Fragment {
                             Request req = new Request(project.getProjectId(), project.getProjectName(), project.getOwnerId(),
                                     project.getOwnerId(), "imageurl", currentUser.getId(),
                                     currentUser.getFirstName() + " " + currentUser.getLastName(),
-                                    currentUser.getPictureUrl(), UUID.randomUUID().toString(), RequestService.PENDING_KEY,
+                                    currentUser.getImagePath(), UUID.randomUUID().toString(), RequestService.PENDING_KEY,
                                     Timestamp.now());
 
                             requestService.createRequest(req);
