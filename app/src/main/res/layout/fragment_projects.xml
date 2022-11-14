@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/gradient">
+    android:background="?attr/colorPrimary">
 
     <LinearLayout
         android:id="@+id/projectsheader"
@@ -24,7 +24,7 @@
             android:focusable="auto"
             android:text="@string/owned_projects"
             android:textAlignment="center"
-            android:textColor="@color/white"
+            android:textColor="?attr/colorControlActivated"
             android:textSize="18sp" />
 
         <TextView
@@ -38,7 +38,7 @@
             android:focusable="auto"
             android:text="@string/participating_projects"
             android:textAlignment="center"
-            android:textColor="@color/transparent_white"
+            android:textColor="?attr/colorControlNormal"
             android:textSize="18sp" />
     </LinearLayout>
 
