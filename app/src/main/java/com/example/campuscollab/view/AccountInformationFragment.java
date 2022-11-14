@@ -25,6 +25,7 @@ import java.util.Objects;
 public class AccountInformationFragment extends Fragment {
 
     private FragmentAccountInformationBinding binding;
+    private String school;
 
     private final UserService userService = UserService.getInstance();
 
@@ -47,7 +48,7 @@ public class AccountInformationFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            String school = getArguments().getString("school_name");
+            school = getArguments().getString("school_name");
         }
     }
 
@@ -86,6 +87,7 @@ public class AccountInformationFragment extends Fragment {
                    userWrite.setFirstName(firstName);
                    userWrite.setLastName(lastName);
                    userWrite.setEmail(email);
+                   userWrite.setSchool(school);
 
                    try
                    {

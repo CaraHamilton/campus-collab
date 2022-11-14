@@ -149,6 +149,7 @@ public class UserService {
         user.setSkills((List<String>) documentSnapshot.get("skills"));
         user.setResumeUrl((String) documentSnapshot.get("resumeUrl"));
         user.setCreatedDate((Timestamp) documentSnapshot.get("createdDate"));
+        user.setSchool((String) documentSnapshot.get("school"));
 
         return user;
     }
