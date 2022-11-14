@@ -16,6 +16,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CompoundButton;
+import android.widget.Toast;
 
 import com.example.campuscollab.R;
 import com.example.campuscollab.databinding.FragmentSettingsBinding;
@@ -68,23 +69,45 @@ public class SettingsFragment extends Fragment {
             }
         });
 
-        changeThemeSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        changeThemeSwitch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (userService.isDarkMode)
+                {
+                    Toast.makeText(getView().getContext(), "Is checked true", Toast.LENGTH_SHORT).show();
+                    userService.isFromSettings = true;
+                    userService.isDarkMode = false;
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+                }
+                else
+                {
+                    Toast.makeText(getView().getContext(), "Is checked false", Toast.LENGTH_SHORT).show();
+                    userService.isFromSettings = true;
+                    userService.isDarkMode = true;
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+                }
+
+            }
+        });
+
+       /* changeThemeSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
                 if (isChecked)
                 {
+                    Toast.makeText(getView().getContext(), "Is checked true", Toast.LENGTH_SHORT).show();
                     userService.isFromSettings = true;
                     userService.isDarkMode = true;
                     AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-
                 }
                 else
                 {
+                    Toast.makeText(getView().getContext(), "Is checked false", Toast.LENGTH_SHORT).show();
                     userService.isFromSettings = true;
                     userService.isDarkMode = false;
                     AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
                 }
             }
-        });
+        });*/
     }
 }
