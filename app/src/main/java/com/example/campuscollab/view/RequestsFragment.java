@@ -1,12 +1,16 @@
 package com.example.campuscollab.view;
 
+import android.content.res.Resources;
+import android.graphics.drawable.LayerDrawable;
 import android.os.Bundle;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.ColorInt;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -92,9 +96,12 @@ public class RequestsFragment extends Fragment {
         pendingRequests.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                int activeColor = getActiveColor();
+                int inactiveColor = getInactiveColor();
+
                 incomingRecycler.setVisibility(View.INVISIBLE);
-                RequestsFragment.this.incomingRequests.setTextColor(getResources().getColor(R.color.transparent_white));
-                pendingRequests.setTextColor(getResources().getColor(R.color.white));
+                RequestsFragment.this.incomingRequests.setTextColor(inactiveColor);
+                pendingRequests.setTextColor(activeColor);
                 pendingRecycler.setVisibility(View.VISIBLE);
             }
         });
@@ -102,14 +109,33 @@ public class RequestsFragment extends Fragment {
         this.incomingRequests.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                int activeColor = getActiveColor();
+                int inactiveColor = getInactiveColor();
+
                 pendingRecycler.setVisibility(View.INVISIBLE);
-                pendingRequests.setTextColor(getResources().getColor(R.color.transparent_white));
-                RequestsFragment.this.incomingRequests.setTextColor(getResources().getColor(R.color.white));
+                pendingRequests.setTextColor(inactiveColor);
+                RequestsFragment.this.incomingRequests.setTextColor(activeColor);
                 incomingRecycler.setVisibility(View.VISIBLE);
             }
         });
 
         return binding.getRoot();
+    }
+
+    private int getActiveColor() {
+        TypedValue typedValue = new TypedValue();
+        Resources.Theme theme = requireContext().getTheme();
+        theme.resolveAttribute(androidx.appcompat.R.attr.colorControlActivated, typedValue, true);
+        @ColorInt int color = typedValue.data;
+        return color;
+    }
+
+    private int getInactiveColor() {
+        TypedValue typedValue = new TypedValue();
+        Resources.Theme theme = requireContext().getTheme();
+        theme.resolveAttribute(androidx.appcompat.R.attr.colorControlNormal, typedValue, true);
+        @ColorInt int color = typedValue.data;
+        return color;
     }
 
     @Override

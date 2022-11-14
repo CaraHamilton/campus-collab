@@ -43,11 +43,6 @@
             android:layout_marginRight="20dp"
             android:layout_width="35dp"
             android:layout_height="35dp" />
-
-        <View android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_alignParentBottom="true"
-            android:background="#555555" />
     </RelativeLayout>
 
     <FrameLayout

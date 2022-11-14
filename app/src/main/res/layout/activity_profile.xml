@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".view.ProfileActivity"
+    android:background="?attr/colorPrimary">
+
+    <RelativeLayout
+        android:id="@+id/search_bar"
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:background="?attr/colorAccent"
+        tools:ignore="MissingConstraints">
+
+        <ImageView
+            android:id="@+id/back_arrow"
+            app:srcCompat="@drawable/back_arrow"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="20dp"
+            android:layout_width="35dp"
+            android:layout_height="35dp" />
+
+        <SearchView
+            android:layout_width="200dp"
+            android:layout_height="30dp"
+            android:layout_centerInParent="true"
+            android:background="@drawable/rounded_corner_field"
+            android:backgroundTint="?attr/colorOnBackground"
+            android:textColor="?attr/colorOnPrimary"
+            android:iconifiedByDefault="false"
+            android:queryBackground="@null"
+            android:queryHint="Search" />
+    </RelativeLayout>
+
+
+     <RelativeLayout
+         android:id="@+id/header"
+         android:layout_width="match_parent"
+         android:layout_height="wrap_content"
+         app:layout_constraintTop_toBottomOf="@+id/search_bar">
+
+        <ImageView
+            android:id="@+id/profile_header_image"
+            android:layout_width="match_parent"
+            android:layout_height="90dp"
+            android:background="#999999"/>
+
+        <ImageView
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_marginTop="40dp"
+            android:layout_centerHorizontal="true"
+            android:src="@drawable/plus_sign"/>
+
+         <com.google.android.material.card.MaterialCardView
+             android:id="@+id/profile_picture"
+             android:layout_width="126dp"
+             android:layout_height="126dp"
+             android:layout_gravity="center_horizontal"
+             android:layout_marginTop="25dp"
+             android:layout_marginStart="20dp"
+             app:cardCornerRadius="63dp"
+             app:strokeColor="?attr/colorPrimary"
+             android:backgroundTint="#999999"
+             app:strokeWidth="5dp"
+             app:cardElevation="0dp">
+
+             <ImageView
+                 android:layout_width="20dp"
+                 android:layout_height="20dp"
+                 android:layout_gravity="center"
+                 android:src="@drawable/plus_sign"/>
+         </com.google.android.material.card.MaterialCardView>
+
+         <com.google.android.material.button.MaterialButton
+             android:layout_width="wrap_content"
+             android:layout_height="55dp"
+             android:layout_marginRight="30dp"
+             android:layout_marginTop="100dp"
+             android:backgroundTint="?attr/colorSecondary"
+             android:textColor="?attr/colorOnSecondary"
+             android:fontFamily="sans-serif-medium"
+             android:text="Message"
+             android:textAllCaps="false"
+             android:layout_alignParentEnd="true"
+             app:icon="@drawable/chat_icon"
+             app:iconTint="?attr/colorOnSecondary"
+             app:iconSize="20dp"/>
+    </RelativeLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center"
+        app:layout_constraintTop_toBottomOf="@+id/header">
+
+        <TextView
+            android:id="@+id/user_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="20dp"
+            android:fontFamily="sans-serif-medium"
+            android:text="User Name"
+            android:textColor="?attr/colorOnPrimary"
+            android:textSize="28dp" />
+
+        <TextView
+            android:id="@+id/user_major"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:fontFamily="sans-serif"
+            android:text="Major"
+            android:textColor="?attr/colorOnPrimary"
+            android:textSize="22dp" />
+
+        <TextView
+            android:id="@+id/user_skills"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="120dp"
+            android:fontFamily="sans-serif-medium"
+            android:text="Skills"
+            android:textColor="?attr/colorOnPrimary"
+            android:textSize="22dp" />
+
+        <TextView
+            android:id="@+id/user_projects"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="80dp"
+            android:fontFamily="sans-serif-medium"
+            android:text="Projects"
+            android:textColor="?attr/colorOnPrimary"
+            android:textSize="22dp" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:layout_gravity="bottom"
+            android:layout_marginTop="110dp"
+            android:backgroundTint="?attr/colorSecondary"
+            android:textColor="?attr/colorOnSecondary"
+            android:fontFamily="sans-serif-medium"
+            android:text="Add Resume"
+            android:textAllCaps="false" />
+        </LinearLayout>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
