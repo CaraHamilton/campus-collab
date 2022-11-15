@@ -74,14 +74,12 @@ public class SettingsFragment extends Fragment {
             public void onClick(View view) {
                 if (userService.isDarkMode)
                 {
-                    Toast.makeText(getView().getContext(), "Is checked true", Toast.LENGTH_SHORT).show();
                     userService.isFromSettings = true;
                     userService.isDarkMode = false;
                     AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
                 }
                 else
                 {
-                    Toast.makeText(getView().getContext(), "Is checked false", Toast.LENGTH_SHORT).show();
                     userService.isFromSettings = true;
                     userService.isDarkMode = true;
                     AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);

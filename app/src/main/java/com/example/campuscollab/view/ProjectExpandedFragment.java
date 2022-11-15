@@ -130,7 +130,7 @@ public class ProjectExpandedFragment extends Fragment {
             } else {
                 recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
-            recyclerView.setAdapter(new ParticipatingGroupMemberRecyclerViewAdapter(project.getParticipantIds()));
+            recyclerView.setAdapter(new ParticipatingGroupMemberRecyclerViewAdapter(getContext(), project.getParticipantIds()));
         }
         return view;
     }

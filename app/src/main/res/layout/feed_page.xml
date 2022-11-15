@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:fitsSystemWindows="false"
     tools:context=".view.FeedActivity">
 
     <View
@@ -25,15 +26,17 @@
             android:layout_height="35dp" />
 
         <SearchView
+            android:id="@+id/search_bar"
             android:layout_width="250dp"
             android:layout_height="30dp"
             android:layout_centerInParent="true"
             android:background="@drawable/rounded_corner_field"
-            android:backgroundTint="?attr/colorOnBackground"
+            android:backgroundTint="?attr/colorPrimary"
             android:textColor="?attr/colorOnPrimary"
             android:iconifiedByDefault="false"
+            android:queryHint="Search"
             android:queryBackground="@null"
-            android:queryHint="Search" />
+            android:focusedByDefault="false"/>
 
         <ImageView
             android:id="@+id/chat_icon"

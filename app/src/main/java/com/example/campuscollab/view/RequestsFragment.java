@@ -76,7 +76,7 @@ public class RequestsFragment extends Fragment {
             {
                 Toast.makeText(requireView().getContext(), "Couldn't retrieve any incoming requests", Toast.LENGTH_SHORT).show();
             } else {
-                incomingRecycler.setAdapter(new RequestsRecyclerViewAdapter(incomingRequestsList, true));
+                incomingRecycler.setAdapter(new RequestsRecyclerViewAdapter(getContext(), incomingRequestsList, true));
                 incomingRecycler.setLayoutManager(new LinearLayoutManager(incomingRecycler.getContext()));
             }
 
@@ -85,7 +85,7 @@ public class RequestsFragment extends Fragment {
             {
                 Toast.makeText(requireView().getContext(), "Couldn't retrieve any pending requests", Toast.LENGTH_SHORT).show();
             } else {
-                pendingRecycler.setAdapter(new RequestsRecyclerViewAdapter(pendingRequestsList, false));
+                pendingRecycler.setAdapter(new RequestsRecyclerViewAdapter(getContext(), pendingRequestsList, false));
                 pendingRecycler.setLayoutManager(new LinearLayoutManager(pendingRecycler.getContext()));
             }
 

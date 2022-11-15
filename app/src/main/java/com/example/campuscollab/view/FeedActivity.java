@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -20,6 +21,8 @@ import com.example.campuscollab.service.UserService;
 public class FeedActivity extends AppCompatActivity {
 
     private final UserService userService = UserService.getInstance();
+
+    SearchView searchBar;
 
     CardView addProjectButton;
     ImageView profileIcon;
@@ -43,6 +46,7 @@ public class FeedActivity extends AppCompatActivity {
         com.example.campuscollab.databinding.FeedPageBinding binding = FeedPageBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
+        searchBar = binding.searchBar;
         addProjectButton = binding.addProjectButton;
         profileIcon = binding.profilePicture;
         messageIcon = binding.chatIcon;
@@ -91,6 +95,7 @@ public class FeedActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent feed_transition = new Intent(getApplicationContext(), ProfileActivity.class);
+                feed_transition.putExtra("user_id", userService.getCurrentUser().getId());
                 startActivity(feed_transition);
             }
         });

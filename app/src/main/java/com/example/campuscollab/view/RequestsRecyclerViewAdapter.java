@@ -1,5 +1,7 @@
 package com.example.campuscollab.view;
 
+import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,10 +22,12 @@ import java.util.concurrent.ExecutionException;
 public class RequestsRecyclerViewAdapter extends RecyclerView.Adapter<RequestsRecyclerViewAdapter.RequestViewHolder> {
     private List<Request> requests;
     private boolean canAcceptReject;
+    Context context;
 
     private final RequestService requestService = RequestService.getInstance();
 
-    public RequestsRecyclerViewAdapter(List<Request> requests, boolean canAcceptReject) {
+    public RequestsRecyclerViewAdapter(Context context, List<Request> requests, boolean canAcceptReject) {
+        this.context = context;
         this.requests = requests;
         this.canAcceptReject = canAcceptReject;
     }
@@ -38,6 +42,15 @@ public class RequestsRecyclerViewAdapter extends RecyclerView.Adapter<RequestsRe
     public void onBindViewHolder(@NonNull RequestViewHolder holder, int position) {
         Request currReq = requests.get(position);
         holder.message.setText(currReq.getRequesterName() + " is requesting to join " + currReq.getProjectName());
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                    Intent profile_transition = new Intent(context, ProfileActivity.class);
+                    profile_transition.putExtra("user_id", currReq.getRequesterId());
+                    context.startActivity(profile_transition);
+                }
+        });
 
         if (canAcceptReject) {
             holder.acceptButton.setOnClickListener(new View.OnClickListener() {

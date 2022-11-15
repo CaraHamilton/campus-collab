@@ -106,8 +106,6 @@ public class UserService {
         return task.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
     }
 
-
-
     public void signOut() {
         authService.signOut();
         currentUser = null;

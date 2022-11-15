@@ -1,157 +1,188 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".view.ProfileActivity"
-    android:background="?attr/colorPrimary">
+    android:background="?attr/colorPrimary"
+    android:fillViewport="true">
 
     <RelativeLayout
-        android:id="@+id/search_bar"
         android:layout_width="match_parent"
-        android:layout_height="55dp"
-        android:background="?attr/colorAccent"
-        tools:ignore="MissingConstraints">
+        android:layout_height="match_parent">
 
-        <ImageView
-            android:id="@+id/back_arrow"
-            app:srcCompat="@drawable/back_arrow"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="20dp"
-            android:layout_width="35dp"
-            android:layout_height="35dp" />
-
-        <SearchView
-            android:layout_width="200dp"
-            android:layout_height="30dp"
-            android:layout_centerInParent="true"
-            android:background="@drawable/rounded_corner_field"
-            android:backgroundTint="?attr/colorOnBackground"
-            android:textColor="?attr/colorOnPrimary"
-            android:iconifiedByDefault="false"
-            android:queryBackground="@null"
-            android:queryHint="Search" />
-    </RelativeLayout>
-
-
-     <RelativeLayout
-         android:id="@+id/header"
-         android:layout_width="match_parent"
-         android:layout_height="wrap_content"
-         app:layout_constraintTop_toBottomOf="@+id/search_bar">
-
-        <ImageView
-            android:id="@+id/profile_header_image"
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="90dp"
-            android:background="#999999"/>
+            android:layout_height="55dp"
+            android:background="?attr/colorAccent"
+            tools:ignore="MissingConstraints">
 
-        <ImageView
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:layout_marginTop="40dp"
-            android:layout_centerHorizontal="true"
-            android:src="@drawable/plus_sign"/>
+            <ImageView
+                android:id="@+id/back_arrow"
+                app:srcCompat="@drawable/back_arrow"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="20dp"
+                android:layout_width="35dp"
+                android:layout_height="35dp" />
 
-         <com.google.android.material.card.MaterialCardView
-             android:id="@+id/profile_picture"
-             android:layout_width="126dp"
-             android:layout_height="126dp"
-             android:layout_gravity="center_horizontal"
-             android:layout_marginTop="25dp"
-             android:layout_marginStart="20dp"
-             app:cardCornerRadius="63dp"
-             app:strokeColor="?attr/colorPrimary"
-             android:backgroundTint="#999999"
-             app:strokeWidth="5dp"
-             app:cardElevation="0dp">
-
-             <ImageView
-                 android:layout_width="20dp"
-                 android:layout_height="20dp"
-                 android:layout_gravity="center"
-                 android:src="@drawable/plus_sign"/>
-         </com.google.android.material.card.MaterialCardView>
-
-         <com.google.android.material.button.MaterialButton
-             android:layout_width="wrap_content"
-             android:layout_height="55dp"
-             android:layout_marginRight="30dp"
-             android:layout_marginTop="100dp"
-             android:backgroundTint="?attr/colorSecondary"
-             android:textColor="?attr/colorOnSecondary"
-             android:fontFamily="sans-serif-medium"
-             android:text="Message"
-             android:textAllCaps="false"
-             android:layout_alignParentEnd="true"
-             app:icon="@drawable/chat_icon"
-             app:iconTint="?attr/colorOnSecondary"
-             app:iconSize="20dp"/>
-    </RelativeLayout>
+            <SearchView
+                android:id="@+id/search_bar"
+                android:layout_width="200dp"
+                android:layout_height="30dp"
+                android:layout_centerInParent="true"
+                android:background="@drawable/rounded_corner_field"
+                android:backgroundTint="?attr/colorPrimary"
+                android:textColor="?attr/colorOnPrimary"
+                android:iconifiedByDefault="false"
+                android:queryBackground="@null"
+                android:queryHint="Search" />
+        </RelativeLayout>
 
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:gravity="center"
-        app:layout_constraintTop_toBottomOf="@+id/header">
-
-        <TextView
-            android:id="@+id/user_name"
+        <RelativeLayout
+            android:id="@+id/header"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
-            android:layout_marginTop="20dp"
-            android:fontFamily="sans-serif-medium"
-            android:text="User Name"
-            android:textColor="?attr/colorOnPrimary"
-            android:textSize="28dp" />
+            android:layout_marginTop="55dp">
 
-        <TextView
-            android:id="@+id/user_major"
+            <ImageView
+                android:id="@+id/profile_header_image"
+                android:layout_width="match_parent"
+                android:layout_height="90dp"
+                android:background="#999999"/>
+
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_marginTop="40dp"
+                android:layout_centerHorizontal="true"
+                android:src="@drawable/plus_sign"/>
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/profile_picture"
+                android:layout_width="126dp"
+                android:layout_height="126dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="25dp"
+                android:layout_marginStart="20dp"
+                app:cardCornerRadius="63dp"
+                app:strokeColor="?attr/colorPrimary"
+                android:backgroundTint="#999999"
+                app:strokeWidth="5dp"
+                app:cardElevation="0dp">
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_gravity="center"
+                    android:src="@drawable/plus_sign"/>
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/message_button"
+                 android:layout_width="wrap_content"
+                android:layout_height="55dp"
+                android:layout_marginRight="30dp"
+                android:layout_marginTop="100dp"
+                android:backgroundTint="?attr/colorSecondary"
+                android:textColor="?attr/colorOnSecondary"
+                android:fontFamily="sans-serif-medium"
+                android:text="Message"
+                android:textAllCaps="false"
+                android:layout_alignParentEnd="true"
+                app:icon="@drawable/chat_icon"
+                app:iconTint="?attr/colorOnSecondary"
+                app:iconSize="20dp"/>
+        </RelativeLayout>
+
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
-            android:fontFamily="sans-serif"
-            android:text="Major"
-            android:textColor="?attr/colorOnPrimary"
-            android:textSize="22dp" />
+            android:orientation="vertical"
+            android:gravity="center"
+            android:layout_marginTop="190dp">
 
-        <TextView
-            android:id="@+id/user_skills"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
-            android:layout_marginTop="120dp"
-            android:fontFamily="sans-serif-medium"
-            android:text="Skills"
-            android:textColor="?attr/colorOnPrimary"
-            android:textSize="22dp" />
+            <TextView
+                android:id="@+id/user_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="20dp"
+                android:fontFamily="sans-serif-medium"
+                android:text="User Name"
+                android:textColor="?attr/colorOnPrimary"
+                android:textSize="28dp" />
 
-        <TextView
-            android:id="@+id/user_projects"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
-            android:layout_marginTop="80dp"
-            android:fontFamily="sans-serif-medium"
-            android:text="Projects"
-            android:textColor="?attr/colorOnPrimary"
-            android:textSize="22dp" />
+            <TextView
+                android:id="@+id/user_major"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:fontFamily="sans-serif"
+                android:text="Major"
+                android:textColor="?attr/colorOnPrimary"
+                android:textSize="22dp" />
 
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="50dp"
-            android:layout_gravity="bottom"
-            android:layout_marginTop="110dp"
-            android:backgroundTint="?attr/colorSecondary"
-            android:textColor="?attr/colorOnSecondary"
-            android:fontFamily="sans-serif-medium"
-            android:text="Add Resume"
-            android:textAllCaps="false" />
+            <TextView
+                android:id="@+id/test_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:fontFamily="sans-serif"
+                android:text="CURRENT LOGGED IN USER"
+                android:textColor="?attr/colorOnPrimary"
+                android:textSize="22dp" />
+
+            <TextView
+                android:id="@+id/user_skills"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="150dp"
+                android:fontFamily="sans-serif-medium"
+                android:text="Skills"
+                android:textColor="?attr/colorOnPrimary"
+                android:textSize="22dp" />
+
+            <!-- <com.google.android.material.card.MaterialCardView
+                android:id="@+id/add_skills_button"
+                android:layout_width="10dp"
+                android:layout_height="10dp"
+                android:layout_gravity="center_horizontal"
+                app:cardCornerRadius="5dp"
+                app:strokeColor="?attr/colorPrimary"
+                android:backgroundTint="#999999"
+                app:cardElevation="0dp">
+
+                <ImageView
+                android:layout_width="3dp"
+                android:layout_height="3dp"
+                android:layout_gravity="center"
+                android:src="@drawable/plus_sign"/>
+            </com.google.android.material.card.MaterialCardView> -->
+
+            <TextView
+                android:id="@+id/user_projects"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="150dp"
+                android:fontFamily="sans-serif-medium"
+                android:text="Projects"
+                android:textColor="?attr/colorOnPrimary"
+                android:textSize="22dp" />
+
+            <Button
+                android:layout_width="300dp"
+                android:layout_height="50dp"
+                android:layout_marginTop="250dp"
+                android:layout_marginBottom="50dp"
+                android:backgroundTint="?attr/colorSecondary"
+                android:textColor="?attr/colorOnSecondary"
+                android:fontFamily="sans-serif-medium"
+                android:text="Add Resume"
+                android:textAllCaps="false" />
         </LinearLayout>
-
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    </RelativeLayout>
+</ScrollView>
