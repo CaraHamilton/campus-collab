@@ -17,13 +17,25 @@
         android:layout_height="75dp"
         android:background="?attr/colorAccent">
 
-        <ImageView
-            android:id="@+id/profile_picture"
-            app:srcCompat="@drawable/profile_picture"
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="40dp"
+            android:layout_height="40dp"
             android:layout_centerVertical="true"
             android:layout_marginLeft="20dp"
-            android:layout_width="35dp"
-            android:layout_height="35dp" />
+            app:cardCornerRadius="20dp"
+            android:backgroundTint="#999999"
+            app:cardElevation="0dp">
+
+            <ImageView
+                android:id="@+id/profile_picture"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:scaleType="fitXY"
+                android:adjustViewBounds="true"
+                android:layout_gravity="center"
+                android:src="@drawable/profile_picture"/>
+        </com.google.android.material.card.MaterialCardView>
+
 
         <SearchView
             android:id="@+id/search_bar"

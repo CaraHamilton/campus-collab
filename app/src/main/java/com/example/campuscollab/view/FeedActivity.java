@@ -5,6 +5,9 @@ import androidx.cardview.widget.CardView;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
@@ -17,6 +20,8 @@ import com.example.campuscollab.databinding.FeedPageBinding;
 import com.example.campuscollab.domain.User;
 import com.example.campuscollab.service.AuthService;
 import com.example.campuscollab.service.UserService;
+
+import java.util.concurrent.ExecutionException;
 
 public class FeedActivity extends AppCompatActivity {
 
@@ -62,6 +67,23 @@ public class FeedActivity extends AppCompatActivity {
 
         settingsIcon = binding.settingsIcon;
         settingsText = binding.settingsText;
+
+        try {
+            User currentUser = userService.getCurrentUser();
+            byte[] imageBytes = userService.getImageBytes(currentUser.getImagePath()).get();
+
+            //TODO fix exception when loading profile page with no picture
+
+            if (imageBytes != null)
+            {
+                Bitmap bmp = BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.length);
+                BitmapDrawable ob = new BitmapDrawable(getResources(), bmp);
+                profileIcon.setImageDrawable(ob);
+            }
+
+        } catch (ExecutionException | InterruptedException e) {
+            e.printStackTrace();
+        }
 
         if (userService.isFromSettings)
         {

@@ -49,9 +49,12 @@
                 android:id="@+id/profile_header_image"
                 android:layout_width="match_parent"
                 android:layout_height="90dp"
+                android:scaleType="fitXY"
+                android:adjustViewBounds="true"
                 android:background="#999999"/>
 
             <ImageView
+                android:id="@+id/header_plus_sign"
                 android:layout_width="20dp"
                 android:layout_height="20dp"
                 android:layout_marginTop="40dp"
@@ -72,9 +75,12 @@
                 app:cardElevation="0dp">
 
                 <ImageView
+                    android:id="@+id/profile_picture_image"
                     android:layout_width="20dp"
                     android:layout_height="20dp"
                     android:layout_gravity="center"
+                    android:scaleType="fitXY"
+                    android:adjustViewBounds="true"
                     android:src="@drawable/plus_sign"/>
             </com.google.android.material.card.MaterialCardView>
 
