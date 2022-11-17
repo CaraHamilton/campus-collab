@@ -45,6 +45,8 @@ public class FeedActivity extends AppCompatActivity {
     ImageView settingsIcon;
     TextView settingsText;
 
+    byte[] imageBytes = null;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -69,10 +71,12 @@ public class FeedActivity extends AppCompatActivity {
         settingsText = binding.settingsText;
 
         try {
-            User currentUser = userService.getCurrentUser();
-            byte[] imageBytes = userService.getImageBytes(currentUser.getImagePath()).get();
+            User currentUser = userService.getCurrentUser();;
 
-            //TODO fix exception when loading profile page with no picture
+            if (currentUser.getImagePath() != null)
+            {
+                imageBytes = userService.getImageBytes(currentUser.getImagePath()).get();
+            }
 
             if (imageBytes != null)
             {
@@ -105,6 +109,7 @@ public class FeedActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 lowerOpacity();
+                userService.isFromSettings = false;
 
                 FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
                 CreateProjectFragment createProjectFragment = new CreateProjectFragment();
@@ -125,6 +130,7 @@ public class FeedActivity extends AppCompatActivity {
         messageIcon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                userService.isFromSettings = false;
                 Toast.makeText(getApplicationContext(), "Messages", Toast.LENGTH_SHORT).show();
 
                 //TODO Include switch to message activity
@@ -135,6 +141,7 @@ public class FeedActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 changeOpacity(homeIcon, homeText);
+                userService.isFromSettings = false;
 
                 FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
                 FeedFragment feedFragment = new FeedFragment();
@@ -146,9 +153,8 @@ public class FeedActivity extends AppCompatActivity {
         projectIcon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(getApplicationContext(), "Projects", Toast.LENGTH_SHORT).show();
-
                 changeOpacity(projectIcon, projectText);
+                userService.isFromSettings = false;
 
                 FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
                 ProjectsFragment projectsFragment = new ProjectsFragment();
@@ -161,6 +167,7 @@ public class FeedActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 changeOpacity(requestIcon, requestText);
+                userService.isFromSettings = false;
 
                 FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
                 RequestsFragment requestsFragment = new RequestsFragment();
@@ -173,6 +180,7 @@ public class FeedActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 changeOpacity(settingsIcon, settingsText);
+                userService.isFromSettings = false;
 
                 FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
                 SettingsFragment settingsFragment = new SettingsFragment();
@@ -200,6 +208,15 @@ public class FeedActivity extends AppCompatActivity {
         requestText.setAlpha(.5f);
         settingsIcon.setAlpha(.5f);
         settingsText.setAlpha(.5f);
+    }
+
+    public ImageView getHomeIcon()
+    {
+        return homeIcon;
+    }
+    public TextView getHomeText()
+    {
+        return homeText;
     }
 
     @Override

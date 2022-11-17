@@ -5,6 +5,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.storage.UploadTask;
 
 public class ProjectRepository {
 
@@ -51,5 +52,4 @@ public class ProjectRepository {
     public Task<Void> deleteProject(String projectId) {
         return db.collection(PROJECT_KEY).document(projectId).delete();
     }
-
 }

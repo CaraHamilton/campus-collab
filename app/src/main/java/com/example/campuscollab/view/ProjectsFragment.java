@@ -6,6 +6,7 @@ import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -42,6 +43,9 @@ public class ProjectsFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         binding = FragmentProjectsBinding.inflate(inflater, container, false);
+        FeedActivity feedActivity = (FeedActivity) getActivity();
+        ImageView homeIcon = feedActivity.getHomeIcon();
+        TextView homeText = feedActivity.getHomeText();
 
         ownedProjects = binding.ownedProjects;
         participatingProjects = binding.participatingProjects;
@@ -57,7 +61,7 @@ public class ProjectsFragment extends Fragment {
             {
                 Toast.makeText(requireView().getContext(), "Couldn't retrieve any projects", Toast.LENGTH_SHORT).show();
             } else {
-                ownedRecycler.setAdapter(new FeedRecyclerViewAdapter(ownedProjects));
+                ownedRecycler.setAdapter(new FeedRecyclerViewAdapter(homeIcon, homeText, ownedProjects));
                 ownedRecycler.setLayoutManager(new LinearLayoutManager(ownedRecycler.getContext()));
             }
 
@@ -67,7 +71,7 @@ public class ProjectsFragment extends Fragment {
             {
                 Toast.makeText(requireView().getContext(), "Couldn't retrieve any projects", Toast.LENGTH_SHORT).show();
             } else {
-                participatingRecycler.setAdapter(new FeedRecyclerViewAdapter(participatingProjects));
+                participatingRecycler.setAdapter(new FeedRecyclerViewAdapter(homeIcon, homeText, participatingProjects));
                 participatingRecycler.setLayoutManager(new LinearLayoutManager(participatingRecycler.getContext()));
             }
 

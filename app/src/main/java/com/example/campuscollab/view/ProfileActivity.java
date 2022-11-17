@@ -8,6 +8,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,7 +35,6 @@ public class ProfileActivity extends AppCompatActivity {
     String userID;
     User user;
 
-    SearchView searchBar;
     ImageView backArrow;
     ImageView profileHeaderImage;
     ImageView headerPlusSign;
@@ -46,12 +46,14 @@ public class ProfileActivity extends AppCompatActivity {
 
     int SELECT_PROFILE_PIC = 200;
     int SELECT_HEADER_PIC = 300;
+    byte[] imageBytes = null;
+    byte[] headerBytes = null;
 
     @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        com.example.campuscollab.databinding.ActivityProfileBinding binding = ActivityProfileBinding.inflate(getLayoutInflater());
+        ActivityProfileBinding binding = ActivityProfileBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
         Bundle bundle = getIntent().getExtras();
@@ -60,7 +62,6 @@ public class ProfileActivity extends AppCompatActivity {
             userID = bundle.getString("user_id");
         }
 
-        searchBar = binding.searchBar;
         backArrow = binding.backArrow;
         profileHeaderImage = binding.profileHeaderImage;
         headerPlusSign = binding.headerPlusSign;
@@ -78,19 +79,32 @@ public class ProfileActivity extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(), "User not found", Toast.LENGTH_SHORT).show();
             } else {
                 userName.setText(user.getFirstName() + " " + user.getLastName());
-                searchBar.setQuery(user.getFirstName() + " " + user.getLastName(), false);
 
-                byte[] imageBytes = userService.getImageBytes(user.getImagePath()).get();
+                if (user.getImagePath() != null)
+                {
+                    imageBytes = userService.getImageBytes(user.getImagePath()).get();
+                }
 
-                //TODO fix exception when loading profile page with no picture
+                if (user.getHeaderPath() != null)
+                {
+                    headerBytes = userService.getImageBytes(user.getHeaderPath()).get();
+                }
 
                 if (imageBytes != null)
                 {
                     Bitmap bmp = BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.length);
                     BitmapDrawable ob = new BitmapDrawable(getResources(), bmp);
                     profilePictureImage.setImageDrawable(ob);
-                    profilePictureImage.getLayoutParams().height = 350;
-                    profilePictureImage.getLayoutParams().width = 350;
+                    profilePictureImage.getLayoutParams().height = 325;
+                    profilePictureImage.getLayoutParams().width = 325;
+                }
+
+                if (headerBytes != null)
+                {
+                    Bitmap bmp = BitmapFactory.decodeByteArray(headerBytes, 0, headerBytes.length);
+                    BitmapDrawable ob = new BitmapDrawable(getResources(), bmp);
+                    profileHeaderImage.setImageDrawable(ob);
+                    headerPlusSign.setVisibility(View.GONE);
                 }
 
                 if (!userService.getCurrentUser().getId().equals(userID)) {
@@ -175,7 +189,7 @@ public class ProfileActivity extends AppCompatActivity {
 
                     try {
                         byte[] inputData = getBytes(iStream);
-                        userService.uploadImageBytes("test", inputData);
+                        userService.uploadImageBytes(userID + "_profile", inputData, true);
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
@@ -185,9 +199,23 @@ public class ProfileActivity extends AppCompatActivity {
             {
                 Uri selectedImageUri = data.getData();
                 if (null != selectedImageUri) {
-                    headerPlusSign.setVisibility(View.INVISIBLE);
+                    headerPlusSign.setVisibility(View.GONE);
                     profileHeaderImage.setImageURI(selectedImageUri);
                     profileHeaderImage.getLayoutParams().width = ViewGroup.LayoutParams.MATCH_PARENT;
+
+                    InputStream iStream = null;
+                    try {
+                        iStream = getContentResolver().openInputStream(selectedImageUri);
+                    } catch (FileNotFoundException e) {
+                        e.printStackTrace();
+                    }
+
+                    try {
+                        byte[] inputData = getBytes(iStream);
+                        userService.uploadImageBytes(userID + "_header", inputData, false);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
                 }
             }
         }

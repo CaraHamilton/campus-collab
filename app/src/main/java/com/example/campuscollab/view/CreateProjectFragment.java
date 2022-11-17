@@ -1,5 +1,7 @@
 package com.example.campuscollab.view;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,6 +10,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -20,8 +23,13 @@ import com.example.campuscollab.databinding.FragmentCreateProjectBinding;
 import com.example.campuscollab.domain.Project;
 import com.example.campuscollab.service.ProjectService;
 import com.example.campuscollab.service.UserService;
+import com.google.android.material.card.MaterialCardView;
 import com.google.firebase.Timestamp;
 
+import java.io.ByteArrayOutputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Objects;
 
@@ -30,10 +38,14 @@ public class CreateProjectFragment extends Fragment
     private final UserService userService = UserService.getInstance();
     private final ProjectService projectService = ProjectService.getInstance();
     private FragmentCreateProjectBinding binding;
+    private ImageView projectImage;
     private EditText projectNameInput;
     private EditText projectDescriptionInput;
     private Spinner groupMemberNumber;
     private int maxGroupSize;
+
+    int SELECT_PROJECT_PIC = 200;
+    byte[] imageBytes = null;
 
     @Override
     public View onCreateView(
@@ -42,6 +54,7 @@ public class CreateProjectFragment extends Fragment
     ) {
         binding = FragmentCreateProjectBinding.inflate(Objects.requireNonNull(inflater), container, false);
         Button createProjectButton = binding.createProjectButton;
+        projectImage = binding.projectPicture;
         projectNameInput = binding.projectName;
         projectDescriptionInput = binding.projectDescription;
         groupMemberNumber = binding.groupSizeInput;
@@ -51,6 +64,13 @@ public class CreateProjectFragment extends Fragment
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
         groupMemberNumber.setAdapter(adapter);
+
+        projectImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                chooseProjectImage();
+            }
+        });
 
         createProjectButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -107,5 +127,51 @@ public class CreateProjectFragment extends Fragment
         int[] options = getResources().getIntArray(R.array.group_size_values);
         maxGroupSize = options[options.length - 1];
         groupMemberNumber.setSelection(options.length - 1);
+    }
+
+    void chooseProjectImage() {
+        Intent i = new Intent();
+        i.setType("image/*");
+        i.setAction(Intent.ACTION_GET_CONTENT);
+        startActivityForResult(Intent.createChooser(i, "Select Picture"), SELECT_PROJECT_PIC);
+    }
+
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == SELECT_PROJECT_PIC) {
+            Uri selectedImageUri = data.getData();
+            if (null != selectedImageUri) {
+                projectImage.setImageURI(selectedImageUri);
+                projectImage.getLayoutParams().height = 300;
+                projectImage.getLayoutParams().width = 300;
+
+                InputStream iStream = null;
+                try {
+                    iStream = getActivity().getContentResolver().openInputStream(selectedImageUri);
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                }
+
+                try {
+                    byte[] inputData = getBytes(iStream);
+                    //projectService.uploadImageBytes(userService.getCurrentUser().getId() + "_project", inputData, true);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
+    public byte[] getBytes(InputStream inputStream) throws IOException {
+        ByteArrayOutputStream byteBuffer = new ByteArrayOutputStream();
+        int bufferSize = 1024;
+        byte[] buffer = new byte[bufferSize];
+
+        int len = 0;
+        while ((len = inputStream.read(buffer)) != -1) {
+            byteBuffer.write(buffer, 0, len);
+        }
+        return byteBuffer.toByteArray();
     }
 }

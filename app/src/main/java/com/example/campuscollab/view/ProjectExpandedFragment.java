@@ -111,6 +111,8 @@ public class ProjectExpandedFragment extends Fragment {
 
                             requestService.createRequest(req);
 
+                            //TODO add ability to undo sending requests
+
                             Toast.makeText(view.getContext(), "Request sent", Toast.LENGTH_SHORT).show();
                         }
                     });

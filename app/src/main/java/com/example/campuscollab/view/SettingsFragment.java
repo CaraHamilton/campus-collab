@@ -52,6 +52,7 @@ public class SettingsFragment extends Fragment {
 
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        userService.isFromSettings = true;
 
         signOutButton = binding.signOutButton;
         changeThemeSwitch = binding.changeThemeSwitch;
@@ -74,13 +75,11 @@ public class SettingsFragment extends Fragment {
             public void onClick(View view) {
                 if (userService.isDarkMode)
                 {
-                    userService.isFromSettings = true;
                     userService.isDarkMode = false;
                     AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
                 }
                 else
                 {
-                    userService.isFromSettings = true;
                     userService.isDarkMode = true;
                     AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
                 }

@@ -4,6 +4,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,6 +27,7 @@ public class ParticipatingGroupMemberRecyclerViewAdapter extends RecyclerView.Ad
     private UserService userService = UserService.getInstance();
     private Context context;
     private User clickedUser;
+    private byte[] imageBytes = null;
 
     public ParticipatingGroupMemberRecyclerViewAdapter(Context context, List<String> participants) {
         this.context = context;
@@ -44,6 +48,19 @@ public class ParticipatingGroupMemberRecyclerViewAdapter extends RecyclerView.Ad
             User user = userService.getAnUser(holder.participant).get();
             clickedUser = user;
             holder.userName.setText(user.getFirstName() + " " + user.getLastName());
+
+            if (user.getImagePath() != null)
+            {
+                imageBytes = userService.getImageBytes(user.getImagePath()).get();
+            }
+
+            if (imageBytes != null)
+            {
+                Bitmap bmp = BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.length);
+                BitmapDrawable ob = new BitmapDrawable(context.getResources(), bmp);
+                holder.userImage.setImageDrawable(ob);
+            }
+
         } catch (ExecutionException e) {
             e.printStackTrace();
         } catch (InterruptedException e) {

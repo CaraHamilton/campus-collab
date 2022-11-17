@@ -24,18 +24,6 @@
                 android:layout_marginLeft="20dp"
                 android:layout_width="35dp"
                 android:layout_height="35dp" />
-
-            <SearchView
-                android:id="@+id/search_bar"
-                android:layout_width="200dp"
-                android:layout_height="30dp"
-                android:layout_centerInParent="true"
-                android:background="@drawable/rounded_corner_field"
-                android:backgroundTint="?attr/colorPrimary"
-                android:textColor="?attr/colorOnPrimary"
-                android:iconifiedByDefault="false"
-                android:queryBackground="@null"
-                android:queryHint="Search" />
         </RelativeLayout>
 
 
@@ -49,7 +37,7 @@
                 android:id="@+id/profile_header_image"
                 android:layout_width="match_parent"
                 android:layout_height="90dp"
-                android:scaleType="fitXY"
+                android:scaleType="centerCrop"
                 android:adjustViewBounds="true"
                 android:background="#999999"/>
 

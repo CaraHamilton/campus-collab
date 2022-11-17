@@ -95,6 +95,10 @@ public class Project implements Comparable<Project> {
         return projectId;
     }
 
+    public String getImageUrl() { return imageUrl; }
+
+    public void setImageUrl(String imageUrl) { this.imageUrl = imageUrl; }
+
     @Override
     public int compareTo(Project o) {
         return getCreatedDate().compareTo(o.getCreatedDate());
