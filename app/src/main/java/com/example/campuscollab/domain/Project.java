@@ -8,7 +8,7 @@ public class Project implements Comparable<Project> {
     private Timestamp createdDate;
     private String description;
     private Timestamp editedDate;
-    private String imageUrl;
+    private String imagePath;
     private String projectName;
     private Integer maxParticipants;
     private String ownerId;
@@ -16,7 +16,7 @@ public class Project implements Comparable<Project> {
     private String projectId;
     private String school;
 
-    public Project(String projectName, String ownerId, String description, List<String> participantIds, Timestamp createdDate, Timestamp editedDate, Integer maxParticipants, String imageUrl, String school) {
+    public Project(String projectName, String ownerId, String description, List<String> participantIds, Timestamp createdDate, Timestamp editedDate, Integer maxParticipants, String imagePath, String school) {
         this.projectName = projectName;
         this.ownerId = ownerId;
         this.description = description;
@@ -26,7 +26,7 @@ public class Project implements Comparable<Project> {
         this.maxParticipants = maxParticipants;
     }
 
-    public Project(String projectId, String projectName, String ownerId, String description, List<String> participantIds, Timestamp createdDate, Timestamp editedDate, Integer maxParticipants, String imageUrl, String school) {
+    public Project(String projectId, String projectName, String ownerId, String description, List<String> participantIds, Timestamp createdDate, Timestamp editedDate, Integer maxParticipants, String imagePath, String school) {
         this.projectId = projectId;
         this.projectName = projectName;
         this.ownerId = ownerId;
@@ -35,7 +35,7 @@ public class Project implements Comparable<Project> {
         this.createdDate = createdDate;
         this.editedDate = editedDate;
         this.maxParticipants = maxParticipants;
-        this.imageUrl = imageUrl;
+        this.imagePath = imagePath;
         this.school = school;
     }
 
@@ -95,9 +95,13 @@ public class Project implements Comparable<Project> {
         return projectId;
     }
 
-    public String getImageUrl() { return imageUrl; }
+    public String getImagePath() {
+        return imagePath;
+    }
 
-    public void setImageUrl(String imageUrl) { this.imageUrl = imageUrl; }
+    public void setImagePath(String imagePath) {
+        this.imagePath = imagePath;
+    }
 
     @Override
     public int compareTo(Project o) {

@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.os.AsyncTask;
 
 import com.example.campuscollab.domain.User;
+import com.example.campuscollab.repository.ImageRepository;
 import com.example.campuscollab.repository.UserRepository;
 import com.google.android.gms.tasks.Task;
 import com.google.android.gms.tasks.Tasks;
@@ -20,6 +21,7 @@ public class UserService {
 
     private static UserService instance;
     private final UserRepository userRepository;
+    private final ImageRepository imageRepository;
     private final AuthService authService;
     private User currentUser;
 
@@ -35,6 +37,7 @@ public class UserService {
 
     private UserService() {
         userRepository = new UserRepository();
+        imageRepository = new ImageRepository();
         authService = AuthService.getInstance();
     }
 
@@ -161,7 +164,7 @@ public class UserService {
             @Override
             protected byte[] doInBackground(Void... voids) {
                 try{
-                    Task<byte[]> getImageTask = userRepository.getImageBytes(imagePath);
+                    Task<byte[]> getImageTask = imageRepository.getImageBytes(imagePath);
                     byte[] imageBytes = Tasks.await(getImageTask);
 
                     return imageBytes;
@@ -179,7 +182,7 @@ public class UserService {
             @Override
             protected Void doInBackground(Void... voids) {
                 try{
-                    UploadTask getImageTask = userRepository.uploadImageBytes(imagePath, imageBytes);
+                    UploadTask getImageTask = imageRepository.uploadImageBytes(imagePath, imageBytes);
                     Tasks.await(getImageTask);
 
                     if (isProfile)

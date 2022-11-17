@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.os.AsyncTask;
 
 import com.example.campuscollab.domain.Project;
+import com.example.campuscollab.repository.ImageRepository;
 import com.example.campuscollab.repository.ProjectRepository;
 import com.google.android.gms.tasks.Task;
 import com.google.android.gms.tasks.Tasks;
@@ -21,6 +22,7 @@ public class ProjectService {
 
     private static ProjectService instance;
     private final ProjectRepository projectRepository;
+    private final ImageRepository imageRepository;
 
     public static synchronized ProjectService getInstance() {
         if(instance == null) {
@@ -31,6 +33,7 @@ public class ProjectService {
 
     private ProjectService() {
         projectRepository = new ProjectRepository();
+        imageRepository = new ImageRepository();
     }
 
     public AsyncTask<Void, Void, Project> getProject(String projectId) {
@@ -187,6 +190,44 @@ public class ProjectService {
                     Tasks.await(deleteProjectTask);
                 } catch (InterruptedException | ExecutionException e) {
                     //Do something with the error message
+                }
+                return null;
+            }
+        };
+
+        return task.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+    }
+
+    public AsyncTask<Void, Void, byte[]> getImageBytes(String imagePath) {
+        AsyncTask<Void, Void, byte[]> task = new AsyncTask<Void, Void, byte[]>() {
+            @Override
+            protected byte[] doInBackground(Void... voids) {
+                try{
+                    Task<byte[]> getImageTask = imageRepository.getImageBytes(imagePath);
+                    byte[] imageBytes = Tasks.await(getImageTask);
+
+                    return imageBytes;
+                } catch (InterruptedException | ExecutionException | NullPointerException e) {
+                    return null;
+                }
+            }
+        };
+
+        return task.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+    }
+
+    public AsyncTask<Void, Void, Void> uploadImageBytes(Project project, String imagePath, byte[] imageBytes) {
+        AsyncTask<Void, Void, Void> task = new AsyncTask<Void, Void, Void>() {
+            @Override
+            protected Void doInBackground(Void... voids) {
+                try{
+                    UploadTask getImageTask = imageRepository.uploadImageBytes(imagePath, imageBytes);
+                    Tasks.await(getImageTask);
+
+                    project.setImagePath(imagePath);
+                    updateProject(project);
+                } catch (InterruptedException | ExecutionException | NullPointerException e) {
+                    //do something with the error message
                 }
                 return null;
             }
