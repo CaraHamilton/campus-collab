@@ -11,6 +11,7 @@ public class RequestRepository {
     private final String REQUEST_KEY = "request";
     private final String PROJECT_OWNER_ID_KEY = "projectOwnerId";
     private final String REQUESTER_ID_KEY = "requesterId";
+    private final String PROJECT_ID_KEY = "projectId";
 
     public RequestRepository() {
         db = FirebaseFirestore.getInstance();
@@ -36,6 +37,10 @@ public class RequestRepository {
 
     public Task<QuerySnapshot> getRequestsByRequester(String requesterId) {
         return db.collection(REQUEST_KEY).whereEqualTo(REQUESTER_ID_KEY, requesterId).get();
+    }
+
+    public Task<QuerySnapshot> getRequestsByUserAndProject(String userId, String projectId) {
+        return db.collection(REQUEST_KEY).whereEqualTo(REQUESTER_ID_KEY, userId).whereEqualTo(PROJECT_ID_KEY, projectId).get();
     }
 
 }
