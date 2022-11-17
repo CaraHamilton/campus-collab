@@ -203,8 +203,6 @@ public class RequestService {
         return task.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
     }
 
-    //TODO add function to fetch request by project name
-
     private Request mapDocToRequest(DocumentSnapshot documentSnapshot) {
         Request request = new Request();
         request.setProjectId((String) documentSnapshot.get("projectId"));

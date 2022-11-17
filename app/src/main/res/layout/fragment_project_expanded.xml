@@ -99,7 +99,7 @@
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="25dp"
         android:layout_marginVertical="25dp"
-        android:backgroundTint="?attr/colorSecondary"
+        android:backgroundTint="?attr/colorButtonNormal"
         app:layout_constraintBottom_toBottomOf="parent"
         android:text="@string/apply_to_project"
         android:textAllCaps="false"
