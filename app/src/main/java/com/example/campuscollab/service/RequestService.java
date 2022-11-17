@@ -149,6 +149,33 @@ public class RequestService {
         return task.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
     }
 
+    public AsyncTask<Void, Void, Request> getCurrentUsersRequestForProject(String projectId) {
+        AsyncTask<Void, Void, Request> task = new AsyncTask<Void, Void, Request>() {
+            @Override
+            protected Request doInBackground(Void... voids) {
+                try{
+                    User currentUser = userService.getCurrentUser();
+
+                    Task<QuerySnapshot> getRequestTask = requestRepository.getRequestsByUserAndProject(currentUser.getId(), projectId);
+                    QuerySnapshot querySnapshot = Tasks.await(getRequestTask);
+                    List<DocumentSnapshot> documents = querySnapshot.getDocuments();
+
+                    if(documents.size() <= 0) {
+                        return null;
+                    }
+
+                    Request request = mapDocToRequest(documents.get(0));
+
+                    return request;
+                } catch (InterruptedException | ExecutionException | NullPointerException e) {
+                    return null;
+                }
+            }
+        };
+
+        return task.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+    }
+
     public AsyncTask<Void, Void, List<Request>> getReceivedRequests() {
         AsyncTask<Void, Void, List<Request>> task = new AsyncTask<Void, Void, List<Request>>() {
             @Override
