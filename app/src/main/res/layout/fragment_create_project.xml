@@ -34,7 +34,6 @@
             app:cardCornerRadius="50dp"
             app:strokeColor="?attr/colorPrimary"
             android:backgroundTint="#999999"
-            app:strokeWidth="5dp"
             app:cardElevation="0dp">
 
             <ImageView

@@ -31,6 +31,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 public class CreateProjectFragment extends Fragment
@@ -38,6 +39,7 @@ public class CreateProjectFragment extends Fragment
     private final UserService userService = UserService.getInstance();
     private final ProjectService projectService = ProjectService.getInstance();
     private FragmentCreateProjectBinding binding;
+    private MaterialCardView card;
     private ImageView projectImage;
     private EditText projectNameInput;
     private EditText projectDescriptionInput;
@@ -46,6 +48,7 @@ public class CreateProjectFragment extends Fragment
 
     int SELECT_PROJECT_PIC = 200;
     byte[] imageBytes = null;
+    Uri selectedImageUri = null;
 
     @Override
     public View onCreateView(
@@ -54,6 +57,7 @@ public class CreateProjectFragment extends Fragment
     ) {
         binding = FragmentCreateProjectBinding.inflate(Objects.requireNonNull(inflater), container, false);
         Button createProjectButton = binding.createProjectButton;
+        card = binding.projectCard;
         projectImage = binding.projectPicture;
         projectNameInput = binding.projectName;
         projectDescriptionInput = binding.projectDescription;
@@ -65,7 +69,7 @@ public class CreateProjectFragment extends Fragment
 
         groupMemberNumber.setAdapter(adapter);
 
-        projectImage.setOnClickListener(new View.OnClickListener() {
+        card.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 chooseProjectImage();
@@ -82,6 +86,12 @@ public class CreateProjectFragment extends Fragment
 
                     try {
                         projectService.createProject(newProject);
+                        List<String> participants = newProject.getParticipantIds();
+                        participants.add(userService.getCurrentUser().getId());
+                        newProject.setParticipantIds(participants);
+                        projectService.updateProject(newProject).get();
+
+                        projectService.uploadImageBytes(newProject, userService.getCurrentUser().getId() + "_project", imageBytes);
                         Toast.makeText(requireView().getContext(), "Project created!", Toast.LENGTH_SHORT).show();
                         FeedFragment feedFragment = new FeedFragment();
                         ((FragmentActivity) view.getContext())
@@ -140,7 +150,7 @@ public class CreateProjectFragment extends Fragment
         super.onActivityResult(requestCode, resultCode, data);
 
         if (requestCode == SELECT_PROJECT_PIC) {
-            Uri selectedImageUri = data.getData();
+            selectedImageUri = data.getData();
             if (null != selectedImageUri) {
                 projectImage.setImageURI(selectedImageUri);
                 projectImage.getLayoutParams().height = 300;
@@ -154,8 +164,7 @@ public class CreateProjectFragment extends Fragment
                 }
 
                 try {
-                    byte[] inputData = getBytes(iStream);
-                    //projectService.uploadImageBytes(userService.getCurrentUser().getId() + "_project", inputData, true);
+                    imageBytes = getBytes(iStream);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }

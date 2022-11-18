@@ -2,6 +2,10 @@ package com.example.campuscollab.view;
 
 import android.content.Context;
 import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
+import android.media.Image;
 import android.os.Bundle;
 
 import androidx.annotation.ColorInt;
@@ -16,6 +20,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.campuscollab.R;
@@ -46,12 +51,14 @@ public class ProjectExpandedFragment extends Fragment {
 
     private FragmentProjectExpandedBinding binding;
     private Project project;
+    private ImageView projectPicture;
     private String projectId;
     private String projectTitle;
     private String projectDescription;
     private List<String> participants;
 
     private Button applyToProjectButton;
+    byte[] imageBytes = null;
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
@@ -91,6 +98,20 @@ public class ProjectExpandedFragment extends Fragment {
             if (project == null) {
                 Toast.makeText(requireView().getContext(), "Couldn't retrieve project", Toast.LENGTH_SHORT).show();
             } else {
+                projectPicture = binding.projectPicture;
+
+                if (project.getImagePath() != null)
+                {
+                    imageBytes = projectService.getImageBytes(project.getImagePath()).get();
+                }
+
+                if (imageBytes != null)
+                {
+                    Bitmap bmp = BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.length);
+                    BitmapDrawable ob = new BitmapDrawable(getResources(), bmp);
+                    projectPicture.setImageDrawable(ob);
+                }
+
                 projectTitle = project.getProjectName();
                 projectDescription = project.getDescription();
                 participants = project.getParticipantIds();
@@ -105,7 +126,7 @@ public class ProjectExpandedFragment extends Fragment {
                     changeToUndoButton(applyToProjectButton);
                 }
 
-                if (currentUser.getId().equals(project.getOwnerId())) { //TODO also check to see if person is a member of the group
+                if (currentUser.getId().equals(project.getOwnerId()) || project.getParticipantIds().contains(currentUser.getId())) {
                     applyToProjectButton.setEnabled(false);
                     applyToProjectButton.setVisibility(View.INVISIBLE);
                 } else {

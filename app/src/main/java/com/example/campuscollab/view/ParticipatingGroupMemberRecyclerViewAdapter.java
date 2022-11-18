@@ -47,6 +47,9 @@ public class ParticipatingGroupMemberRecyclerViewAdapter extends RecyclerView.Ad
         try {
             User user = userService.getAnUser(holder.participant).get();
             clickedUser = user;
+
+            //TODO add special title for owner of project
+
             holder.userName.setText(user.getFirstName() + " " + user.getLastName());
 
             if (user.getImagePath() != null)
