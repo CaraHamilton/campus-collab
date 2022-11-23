@@ -1,5 +1,10 @@
 package com.example.campuscollab.view;
 
+import android.content.Context;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,18 +17,24 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.campuscollab.databinding.FragmentRequestItemBinding;
 import com.example.campuscollab.domain.Request;
+import com.example.campuscollab.domain.User;
 import com.example.campuscollab.service.RequestService;
+import com.example.campuscollab.service.UserService;
 
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 public class RequestsRecyclerViewAdapter extends RecyclerView.Adapter<RequestsRecyclerViewAdapter.RequestViewHolder> {
     private List<Request> requests;
+    private UserService userService = UserService.getInstance();
     private boolean canAcceptReject;
+    Context context;
+    byte[] imageBytes = null;
 
     private final RequestService requestService = RequestService.getInstance();
 
-    public RequestsRecyclerViewAdapter(List<Request> requests, boolean canAcceptReject) {
+    public RequestsRecyclerViewAdapter(Context context, List<Request> requests, boolean canAcceptReject) {
+        this.context = context;
         this.requests = requests;
         this.canAcceptReject = canAcceptReject;
     }
@@ -38,6 +49,36 @@ public class RequestsRecyclerViewAdapter extends RecyclerView.Adapter<RequestsRe
     public void onBindViewHolder(@NonNull RequestViewHolder holder, int position) {
         Request currReq = requests.get(position);
         holder.message.setText(currReq.getRequesterName() + " is requesting to join " + currReq.getProjectName());
+
+        try {
+            User user = userService.getAnUser(currReq.getRequesterId()).get();
+
+            if (user.getImagePath() != null)
+            {
+                imageBytes = userService.getImageBytes(user.getImagePath()).get();
+            }
+
+            if (imageBytes != null)
+            {
+                Bitmap bmp = BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.length);
+                BitmapDrawable ob = new BitmapDrawable(context.getResources(), bmp);
+                holder.image.setImageDrawable(ob);
+            }
+
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                    Intent profile_transition = new Intent(context, ProfileActivity.class);
+                    profile_transition.putExtra("user_id", currReq.getRequesterId());
+                    context.startActivity(profile_transition);
+                }
+        });
 
         if (canAcceptReject) {
             holder.acceptButton.setOnClickListener(new View.OnClickListener() {

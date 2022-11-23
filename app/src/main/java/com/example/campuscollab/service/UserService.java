@@ -109,8 +109,6 @@ public class UserService {
         return task.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
     }
 
-
-
     public void signOut() {
         authService.signOut();
         currentUser = null;
@@ -152,6 +150,7 @@ public class UserService {
         user.setLinkedInUrl((String) documentSnapshot.get("linkedInUrl"));
         user.setMajor((String) documentSnapshot.get("major"));
         user.setImagePath((String) documentSnapshot.get("imagePath"));
+        user.setHeaderPath((String) documentSnapshot.get("headerPath"));
         user.setSkills((List<String>) documentSnapshot.get("skills"));
         user.setResumeUrl((String) documentSnapshot.get("resumeUrl"));
         user.setCreatedDate((Timestamp) documentSnapshot.get("createdDate"));
@@ -178,7 +177,7 @@ public class UserService {
         return task.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
     }
 
-    public AsyncTask<Void, Void, Void> uploadImageBytes(String imagePath, byte[] imageBytes) {
+    public AsyncTask<Void, Void, Void> uploadImageBytes(String imagePath, byte[] imageBytes, boolean isProfile) {
         AsyncTask<Void, Void, Void> task = new AsyncTask<Void, Void, Void>() {
             @Override
             protected Void doInBackground(Void... voids) {
@@ -186,7 +185,14 @@ public class UserService {
                     UploadTask getImageTask = imageRepository.uploadImageBytes(imagePath, imageBytes);
                     Tasks.await(getImageTask);
 
-                    currentUser.setImagePath(imagePath);
+                    if (isProfile)
+                    {
+                        currentUser.setImagePath(imagePath);
+                    }
+                    else
+                    {
+                        currentUser.setHeaderPath(imagePath);
+                    }
                     updateUser(currentUser);
                 } catch (InterruptedException | ExecutionException | NullPointerException e) {
                     //do something with the error message

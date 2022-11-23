@@ -21,8 +21,12 @@ import java.util.List;
 public class FeedRecyclerViewAdapter extends RecyclerView.Adapter<FeedRecyclerViewAdapter.ViewHolder> {
 
     private final List<Project> feedProjects;
+    ImageView homeIcon;
+    TextView homeText;
 
-    public FeedRecyclerViewAdapter(List<Project> items) {
+    public FeedRecyclerViewAdapter(ImageView homeIcon, TextView homeText, List<Project> items) {
+        this.homeIcon = homeIcon;
+        this.homeText = homeText;
         feedProjects = items;
     }
 
@@ -42,6 +46,8 @@ public class FeedRecyclerViewAdapter extends RecyclerView.Adapter<FeedRecyclerVi
         holder.card.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                homeIcon.setAlpha(.5f);
+                homeText.setAlpha(.5f);
                 Bundle bundle = new Bundle();
                 bundle.putString("project_id", feedProjects.get(holder.getAbsoluteAdapterPosition()).getProjectId());
                 ProjectExpandedFragment projectExpandedFragment = new ProjectExpandedFragment();

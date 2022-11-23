@@ -3,6 +3,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.example.campuscollab">
 
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.CAMERA" />
+
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -26,6 +30,7 @@
             android:name=".view.FeedActivity"
             android:exported="false"
             android:label="@string/title_activity_main2"
+            android:windowSoftInputMode="adjustNothing"
             android:theme="@style/Theme.CampusCollab.NoActionBar">
             <meta-data
                 android:name="android.app.lib_name"

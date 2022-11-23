@@ -11,6 +11,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.campuscollab.R;
@@ -59,6 +61,9 @@ public class FeedFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_feed_list, container, false);
+        FeedActivity feedActivity = (FeedActivity) getActivity();
+        ImageView homeIcon = feedActivity.getHomeIcon();
+        TextView homeText = feedActivity.getHomeText();
 
         // Set the adapter
         if (view instanceof RecyclerView) {
@@ -80,7 +85,7 @@ public class FeedFragment extends Fragment {
                 }
                 else
                 {
-                    recyclerView.setAdapter(new FeedRecyclerViewAdapter(sortedProjects));
+                    recyclerView.setAdapter(new FeedRecyclerViewAdapter(homeIcon, homeText, sortedProjects));
                 }
             } catch(Exception e) {
                 Toast.makeText(requireView().getContext(), "Exception occurred", Toast.LENGTH_SHORT).show();

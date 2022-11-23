@@ -16,6 +16,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CompoundButton;
+import android.widget.Toast;
 
 import com.example.campuscollab.R;
 import com.example.campuscollab.databinding.FragmentSettingsBinding;
@@ -51,6 +52,7 @@ public class SettingsFragment extends Fragment {
 
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        userService.isFromSettings = true;
 
         signOutButton = binding.signOutButton;
         changeThemeSwitch = binding.changeThemeSwitch;
@@ -68,22 +70,20 @@ public class SettingsFragment extends Fragment {
             }
         });
 
-        changeThemeSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        changeThemeSwitch.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
-                if (isChecked)
+            public void onClick(View view) {
+                if (userService.isDarkMode)
                 {
-                    userService.isFromSettings = true;
-                    userService.isDarkMode = true;
-                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-
-                }
-                else
-                {
-                    userService.isFromSettings = true;
                     userService.isDarkMode = false;
                     AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
                 }
+                else
+                {
+                    userService.isDarkMode = true;
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+                }
+
             }
         });
     }
