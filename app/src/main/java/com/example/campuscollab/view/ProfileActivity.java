@@ -41,7 +41,6 @@ public class ProfileActivity extends AppCompatActivity {
     MaterialCardView userProfilePicture;
     ImageView profilePictureImage;
     TextView userName;
-    TextView testText;
     MaterialButton messageButton;
 
     int SELECT_PROFILE_PIC = 200;
@@ -68,7 +67,6 @@ public class ProfileActivity extends AppCompatActivity {
         userProfilePicture = binding.profilePicture;
         profilePictureImage = binding.profilePictureImage;
         messageButton = binding.messageButton;
-        testText = binding.testText;
 
         userName = binding.userName;
 
@@ -108,7 +106,7 @@ public class ProfileActivity extends AppCompatActivity {
                 }
 
                 if (!userService.getCurrentUser().getId().equals(userID)) {
-                    testText.setVisibility(View.GONE);
+                    //testText.setVisibility(View.GONE);
                 }
                 else
                 {

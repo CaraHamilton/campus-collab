@@ -31,7 +31,8 @@
             android:exported="false"
             android:label="@string/title_activity_main2"
             android:windowSoftInputMode="adjustNothing"
-            android:theme="@style/Theme.CampusCollab.NoActionBar">
+            android:theme="@style/Theme.CampusCollab.NoActionBar"
+            >
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />

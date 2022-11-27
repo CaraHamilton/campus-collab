@@ -82,7 +82,7 @@ public class CreateProjectFragment extends Fragment
                 if (isValidProject()) {
                     Project newProject = new Project(projectNameInput.getText().toString(), userService.getCurrentUser().getId(),
                                                      projectDescriptionInput.getText().toString(), new ArrayList<>(),
-                                                     Timestamp.now(), Timestamp.now(), maxGroupSize, null, userService.getCurrentUser().getSchool());
+                                                     Timestamp.now(), Timestamp.now(), maxGroupSize, userService.getCurrentUser().getId() + "_project", userService.getCurrentUser().getSchool());
 
                     try {
                         projectService.createProject(newProject);
@@ -91,7 +91,11 @@ public class CreateProjectFragment extends Fragment
                         newProject.setParticipantIds(participants);
                         projectService.updateProject(newProject).get();
 
-                        projectService.uploadImageBytes(newProject, userService.getCurrentUser().getId() + "_project", imageBytes);
+                        if (imageBytes != null)
+                        {
+                            projectService.uploadImageBytes(newProject, userService.getCurrentUser().getId() + "_project", imageBytes);
+                        }
+
                         Toast.makeText(requireView().getContext(), "Project created!", Toast.LENGTH_SHORT).show();
                         FeedFragment feedFragment = new FeedFragment();
                         ((FragmentActivity) view.getContext())

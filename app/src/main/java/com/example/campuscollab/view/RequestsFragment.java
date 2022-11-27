@@ -7,12 +7,14 @@ import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.ColorInt;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -49,6 +51,8 @@ public class RequestsFragment extends Fragment {
         incomingRecycler = binding.incomingrecycler;
         pendingRecycler = binding.pendingrecycler;
 
+        FeedActivity feedActivity = (FeedActivity) getActivity();
+        CardView pendingRequestIcon = feedActivity.getPendingRequestIcon();
 
         try {
             /*List<Request> incomingRequestsList = new ArrayList<>();
@@ -76,7 +80,7 @@ public class RequestsFragment extends Fragment {
             {
                 Toast.makeText(requireView().getContext(), "Couldn't retrieve any incoming requests", Toast.LENGTH_SHORT).show();
             } else {
-                incomingRecycler.setAdapter(new RequestsRecyclerViewAdapter(getContext(), incomingRequestsList, true));
+                incomingRecycler.setAdapter(new RequestsRecyclerViewAdapter(getContext(), pendingRequestIcon, incomingRequestsList, true));
                 incomingRecycler.setLayoutManager(new LinearLayoutManager(incomingRecycler.getContext()));
             }
 
@@ -85,7 +89,7 @@ public class RequestsFragment extends Fragment {
             {
                 Toast.makeText(requireView().getContext(), "Couldn't retrieve any pending requests", Toast.LENGTH_SHORT).show();
             } else {
-                pendingRecycler.setAdapter(new RequestsRecyclerViewAdapter(getContext(), pendingRequestsList, false));
+                pendingRecycler.setAdapter(new RequestsRecyclerViewAdapter(getContext(), pendingRequestIcon, pendingRequestsList, false));
                 pendingRecycler.setLayoutManager(new LinearLayoutManager(pendingRecycler.getContext()));
             }
 

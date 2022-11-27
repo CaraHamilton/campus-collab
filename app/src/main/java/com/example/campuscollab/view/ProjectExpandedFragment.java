@@ -100,10 +100,17 @@ public class ProjectExpandedFragment extends Fragment {
             } else {
                 projectPicture = binding.projectPicture;
 
-                if (project.getImagePath() != null)
+                User projectOwner = userService.getAnUser(project.getOwnerId()).get();
+
+                if (projectOwner.getImagePath() != null)
+                {
+                    imageBytes = userService.getImageBytes(projectOwner.getImagePath()).get();
+                }
+
+                /*if (project.getImagePath() != null)
                 {
                     imageBytes = projectService.getImageBytes(project.getImagePath()).get();
-                }
+                }*/
 
                 if (imageBytes != null)
                 {
@@ -172,7 +179,7 @@ public class ProjectExpandedFragment extends Fragment {
             } else {
                 recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
-            recyclerView.setAdapter(new ParticipatingGroupMemberRecyclerViewAdapter(getContext(), project.getParticipantIds()));
+            recyclerView.setAdapter(new ParticipatingGroupMemberRecyclerViewAdapter(getContext(), project.getOwnerId(), project.getParticipantIds()));
         }
         return view;
     }

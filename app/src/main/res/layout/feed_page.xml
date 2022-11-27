@@ -43,7 +43,7 @@
             android:layout_height="30dp"
             android:layout_centerInParent="true"
             android:background="@drawable/rounded_corner_field"
-            android:backgroundTint="?attr/colorPrimary"
+            android:backgroundTint="?attr/colorContainer"
             android:textColor="?attr/colorOnPrimary"
             android:iconifiedByDefault="false"
             android:queryHint="Search"
@@ -79,7 +79,7 @@
             android:layout_width="wrap_content"
             android:orientation="vertical"
             android:layout_centerVertical="true"
-            android:layout_marginLeft="35dp">
+            android:layout_marginLeft="30dp">
 
             <ImageView
                 android:id="@+id/home_icon"
@@ -104,7 +104,7 @@
             android:layout_width="wrap_content"
             android:orientation="vertical"
             android:layout_centerVertical="true"
-            android:layout_marginLeft="110dp">
+            android:layout_marginLeft="105dp">
 
             <ImageView
                 android:id="@+id/briefcase_icon"
@@ -148,7 +148,7 @@
             android:orientation="vertical"
             android:layout_centerVertical="true"
             android:layout_alignParentEnd="true"
-            android:layout_marginRight="110dp">
+            android:layout_marginRight="105dp">
 
             <ImageView
                 android:id="@+id/people_icon"
@@ -168,13 +168,24 @@
                 android:alpha=".5"/>
         </LinearLayout>
 
+        <com.google.android.material.card.MaterialCardView
+            android:visibility="invisible"
+            android:id="@+id/pending_request_icon"
+            android:layout_width="7dp"
+            android:layout_height="7dp"
+            android:layout_alignParentEnd="true"
+            android:layout_marginRight="94dp"
+            android:layout_marginTop="55dp"
+            app:cardCornerRadius="20dp"
+            android:backgroundTint="@color/reject_red" />
+
         <LinearLayout
             android:layout_height="wrap_content"
             android:layout_width="wrap_content"
             android:orientation="vertical"
             android:layout_centerVertical="true"
             android:layout_alignParentEnd="true"
-            android:layout_marginRight="35dp">
+            android:layout_marginRight="30dp">
 
             <ImageView
                 android:id="@+id/settings_icon"
