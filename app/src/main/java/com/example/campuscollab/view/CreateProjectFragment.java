@@ -33,6 +33,7 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.UUID;
 
 public class CreateProjectFragment extends Fragment
                                    implements AdapterView.OnItemSelectedListener {
@@ -93,7 +94,7 @@ public class CreateProjectFragment extends Fragment
 
                         if (imageBytes != null)
                         {
-                            projectService.uploadImageBytes(newProject, userService.getCurrentUser().getId() + "_project", imageBytes);
+                            projectService.uploadImageBytes(newProject, newProject.getProjectId() + "_project", imageBytes);
                         }
 
                         Toast.makeText(requireView().getContext(), "Project created!", Toast.LENGTH_SHORT).show();
