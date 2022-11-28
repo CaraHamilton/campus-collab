@@ -98,9 +98,8 @@ public class FeedActivity extends AppCompatActivity {
         messageIcon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(getApplicationContext(), "Messages", Toast.LENGTH_SHORT).show();
-
-                //TODO Include switch to message activity
+                Intent messageThreads = new Intent(getApplicationContext(), MessageThreadsActivity.class);
+                startActivity(messageThreads);
             }
         });
 
