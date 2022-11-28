@@ -6,7 +6,6 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.campuscollab.domain.Message;
-import com.example.campuscollab.domain.Project;
 import com.example.campuscollab.domain.User;
 import com.example.campuscollab.service.MessageService;
 
@@ -49,7 +48,7 @@ public class MessageActivity extends AppCompatActivity {
         //get information from bundle
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
-            incomingMessageUserID = extras.getString("userID");
+            incomingMessageUserID = extras.getString("sender_ID");
             //The key argument here must match that used in the other activity
         }
 
@@ -77,6 +76,7 @@ public class MessageActivity extends AppCompatActivity {
             messageText = binding.editMessage;
             String messageContent = messageText.getText().toString();
             Timestamp timestamp = new Timestamp(new Date());
+            currentUser = userService.getCurrentUser();
             Message newMessage = new Message(currentUser.getId(), incomingUser.getId(), messageContent, timestamp);
             try {
                 messageService.sendMessage(newMessage);
