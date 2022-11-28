@@ -32,6 +32,7 @@
         app:strokeWidth="2dp">
 
         <ImageView
+            android:id="@+id/project_picture"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:src="@drawable/profile_picture"
@@ -85,8 +86,8 @@
             app:layoutManager="LinearLayoutManager"
             tools:context=".view.GroupUserFragment"
             tools:listitem="@layout/fragment_participating_group_member_card" />
-
-        <Button
+            
+         <Button
             android:id="@+id/applyToProjectBtn"
             android:layout_width="match_parent"
             android:layout_height="50dp"
@@ -95,7 +96,6 @@
             android:text="@string/apply_to_project"
             android:textAllCaps="false"
             android:textColor="?attr/colorOnSecondary"/>
-
     </LinearLayout>
 
 </LinearLayout>

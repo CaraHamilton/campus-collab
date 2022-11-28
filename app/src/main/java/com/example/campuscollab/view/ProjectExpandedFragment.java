@@ -1,20 +1,29 @@
 package com.example.campuscollab.view;
 
 import android.content.Context;
+import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
+import android.media.Image;
 import android.os.Bundle;
 
+import androidx.annotation.ColorInt;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.example.campuscollab.R;
 import com.example.campuscollab.databinding.FragmentProjectExpandedBinding;
 import com.example.campuscollab.domain.Project;
 import com.example.campuscollab.domain.Request;
@@ -26,6 +35,7 @@ import com.google.firebase.Timestamp;
 
 import java.util.List;
 import java.util.UUID;
+import java.util.concurrent.ExecutionException;
 
 /**
  * A fragment representing a list of Items.
@@ -41,12 +51,14 @@ public class ProjectExpandedFragment extends Fragment {
 
     private FragmentProjectExpandedBinding binding;
     private Project project;
+    private ImageView projectPicture;
     private String projectId;
     private String projectTitle;
     private String projectDescription;
     private List<String> participants;
 
     private Button applyToProjectButton;
+    byte[] imageBytes = null;
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
@@ -86,6 +98,20 @@ public class ProjectExpandedFragment extends Fragment {
             if (project == null) {
                 Toast.makeText(requireView().getContext(), "Couldn't retrieve project", Toast.LENGTH_SHORT).show();
             } else {
+                projectPicture = binding.projectPicture;
+
+                if (project.getImagePath() != null)
+                {
+                    imageBytes = projectService.getImageBytes(project.getImagePath()).get();
+                }
+
+                if (imageBytes != null)
+                {
+                    Bitmap bmp = BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.length);
+                    BitmapDrawable ob = new BitmapDrawable(getResources(), bmp);
+                    projectPicture.setImageDrawable(ob);
+                }
+
                 projectTitle = project.getProjectName();
                 projectDescription = project.getDescription();
                 participants = project.getParticipantIds();
@@ -93,25 +119,41 @@ public class ProjectExpandedFragment extends Fragment {
                 applyToProjectButton = binding.applyToProjectBtn;
 
                 User currentUser = userService.getCurrentUser();
+                Request existingRequest = requestService.getCurrentUsersRequestForProject(projectId).get();
 
-                if (currentUser.getId().equals(project.getOwnerId())) {
+                if(existingRequest != null)
+                {
+                    changeToUndoButton(applyToProjectButton);
+                }
+
+                if (currentUser.getId().equals(project.getOwnerId()) || project.getParticipantIds().contains(currentUser.getId())) {
                     applyToProjectButton.setEnabled(false);
                     applyToProjectButton.setVisibility(View.INVISIBLE);
                 } else {
-
                     applyToProjectButton.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
-                            //TODO fill out constructor properly once we have user images and can get users by id
-                            Request req = new Request(project.getProjectId(), project.getProjectName(), project.getOwnerId(),
-                                    project.getOwnerId(), "imageurl", currentUser.getId(),
-                                    currentUser.getFirstName() + " " + currentUser.getLastName(),
-                                    currentUser.getImagePath(), UUID.randomUUID().toString(), RequestService.PENDING_KEY,
-                                    Timestamp.now());
+                            try {
+                                if(requestService.getCurrentUsersRequestForProject(projectId).get() != null) {
+                                    requestService.deleteRequest(requestService.getCurrentUsersRequestForProject(projectId).get().getId());
+                                    changeToApplyButton(applyToProjectButton);
+                                }
+                                else {
+                                    //TODO fill out constructor properly once we have user images and can get users by id
+                                    Request req = new Request(project.getProjectId(), project.getProjectName(), project.getOwnerId(),
+                                            project.getOwnerId(), "imageurl", currentUser.getId(),
+                                            currentUser.getFirstName() + " " + currentUser.getLastName(),
+                                            currentUser.getImagePath(), UUID.randomUUID().toString(), RequestService.PENDING_KEY,
+                                            Timestamp.now());
 
-                            requestService.createRequest(req);
-
-                            Toast.makeText(view.getContext(), "Request sent", Toast.LENGTH_SHORT).show();
+                                    requestService.createRequest(req);
+                                    changeToUndoButton(applyToProjectButton);
+                                }
+                            } catch (ExecutionException e) {
+                                e.printStackTrace();
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
+                            }
                         }
                     });
                 }
@@ -130,7 +172,7 @@ public class ProjectExpandedFragment extends Fragment {
             } else {
                 recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
-            recyclerView.setAdapter(new ParticipatingGroupMemberRecyclerViewAdapter(project.getParticipantIds()));
+            recyclerView.setAdapter(new ParticipatingGroupMemberRecyclerViewAdapter(getContext(), project.getParticipantIds()));
         }
         return view;
     }
@@ -141,4 +183,21 @@ public class ProjectExpandedFragment extends Fragment {
         binding.projectTitle.setText(projectTitle);
         binding.description.setText(projectDescription);
     }
+
+    private void changeToUndoButton(Button applyToProjectButton)
+    {
+        applyToProjectButton.setText("Undo Request");
+        applyToProjectButton.setBackgroundColor(getContext().getResources().getColor(R.color.reject_red));
+    }
+
+    private void changeToApplyButton(Button applyToProjectButton)
+    {
+        applyToProjectButton.setText("Request to join project");
+        TypedValue typedValue = new TypedValue();
+        Resources.Theme theme = requireContext().getTheme();
+        theme.resolveAttribute(androidx.appcompat.R.attr.colorButtonNormal, typedValue, true);
+        @ColorInt int color = typedValue.data;
+        applyToProjectButton.setBackgroundColor(color);
+    }
+
 }
