@@ -245,9 +245,9 @@ public class ProjectService {
         Timestamp createdDate = (Timestamp) documentSnapshot.get("createdDate");
         List<String> participantIds = (List<String>) documentSnapshot.get("participantIds");
         Integer maxParticipants = (Integer) documentSnapshot.get("maxParticipants");
-        String imageUrl = (String) documentSnapshot.get("imageUrl");
+        String imagePath = (String) documentSnapshot.get("imagePath");
         String school = (String) documentSnapshot.get("school");
 
-        return new Project(projectId, projectName, ownerId, description, participantIds, createdDate, editedDate, maxParticipants, imageUrl, school);
+        return new Project(projectId, projectName, ownerId, description, participantIds, createdDate, editedDate, maxParticipants, imagePath, school);
     }
 }

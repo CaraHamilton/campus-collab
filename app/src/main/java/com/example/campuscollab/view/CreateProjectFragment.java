@@ -90,11 +90,12 @@ public class CreateProjectFragment extends Fragment
                         List<String> participants = newProject.getParticipantIds();
                         participants.add(userService.getCurrentUser().getId());
                         newProject.setParticipantIds(participants);
-                        projectService.updateProject(newProject).get();
 
                         if (imageBytes != null)
                         {
                             projectService.uploadImageBytes(newProject, newProject.getProjectId() + "_project", imageBytes);
+                            newProject.setImagePath(newProject.getProjectId() + "_project");
+                            projectService.updateProject(newProject).get();
                         }
 
                         Toast.makeText(requireView().getContext(), "Project created!", Toast.LENGTH_SHORT).show();

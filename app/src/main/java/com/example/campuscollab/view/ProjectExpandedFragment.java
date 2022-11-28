@@ -102,11 +102,6 @@ public class ProjectExpandedFragment extends Fragment {
 
                 User projectOwner = userService.getAnUser(project.getOwnerId()).get();
 
-                /*if (projectOwner.getImagePath() != null)
-                {
-                    imageBytes = userService.getImageBytes(projectOwner.getImagePath()).get();
-                }*/
-
                 if (project.getImagePath() != null)
                 {
                     imageBytes = projectService.getImageBytes(project.getImagePath()).get();
@@ -128,7 +123,7 @@ public class ProjectExpandedFragment extends Fragment {
                 User currentUser = userService.getCurrentUser();
                 Request existingRequest = requestService.getCurrentUsersRequestForProject(projectId).get();
 
-                if(existingRequest != null)
+                if (existingRequest != null)
                 {
                     changeToUndoButton(applyToProjectButton);
                 }

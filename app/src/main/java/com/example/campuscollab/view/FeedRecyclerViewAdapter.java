@@ -53,6 +53,8 @@ public class FeedRecyclerViewAdapter extends RecyclerView.Adapter<FeedRecyclerVi
         holder.title.setText(feedProjects.get(position).getProjectName());
         holder.description.setText(feedProjects.get(position).getDescription());
 
+        byte[] imageBytes = null;
+
         if (feedProjects.get(position).getImagePath() != null)
         {
             try {
