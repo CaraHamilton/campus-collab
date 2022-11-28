@@ -25,4 +25,5 @@
     <string name="apply_to_project">Request to Join Project</string>
     <string name="owned_projects">My Projects</string>
     <string name="participating_projects">Joined Projects</string>
+    <string name="title_activity_messaging">Messaging</string>
 </resources>
