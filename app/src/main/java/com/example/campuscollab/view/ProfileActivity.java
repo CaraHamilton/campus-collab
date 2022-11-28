@@ -1,6 +1,8 @@
 package com.example.campuscollab.view;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
@@ -18,7 +20,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.campuscollab.databinding.ActivityProfileBinding;
+import com.example.campuscollab.domain.Project;
 import com.example.campuscollab.domain.User;
+import com.example.campuscollab.service.ProjectService;
 import com.example.campuscollab.service.UserService;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.card.MaterialCardView;
@@ -27,10 +31,12 @@ import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.List;
 
 public class ProfileActivity extends AppCompatActivity {
 
     private final UserService userService = UserService.getInstance();
+    private final ProjectService projectService = ProjectService.getInstance();
 
     String userID;
     User user;
@@ -42,6 +48,7 @@ public class ProfileActivity extends AppCompatActivity {
     ImageView profilePictureImage;
     TextView userName;
     MaterialButton messageButton;
+    private RecyclerView ownedRecycler;
 
     int SELECT_PROFILE_PIC = 200;
     int SELECT_HEADER_PIC = 300;
@@ -67,6 +74,7 @@ public class ProfileActivity extends AppCompatActivity {
         userProfilePicture = binding.profilePicture;
         profilePictureImage = binding.profilePictureImage;
         messageButton = binding.messageButton;
+        ownedRecycler = binding.ownedRecycler;
 
         userName = binding.userName;
 
@@ -105,8 +113,24 @@ public class ProfileActivity extends AppCompatActivity {
                     headerPlusSign.setVisibility(View.GONE);
                 }
 
+                try {
+                    String currentUserId = user.getId();
+                    List<Project> ownedProjects = projectService.getProjectsByOwner(currentUserId).get();
+
+                    if (ownedProjects == null)
+                    {
+                        Toast.makeText(getApplicationContext(), "Couldn't retrieve any projects", Toast.LENGTH_SHORT).show();
+                    }
+                    else {
+                        ownedRecycler.setAdapter(new FeedRecyclerViewAdapter(getApplicationContext(), null, null, ownedProjects));
+                        ownedRecycler.setLayoutManager(new LinearLayoutManager(ownedRecycler.getContext()));
+                    }
+                } catch (Exception e) {
+                    Toast.makeText(getApplicationContext(), e.getMessage() , Toast.LENGTH_SHORT).show();
+                }
+
                 if (!userService.getCurrentUser().getId().equals(userID)) {
-                    //testText.setVisibility(View.GONE);
+                    //
                 }
                 else
                 {
