@@ -100,6 +100,8 @@ public class ProjectExpandedFragment extends Fragment {
             } else {
                 projectPicture = binding.projectPicture;
 
+                User projectOwner = userService.getAnUser(project.getOwnerId()).get();
+
                 if (project.getImagePath() != null)
                 {
                     imageBytes = projectService.getImageBytes(project.getImagePath()).get();
@@ -121,7 +123,7 @@ public class ProjectExpandedFragment extends Fragment {
                 User currentUser = userService.getCurrentUser();
                 Request existingRequest = requestService.getCurrentUsersRequestForProject(projectId).get();
 
-                if(existingRequest != null)
+                if (existingRequest != null)
                 {
                     changeToUndoButton(applyToProjectButton);
                 }
@@ -172,7 +174,7 @@ public class ProjectExpandedFragment extends Fragment {
             } else {
                 recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
-            recyclerView.setAdapter(new ParticipatingGroupMemberRecyclerViewAdapter(getContext(), project.getParticipantIds()));
+            recyclerView.setAdapter(new ParticipatingGroupMemberRecyclerViewAdapter(getContext(), project.getOwnerId(), project.getParticipantIds()));
         }
         return view;
     }

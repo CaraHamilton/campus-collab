@@ -61,7 +61,7 @@ public class ProjectsFragment extends Fragment {
             {
                 Toast.makeText(requireView().getContext(), "Couldn't retrieve any projects", Toast.LENGTH_SHORT).show();
             } else {
-                ownedRecycler.setAdapter(new FeedRecyclerViewAdapter(homeIcon, homeText, ownedProjects));
+                ownedRecycler.setAdapter(new FeedRecyclerViewAdapter(getContext(), homeIcon, homeText, ownedProjects));
                 ownedRecycler.setLayoutManager(new LinearLayoutManager(ownedRecycler.getContext()));
             }
 
@@ -71,7 +71,7 @@ public class ProjectsFragment extends Fragment {
             {
                 Toast.makeText(requireView().getContext(), "Couldn't retrieve any projects", Toast.LENGTH_SHORT).show();
             } else {
-                participatingRecycler.setAdapter(new FeedRecyclerViewAdapter(homeIcon, homeText, participatingProjects));
+                participatingRecycler.setAdapter(new FeedRecyclerViewAdapter(getContext(), homeIcon, homeText, participatingProjects));
                 participatingRecycler.setLayoutManager(new LinearLayoutManager(participatingRecycler.getContext()));
             }
 

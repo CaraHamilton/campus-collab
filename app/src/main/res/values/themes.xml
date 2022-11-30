@@ -19,6 +19,7 @@
         <item name="colorControlNormal">#999999</item>
         <item name="colorAccent">#243452</item>
         <item name="colorButtonNormal">#3882aa</item>
+        <item name="colorContainer">#FFFFFF</item>
 
         <!-- Status bar color. -->
         <item name="android:statusBarColor" tools:targetApi="l">@color/black</item>

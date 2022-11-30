@@ -85,7 +85,7 @@ public class FeedFragment extends Fragment {
                 }
                 else
                 {
-                    recyclerView.setAdapter(new FeedRecyclerViewAdapter(homeIcon, homeText, sortedProjects));
+                    recyclerView.setAdapter(new FeedRecyclerViewAdapter(getContext(), homeIcon, homeText, sortedProjects));
                 }
             } catch(Exception e) {
                 Toast.makeText(requireView().getContext(), "Exception occurred", Toast.LENGTH_SHORT).show();

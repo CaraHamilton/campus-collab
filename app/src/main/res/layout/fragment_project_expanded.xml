@@ -23,11 +23,11 @@
 
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/project_image"
-        android:layout_width="70dp"
-        android:layout_height="70dp"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
         android:layout_marginTop="20dp"
         android:layout_gravity="center_horizontal"
-        app:cardCornerRadius="50dp"
+        app:cardCornerRadius="60dp"
         app:strokeColor="?attr/cardBackgroundColor"
         app:strokeWidth="2dp">
 
@@ -36,6 +36,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:src="@drawable/profile_picture"
+            android:scaleType="fitXY"
             android:background="#2A2B2E"/>
 
     </com.google.android.material.card.MaterialCardView>
@@ -74,9 +75,7 @@
             android:textSize="20dp"
             android:textStyle="bold" />
 
-        <androidx.recyclerview.widget.RecyclerView
-            xmlns:android="http://schemas.android.com/apk/res/android"
-            xmlns:app="http://schemas.android.com/apk/res-auto"
+        <androidx.recyclerview.widget.RecyclerView xmlns:app="http://schemas.android.com/apk/res-auto"
             xmlns:tools="http://schemas.android.com/tools"
             android:id="@+id/list"
             android:name="com.example.campuscollab.view.ProjectExpandedFragment"
