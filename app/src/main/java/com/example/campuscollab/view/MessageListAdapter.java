@@ -24,9 +24,13 @@ public class MessageListAdapter extends RecyclerView.Adapter {
 
 
     private List<Message> mMessageList;
+    private User currentUser;
+    private User incomingUser;
 
-    public MessageListAdapter(List<Message> messageList) {
+    public MessageListAdapter(List<Message> messageList, User currentUser, User incomingUser) {
         mMessageList = messageList;
+        this.currentUser = currentUser;
+        this.incomingUser = incomingUser;
     }
 
     @Override
@@ -60,6 +64,7 @@ public class MessageListAdapter extends RecyclerView.Adapter {
             sentMessageBinding = FragmentOutgoingMessageBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false);
             return new SentMessageHolder(sentMessageBinding.getRoot());
         } else if (viewType == VIEW_TYPE_MESSAGE_RECEIVED) {
+            receivedMessageBinding = FragmentIncomingMessageBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false);
             return new ReceivedMessageHolder(receivedMessageBinding.getRoot());
         }
 
@@ -93,8 +98,8 @@ public class MessageListAdapter extends RecyclerView.Adapter {
         void bind(Message message) {
             messageText.setText(message.getContent());
 
-            // Format the stored timestamp into a readable String using method.
-            timeText.setText(message.getSentDate().toString());
+            // Format Timestamp
+            timeText.setText(message.getSentDate().toDate().toString());
         }
     }
 
@@ -113,9 +118,9 @@ public class MessageListAdapter extends RecyclerView.Adapter {
             messageText.setText(message.getContent());
 
             // Format the stored timestamp into a readable String using method.
-            timeText.setText(message.getSentDate().toString());
+            timeText.setText(message.getSentDate().toDate().toString());
 
-            nameText.setText(message.getSender());
+            nameText.setText(incomingUser.getFirstName());
         }
     }
 }

@@ -153,7 +153,7 @@ public class ProfileActivity extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(), "Message button", Toast.LENGTH_SHORT).show();
                 //start new activity
                 Intent message_transition = new Intent(getApplicationContext(), MessageActivity.class);
-                message_transition.putExtra("sender_id", userID);
+                message_transition.putExtra("sender_ID", userID);
                 startActivity(message_transition);
             }
         });

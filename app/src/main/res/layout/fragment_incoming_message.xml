@@ -7,21 +7,6 @@
     android:layout_marginTop="16dp">
 
     <TextView
-        android:id="@+id/text_date_other"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:paddingStart="8dp"
-        android:paddingTop="4dp"
-        android:paddingEnd="8dp"
-        android:paddingBottom="4dp"
-        android:text="June 10"
-        android:textColor="?attr/hintTextColor"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
         android:id="@+id/text_user_other"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -30,7 +15,7 @@
         android:textColor="?attr/hintTextColor"
         android:textSize="16sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/text_date_other" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.cardview.widget.CardView
         android:id="@+id/card_message_other"
@@ -55,7 +40,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="8dp"
-                android:maxWidth="260dp"
+                android:maxWidth="240dp"
                 android:paddingLeft="12dp"
                 android:paddingTop="8dp"
                 android:paddingRight="12dp"
@@ -73,7 +58,7 @@
         android:layout_height="wrap_content"
         android:text="8:00"
         android:textColor="?attr/hintTextColor"
-        android:textSize="10sp"
+        android:textSize="8sp"
         app:layout_constraintBottom_toBottomOf="@+id/card_message_other"
         app:layout_constraintStart_toEndOf="@+id/card_message_other" />
 

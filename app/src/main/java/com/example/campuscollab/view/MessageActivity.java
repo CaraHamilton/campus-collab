@@ -64,7 +64,7 @@ public class MessageActivity extends AppCompatActivity {
 
             List<Message> messages = messageService.getMessagesWithUser(incomingMessageUserID).get();
             //To Do: sort messages by date
-            messageListAdapter = new MessageListAdapter(messages);
+            messageListAdapter = new MessageListAdapter(messages, currentUser, incomingUser);
 
             recyclerView.setAdapter(messageListAdapter);
         } catch (Exception e) {
@@ -76,9 +76,8 @@ public class MessageActivity extends AppCompatActivity {
             messageText = binding.editMessage;
             String messageContent = messageText.getText().toString();
             Timestamp timestamp = new Timestamp(new Date());
-            currentUser = userService.getCurrentUser();
-            Message newMessage = new Message(currentUser.getId(), incomingUser.getId(), messageContent, timestamp);
             try {
+                Message newMessage = new Message(currentUser.getId(), incomingUser.getId(), messageContent, timestamp);
                 messageService.sendMessage(newMessage);
             } catch (Exception e) {
                 System.out.println("Error sending message");
@@ -88,7 +87,7 @@ public class MessageActivity extends AppCompatActivity {
             //refresh the recycler view
             try {
                 List<Message> messages = messageService.getMessagesWithUser(incomingMessageUserID).get();
-                messageListAdapter = new MessageListAdapter(messages);
+                messageListAdapter = new MessageListAdapter(messages, currentUser, incomingUser);
                 recyclerView.setAdapter(messageListAdapter);
             } catch (Exception e) {
                 System.out.println("Error getting messages");
