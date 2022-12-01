@@ -22,8 +22,17 @@ public class MessageRepository {
         return db.collection(MESSAGE_KEY).document(id).set(message);
     }
 
-    public Task<QuerySnapshot> getMessages(String senderId, String receiverId) {
+    public Task<QuerySnapshot> getMessagesWithUser(String senderId, String receiverId) {
         return db.collection(MESSAGE_KEY).whereEqualTo(SENDER_KEY, senderId).whereEqualTo(RECEIVER_KEY, receiverId).get();
+    }
+
+
+    public Task<QuerySnapshot> getAllReceivedMessages(String receiverId) {
+        return db.collection(MESSAGE_KEY).whereEqualTo(RECEIVER_KEY, receiverId).get();
+    }
+
+    public Task<QuerySnapshot> getAllSentMessages(String senderId) {
+        return db.collection(MESSAGE_KEY).whereEqualTo(SENDER_KEY, senderId).get();
     }
 
 }
