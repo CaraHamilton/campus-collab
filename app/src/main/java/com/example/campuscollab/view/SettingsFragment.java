@@ -20,9 +20,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -32,6 +34,8 @@ import com.example.campuscollab.domain.User;
 import com.example.campuscollab.service.AuthService;
 import com.example.campuscollab.service.UserService;
 
+import java.util.ArrayList;
+
 public class SettingsFragment extends Fragment {
 
     private FragmentSettingsBinding binding;
@@ -40,11 +44,8 @@ public class SettingsFragment extends Fragment {
     private final UserService userService = UserService.getInstance();
 
     Button signOutButton;
+    Spinner settingSpinner;
     SwitchCompat changeThemeSwitch;
-
-    EditText firstNameTextField;
-    EditText lastNameTextField;
-    Button saveButton;
 
     public SettingsFragment() {
         // Required empty public constructor
@@ -69,19 +70,18 @@ public class SettingsFragment extends Fragment {
         userService.isFromSettings = true;
 
         signOutButton = binding.signOutButton;
+        settingSpinner = binding.optionSpinner;
         changeThemeSwitch = binding.changeThemeSwitch;
-
-        firstNameTextField = binding.firstNameTextField;
-        lastNameTextField = binding.lastNameTextField;
-        saveButton = binding.saveButton;
-
-        saveButton.setEnabled(false);
-        saveButton.setBackgroundColor(getContext().getResources().getColor(R.color.input_gray));
 
         changeThemeSwitch.setChecked(userService.isDarkMode);
 
-        firstNameTextField.addTextChangedListener(textWatcher);
-        lastNameTextField.addTextChangedListener(textWatcher);
+        ArrayList<String> arrayList = new ArrayList<>();
+        arrayList.add("Most Recent");
+        arrayList.add("Most Popular");
+
+        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item, arrayList);
+        arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        settingSpinner.setAdapter(arrayAdapter);
 
         changeThemeSwitch.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -100,30 +100,6 @@ public class SettingsFragment extends Fragment {
             }
         });
 
-        saveButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                User currentUser = userService.getCurrentUser();
-
-                String firstNameInput = firstNameTextField.getText().toString().trim();
-                String lastNameInput = lastNameTextField.getText().toString().trim();
-
-                if (!firstNameInput.isEmpty())
-                {
-                    currentUser.setFirstName(firstNameInput);
-                }
-
-                if (!lastNameInput.isEmpty())
-                {
-                    currentUser.setLastName(lastNameInput);
-                }
-
-                userService.updateUser(currentUser);
-                Toast.makeText(requireView().getContext(), "Name changed", Toast.LENGTH_SHORT).show();
-            }
-        });
-
         signOutButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -135,39 +111,4 @@ public class SettingsFragment extends Fragment {
             }
         });
     }
-
-    private TextWatcher textWatcher = new TextWatcher() {
-        @Override
-        public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-        }
-
-        @Override
-        public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-            String firstNameInput = firstNameTextField.getText().toString().trim();
-            String lastNameInput = lastNameTextField.getText().toString().trim();
-
-            if (!firstNameInput.isEmpty() || !lastNameInput.isEmpty())
-            {
-                saveButton.setEnabled(true);
-
-                TypedValue typedValue = new TypedValue();
-                Resources.Theme theme = requireContext().getTheme();
-                theme.resolveAttribute(androidx.appcompat.R.attr.colorAccent, typedValue, true);
-                @ColorInt int color = typedValue.data;
-
-                saveButton.setBackgroundColor(color);
-            }
-            else
-            {
-                saveButton.setEnabled(false);
-                saveButton.setBackgroundColor(getContext().getResources().getColor(R.color.input_gray));
-            }
-        }
-
-        @Override
-        public void afterTextChanged(Editable editable) {
-
-        }
-    };
 }

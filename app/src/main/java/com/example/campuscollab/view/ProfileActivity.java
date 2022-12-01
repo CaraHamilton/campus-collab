@@ -1,24 +1,32 @@
 package com.example.campuscollab.view;
 
+import androidx.annotation.ColorInt;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.util.TypedValue;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.campuscollab.R;
 import com.example.campuscollab.databinding.ActivityProfileBinding;
 import com.example.campuscollab.domain.Project;
 import com.example.campuscollab.domain.User;
@@ -43,11 +51,15 @@ public class ProfileActivity extends AppCompatActivity {
 
     ImageView backArrow;
     ImageView profileHeaderImage;
-    ImageView headerPlusSign;
+    MaterialCardView changeHeaderPicCard;
     MaterialCardView userProfilePicture;
+    MaterialCardView changePicCard;
     ImageView profilePictureImage;
     TextView userName;
     MaterialButton messageButton;
+    Button saveButton;
+    EditText userMajor;
+    EditText userBio;
     private RecyclerView ownedRecycler;
 
     int SELECT_PROFILE_PIC = 200;
@@ -70,13 +82,23 @@ public class ProfileActivity extends AppCompatActivity {
 
         backArrow = binding.backArrow;
         profileHeaderImage = binding.profileHeaderImage;
-        headerPlusSign = binding.headerPlusSign;
         userProfilePicture = binding.profilePicture;
         profilePictureImage = binding.profilePictureImage;
+        changeHeaderPicCard = binding.changeHeaderPicCard;
+        changePicCard = binding.changeProfilePicCard;
         messageButton = binding.messageButton;
         ownedRecycler = binding.ownedRecycler;
+        saveButton = binding.saveButton;
+        userMajor = binding.userMajor;
+        userBio = binding.bio;
 
         userName = binding.userName;
+
+        saveButton.setEnabled(false);
+        saveButton.setVisibility(View.INVISIBLE);
+
+        userMajor.addTextChangedListener(textWatcher);
+        userBio.addTextChangedListener(textWatcher);
 
         try {
             user = userService.getAnUser(userID).get();
@@ -85,6 +107,17 @@ public class ProfileActivity extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(), "User not found", Toast.LENGTH_SHORT).show();
             } else {
                 userName.setText(user.getFirstName() + " " + user.getLastName());
+                userMajor.setText("Major");
+
+                if (userMajor != null)
+                {
+                    userMajor.setText(user.getMajor());
+                }
+
+                if (userBio != null)
+                {
+                    userBio.setText(user.getDescription());
+                }
 
                 if (user.getImagePath() != null)
                 {
@@ -98,6 +131,7 @@ public class ProfileActivity extends AppCompatActivity {
 
                 if (imageBytes != null)
                 {
+                    profilePictureImage.setVisibility(View.VISIBLE);
                     Bitmap bmp = BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.length);
                     BitmapDrawable ob = new BitmapDrawable(getResources(), bmp);
                     profilePictureImage.setImageDrawable(ob);
@@ -110,7 +144,6 @@ public class ProfileActivity extends AppCompatActivity {
                     Bitmap bmp = BitmapFactory.decodeByteArray(headerBytes, 0, headerBytes.length);
                     BitmapDrawable ob = new BitmapDrawable(getResources(), bmp);
                     profileHeaderImage.setImageDrawable(ob);
-                    headerPlusSign.setVisibility(View.GONE);
                 }
 
                 try {
@@ -130,7 +163,13 @@ public class ProfileActivity extends AppCompatActivity {
                 }
 
                 if (!userService.getCurrentUser().getId().equals(userID)) {
-                    //
+                    changePicCard.setVisibility(View.GONE);
+                    changeHeaderPicCard.setVisibility(View.GONE);
+                    userMajor.setBackground(null);
+                    userMajor.setFocusable(false);
+                    userBio.setBackground(null);
+                    userBio.setFocusable(false);
+                    saveButton.setVisibility(View.GONE);
                 }
                 else
                 {
@@ -149,7 +188,7 @@ public class ProfileActivity extends AppCompatActivity {
             }
         });
 
-        profileHeaderImage.setOnClickListener(new View.OnClickListener() {
+        changeHeaderPicCard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (userID.equals(userService.getCurrentUser().getId()))
@@ -159,7 +198,7 @@ public class ProfileActivity extends AppCompatActivity {
             }
         });
 
-        userProfilePicture.setOnClickListener(new View.OnClickListener() {
+        changePicCard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (userID.equals(userService.getCurrentUser().getId()))
@@ -177,6 +216,30 @@ public class ProfileActivity extends AppCompatActivity {
                 Intent message_transition = new Intent(getApplicationContext(), MessageActivity.class);
                 message_transition.putExtra("sender_ID", userID);
                 startActivity(message_transition);
+            }
+        });
+
+        saveButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                User currentUser = userService.getCurrentUser();
+
+                String major = userMajor.getText().toString().trim();
+                String bio = userBio.getText().toString().trim();
+
+                if (!major.isEmpty())
+                {
+                    currentUser.setMajor(major);
+                }
+
+                if (!bio.isEmpty())
+                {
+                    currentUser.setDescription(bio);
+                }
+
+                userService.updateUser(currentUser);
+                Toast.makeText(getApplicationContext(), "Information Updated", Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -225,7 +288,6 @@ public class ProfileActivity extends AppCompatActivity {
             {
                 Uri selectedImageUri = data.getData();
                 if (null != selectedImageUri) {
-                    headerPlusSign.setVisibility(View.GONE);
                     profileHeaderImage.setImageURI(selectedImageUri);
                     profileHeaderImage.getLayoutParams().width = ViewGroup.LayoutParams.MATCH_PARENT;
 
@@ -258,4 +320,40 @@ public class ProfileActivity extends AppCompatActivity {
         }
         return byteBuffer.toByteArray();
     }
+
+    private TextWatcher textWatcher = new TextWatcher() {
+        @Override
+        public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+        }
+
+        @Override
+        public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+            String major = userMajor.getText().toString().trim();
+            String bio = userBio.getText().toString().trim();
+
+            saveButton.setEnabled(true);
+            saveButton.setVisibility(View.VISIBLE);
+
+            if (!major.isEmpty() || !bio.isEmpty())
+            {
+                TypedValue typedValue = new TypedValue();
+                Resources.Theme theme = getApplicationContext().getTheme();
+                theme.resolveAttribute(androidx.appcompat.R.attr.colorAccent, typedValue, true);
+                @ColorInt int color = typedValue.data;
+
+                saveButton.setBackgroundColor(color);
+            }
+            else
+            {
+                saveButton.setEnabled(false);
+                saveButton.setVisibility(View.GONE);
+            }
+        }
+
+        @Override
+        public void afterTextChanged(Editable editable) {
+
+        }
+    };
 }

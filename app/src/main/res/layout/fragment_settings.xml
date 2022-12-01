@@ -46,7 +46,6 @@
                 android:orientation="horizontal">
 
                 <androidx.appcompat.widget.SwitchCompat
-                    android:id="@+id/change_theme_switch"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal" />
@@ -55,42 +54,61 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:layout_marginTop="20dp">
+            android:layout_height="50dp">
 
-            <EditText
-                android:id="@+id/first_name_text_field"
-                android:layout_width="match_parent"
+            <TextView
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:hint="Change First Name"
+                android:layout_centerVertical="true"
+                android:text="Hide My Projects"
                 android:textColor="?attr/colorOnPrimary"
-                android:textSize="15sp"/>
+                android:textSize="15sp" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:orientation="horizontal">
+
+                <androidx.appcompat.widget.SwitchCompat
+                    android:id="@+id/change_theme_switch"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal" />
+            </LinearLayout>
         </RelativeLayout>
+
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="60dp">
+            android:layout_height="50dp">
 
-            <EditText
-                android:id="@+id/last_name_text_field"
-                android:layout_width="match_parent"
+            <TextView
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:hint="Change Last Name"
+                android:layout_centerVertical="true"
+                android:text="Sort Projects by:"
                 android:textColor="?attr/colorOnPrimary"
-                android:textSize="15sp"/>
-        </RelativeLayout>
+                android:textSize="15sp" />
 
-        <Button
-            android:id="@+id/save_button"
-            android:layout_width="100dp"
-            android:layout_height="match_parent"
-            android:layout_gravity="center"
-            android:text="Save"
-            android:backgroundTint="?attr/colorAccent"
-            android:textColor="?attr/colorOnSecondary" />
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:orientation="horizontal">
+
+                <Spinner
+                    android:id="@+id/option_spinner"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal" />
+            </LinearLayout>
+        </RelativeLayout>
     </LinearLayout>
+
+
 
     <Button
         android:id="@+id/sign_out_button"
