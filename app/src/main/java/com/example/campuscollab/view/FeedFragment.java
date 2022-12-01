@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -31,6 +32,7 @@ public class FeedFragment extends Fragment {
     private ProjectService projectService = ProjectService.getInstance();
     private UserService userService = UserService.getInstance();
     private String school;
+    private String searchText;
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
@@ -64,6 +66,7 @@ public class FeedFragment extends Fragment {
         FeedActivity feedActivity = (FeedActivity) getActivity();
         ImageView homeIcon = feedActivity.getHomeIcon();
         TextView homeText = feedActivity.getHomeText();
+        searchText = feedActivity.getSearchText().toLowerCase();
 
         // Set the adapter
         if (view instanceof RecyclerView) {
@@ -95,9 +98,24 @@ public class FeedFragment extends Fragment {
     }
 
     public List<Project> sortProjects(List<Project> projects) {
-        List<Project> sortedProjects = new ArrayList<>(projects);
-        Collections.sort(sortedProjects, Collections.reverseOrder());
+        List<Project> sortedProjects = new ArrayList<>();
 
+        if (searchText == null)
+        {
+            sortedProjects = new ArrayList<>(projects);
+        }
+        else
+        {
+            for (Project project : projects)
+            {
+                if (project.getProjectName().toLowerCase().contains(searchText))
+                {
+                    sortedProjects.add(project);
+                }
+            }
+        }
+
+        Collections.sort(sortedProjects, Collections.reverseOrder());
         return sortedProjects;
     }
 }
