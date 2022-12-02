@@ -134,7 +134,7 @@ public class MessageService {
                     ListIterator<Message> iter = messages.listIterator();
                     while(iter.hasNext()) {
                         Message message = iter.next();
-                        if(message.getSender() != currentUser.getId()){
+                        if(!message.getSender().equals(currentUser.getId())){
                             if(sentOrReceivedUsers.contains(message.getSender())){
                                 iter.remove();
                             } else {
