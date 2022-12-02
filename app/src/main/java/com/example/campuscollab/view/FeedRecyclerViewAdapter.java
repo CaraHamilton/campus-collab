@@ -5,6 +5,10 @@ import androidx.cardview.widget.CardView;
 import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,16 +19,22 @@ import android.widget.TextView;
 import com.example.campuscollab.R;
 import com.example.campuscollab.domain.Project;
 import com.example.campuscollab.databinding.FragmentFeedBinding;
+import com.example.campuscollab.service.ProjectService;
 
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 public class FeedRecyclerViewAdapter extends RecyclerView.Adapter<FeedRecyclerViewAdapter.ViewHolder> {
 
     private final List<Project> feedProjects;
+    private final ProjectService projectService = ProjectService.getInstance();
+    private Context context;
+    byte[] imageBytes = null;
     ImageView homeIcon;
     TextView homeText;
 
-    public FeedRecyclerViewAdapter(ImageView homeIcon, TextView homeText, List<Project> items) {
+    public FeedRecyclerViewAdapter(Context context, ImageView homeIcon, TextView homeText, List<Project> items) {
+        this.context = context;
         this.homeIcon = homeIcon;
         this.homeText = homeText;
         feedProjects = items;
@@ -42,7 +52,27 @@ public class FeedRecyclerViewAdapter extends RecyclerView.Adapter<FeedRecyclerVi
     public void onBindViewHolder(final ViewHolder holder, int position) {
         holder.title.setText(feedProjects.get(position).getProjectName());
         holder.description.setText(feedProjects.get(position).getDescription());
-//        holder.image.setImageDrawable( get user image based on project owner );
+
+        byte[] imageBytes = null;
+
+        if (feedProjects.get(position).getImagePath() != null)
+        {
+            try {
+                imageBytes = projectService.getImageBytes(feedProjects.get(position).getImagePath()).get();
+            } catch (ExecutionException e) {
+                e.printStackTrace();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+
+        if (imageBytes != null)
+        {
+            Bitmap bmp = BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.length);
+            BitmapDrawable ob = new BitmapDrawable(context.getResources(), bmp);
+            holder.image.setImageDrawable(ob);
+        }
+
         holder.card.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

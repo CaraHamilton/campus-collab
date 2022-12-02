@@ -36,6 +36,7 @@
                     android:layout_height="match_parent"
                     android:layout_centerVertical="true"
                     android:src="@drawable/profile_picture"
+                    android:scaleType="fitXY"
                     android:background="#2A2B2E"/>
 
             </com.google.android.material.card.MaterialCardView>

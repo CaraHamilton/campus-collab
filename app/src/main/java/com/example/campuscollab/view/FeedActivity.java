@@ -17,15 +17,19 @@ import android.widget.Toast;
 
 import com.example.campuscollab.R;
 import com.example.campuscollab.databinding.FeedPageBinding;
+import com.example.campuscollab.domain.Request;
 import com.example.campuscollab.domain.User;
 import com.example.campuscollab.service.AuthService;
+import com.example.campuscollab.service.RequestService;
 import com.example.campuscollab.service.UserService;
 
+import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 public class FeedActivity extends AppCompatActivity {
 
     private final UserService userService = UserService.getInstance();
+    private final RequestService requestService = RequestService.getInstance();
 
     SearchView searchBar;
 
@@ -41,6 +45,7 @@ public class FeedActivity extends AppCompatActivity {
 
     ImageView requestIcon;
     TextView requestText;
+    CardView pendingRequestIcon;
 
     ImageView settingsIcon;
     TextView settingsText;
@@ -66,12 +71,19 @@ public class FeedActivity extends AppCompatActivity {
 
         requestIcon = binding.peopleIcon;
         requestText = binding.requestText;
+        pendingRequestIcon = binding.pendingRequestIcon;
 
         settingsIcon = binding.settingsIcon;
         settingsText = binding.settingsText;
 
         try {
-            User currentUser = userService.getCurrentUser();;
+            User currentUser = userService.getCurrentUser();
+            List<Request> incomingRequestsList = requestService.getSentRequests().get();
+
+            if (incomingRequestsList.size() != 0)
+            {
+                pendingRequestIcon.setVisibility(View.VISIBLE);
+            }
 
             if (currentUser.getImagePath() != null)
             {
@@ -217,6 +229,7 @@ public class FeedActivity extends AppCompatActivity {
     {
         return homeText;
     }
+    public CardView getPendingRequestIcon() { return pendingRequestIcon; }
 
     @Override
     public void onBackPressed() {

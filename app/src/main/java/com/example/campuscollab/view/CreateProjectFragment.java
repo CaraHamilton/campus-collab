@@ -33,6 +33,7 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.UUID;
 
 public class CreateProjectFragment extends Fragment
                                    implements AdapterView.OnItemSelectedListener {
@@ -82,16 +83,21 @@ public class CreateProjectFragment extends Fragment
                 if (isValidProject()) {
                     Project newProject = new Project(projectNameInput.getText().toString(), userService.getCurrentUser().getId(),
                                                      projectDescriptionInput.getText().toString(), new ArrayList<>(),
-                                                     Timestamp.now(), Timestamp.now(), maxGroupSize, null, userService.getCurrentUser().getSchool());
+                                                     Timestamp.now(), Timestamp.now(), maxGroupSize, userService.getCurrentUser().getId() + "_project", userService.getCurrentUser().getSchool());
 
                     try {
                         projectService.createProject(newProject);
                         List<String> participants = newProject.getParticipantIds();
                         participants.add(userService.getCurrentUser().getId());
                         newProject.setParticipantIds(participants);
-                        projectService.updateProject(newProject).get();
 
-                        projectService.uploadImageBytes(newProject, userService.getCurrentUser().getId() + "_project", imageBytes);
+                        if (imageBytes != null)
+                        {
+                            projectService.uploadImageBytes(newProject, newProject.getProjectId() + "_project", imageBytes);
+                            newProject.setImagePath(newProject.getProjectId() + "_project");
+                            projectService.updateProject(newProject).get();
+                        }
+
                         Toast.makeText(requireView().getContext(), "Project created!", Toast.LENGTH_SHORT).show();
                         FeedFragment feedFragment = new FeedFragment();
                         ((FragmentActivity) view.getContext())

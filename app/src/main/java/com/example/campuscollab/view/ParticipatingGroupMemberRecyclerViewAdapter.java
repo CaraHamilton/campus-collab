@@ -27,10 +27,12 @@ public class ParticipatingGroupMemberRecyclerViewAdapter extends RecyclerView.Ad
     private UserService userService = UserService.getInstance();
     private Context context;
     private User clickedUser;
+    private String ownerID;
     private byte[] imageBytes = null;
 
-    public ParticipatingGroupMemberRecyclerViewAdapter(Context context, List<String> participants) {
+    public ParticipatingGroupMemberRecyclerViewAdapter(Context context, String ownerId, List<String> participants) {
         this.context = context;
+        this.ownerID = ownerId;
         this.participants = participants;
     }
 
@@ -48,9 +50,14 @@ public class ParticipatingGroupMemberRecyclerViewAdapter extends RecyclerView.Ad
             User user = userService.getAnUser(holder.participant).get();
             clickedUser = user;
 
-            //TODO add special title for owner of project
-
-            holder.userName.setText(user.getFirstName() + " " + user.getLastName());
+            if(user.getId().equals(ownerID))
+            {
+                holder.userName.setText(user.getFirstName() + " " + user.getLastName() + " (Owner)");
+            }
+            else
+            {
+                holder.userName.setText(user.getFirstName() + " " + user.getLastName());
+            }
 
             if (user.getImagePath() != null)
             {
