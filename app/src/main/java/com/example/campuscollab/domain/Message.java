@@ -5,23 +5,29 @@ import com.google.firebase.Timestamp;
 public class Message {
 
     private String sender;
+    private String senderName;
     private String receiver;
+    private String receiverName;
     private String content;
     private Timestamp sentDate;
     private String id;
 
     public Message() {}
 
-    public Message(String sender, String receiver, String content, Timestamp sentDate) {
+    public Message(String sender, String senderName, String receiver, String receiverName, String content, Timestamp sentDate) {
         this.sender = sender;
+        this.senderName = senderName;
         this.receiver = receiver;
+        this.receiverName = receiverName;
         this.content = content;
         this.sentDate = sentDate;
     }
 
-    public Message(String sender, String receiver, String content, Timestamp sentDate, String id) {
+    public Message(String sender, String senderName, String receiver, String receiverName, String content, Timestamp sentDate, String id) {
         this.sender = sender;
+        this.senderName = senderName;
         this.receiver = receiver;
+        this.receiverName = receiverName;
         this.content = content;
         this.sentDate = sentDate;
         this.id = id;
@@ -35,12 +41,28 @@ public class Message {
         this.sender = sender;
     }
 
+    public String getSenderName() {
+        return senderName;
+    }
+
+    public void setSenderName(String senderName) {
+        this.senderName = senderName;
+    }
+
     public String getReceiver() {
         return receiver;
     }
 
     public void setReceiver(String receiver) {
         this.receiver = receiver;
+    }
+
+    public String getReceiverName() {
+        return receiverName;
+    }
+
+    public void setReceiverName(String receiverName) {
+        this.receiverName = receiverName;
     }
 
     public String getContent() {

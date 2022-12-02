@@ -77,7 +77,7 @@ public class MessageActivity extends AppCompatActivity {
             String messageContent = messageText.getText().toString();
             Timestamp timestamp = new Timestamp(new Date());
             try {
-                Message newMessage = new Message(currentUser.getId(), incomingUser.getId(), messageContent, timestamp);
+                Message newMessage = new Message(currentUser.getId(), currentUser.getFirstName() + " " + currentUser.getLastName(), incomingUser.getId(), incomingUser.getFirstName() + " " + incomingUser.getLastName(), messageContent, timestamp);
                 messageService.sendMessage(newMessage);
             } catch (Exception e) {
                 System.out.println("Error sending message");
