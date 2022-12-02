@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.campuscollab.databinding.MessageThreadItemBinding;
 import com.example.campuscollab.domain.Message;
+import com.example.campuscollab.service.UserService;
 
 import java.util.List;
 
@@ -35,16 +36,23 @@ public class ThreadsAdapter extends RecyclerView.Adapter<ThreadsAdapter.ThreadVi
     @Override
     public void onBindViewHolder(@NonNull ThreadsAdapter.ThreadViewHolder holder, int position) {
         Message currThread = threads.get(position);
-        holder.name.setText(currThread.getSender());
+        String other_user_id;
+        if (currThread.getSender().equals(UserService.getInstance().getCurrentUser().getId())) {
+            holder.name.setText(currThread.getReceiverName());
+            other_user_id = currThread.getReceiver();
+        } else {
+            holder.name.setText(currThread.getSenderName());
+            other_user_id = currThread.getSender();
+        }
         holder.latestMessage.setText(currThread.getContent());
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 //TODO:: call new activity of that specific thread
-                Intent conversation = new Intent(view.getContext(), FeedActivity.class);
+                Intent conversation = new Intent(view.getContext(), MessageActivity.class);
+                conversation.putExtra("sender_ID", other_user_id);
                 Bundle bundle = new Bundle();
-                bundle.putString("sender_id", currThread.getSender());
                 startActivity(view.getContext(), conversation, bundle);
             }
         });
