@@ -33,6 +33,26 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="55dp">
 
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/change_header_pic_card"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginStart="350dp"
+                app:cardCornerRadius="15dp"
+                app:strokeColor="?attr/colorPrimary"
+                android:backgroundTint="?attr/colorSecondary"
+                app:strokeWidth="2dp"
+                android:translationZ="1dp">
+
+                <ImageView
+                    android:layout_width="15dp"
+                    android:layout_height="15dp"
+                    android:layout_gravity="center"
+                    android:adjustViewBounds="true"
+                    android:src="@drawable/plus_sign"/>
+            </com.google.android.material.card.MaterialCardView>
+
             <ImageView
                 android:id="@+id/profile_header_image"
                 android:layout_width="match_parent"
@@ -40,14 +60,6 @@
                 android:scaleType="centerCrop"
                 android:adjustViewBounds="true"
                 android:background="#999999"/>
-
-            <ImageView
-                android:id="@+id/header_plus_sign"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:layout_marginTop="40dp"
-                android:layout_centerHorizontal="true"
-                android:src="@drawable/plus_sign"/>
 
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/profile_picture"
@@ -64,10 +76,32 @@
 
                 <ImageView
                     android:id="@+id/profile_picture_image"
+                    android:visibility="invisible"
                     android:layout_width="20dp"
                     android:layout_height="20dp"
                     android:layout_gravity="center"
                     android:scaleType="fitXY"
+                    android:adjustViewBounds="true"
+                    android:src="@drawable/plus_sign"/>
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/change_profile_pic_card"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="110dp"
+                android:layout_marginStart="110dp"
+                app:cardCornerRadius="17.5dp"
+                app:strokeColor="?attr/colorPrimary"
+                android:backgroundTint="?attr/colorSecondary"
+                app:strokeWidth="2dp"
+                app:cardElevation="0dp">
+
+                <ImageView
+                    android:layout_width="15dp"
+                    android:layout_height="15dp"
+                    android:layout_gravity="center"
                     android:adjustViewBounds="true"
                     android:src="@drawable/plus_sign"/>
             </com.google.android.material.card.MaterialCardView>
@@ -108,38 +142,55 @@
                 android:textColor="?attr/colorOnPrimary"
                 android:textSize="28dp" />
 
-            <TextView
+            <EditText
                 android:id="@+id/user_major"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
+                android:layout_gravity="left"
+                android:layout_marginLeft="30dp"
                 android:fontFamily="sans-serif"
                 android:text="Major"
                 android:textColor="?attr/colorOnPrimary"
-                android:textSize="22dp" />
-            <!-- <com.google.android.material.card.MaterialCardView
-                android:id="@+id/add_skills_button"
-                android:layout_width="10dp"
-                android:layout_height="10dp"
-                android:layout_gravity="center_horizontal"
-                app:cardCornerRadius="5dp"
-                app:strokeColor="?attr/colorPrimary"
-                android:backgroundTint="#999999"
-                app:cardElevation="0dp">
+                android:textSize="22dp"
+                android:singleLine="true"/>
 
-                <ImageView
-                android:layout_width="3dp"
-                android:layout_height="3dp"
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="10dp"
+                android:fontFamily="sans-serif-medium"
+                android:text="Bio"
+                android:textColor="?attr/colorOnPrimary"
+                android:textSize="22dp" />
+
+            <EditText
+                android:id="@+id/bio"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="left"
+                android:layout_marginLeft="25dp"
+                android:layout_marginRight="20dp"
+                android:fontFamily="sans-serif"
+                android:textColor="?attr/colorOnPrimary"
+                android:textSize="18dp" />
+
+            <Button
+                android:id="@+id/save_button"
+                android:layout_width="100dp"
+                android:layout_height="match_parent"
+                android:layout_marginTop="10dp"
                 android:layout_gravity="center"
-                android:src="@drawable/plus_sign"/>
-            </com.google.android.material.card.MaterialCardView> -->
+                android:text="Save"
+                android:backgroundTint="?attr/colorAccent"
+                android:textColor="?attr/colorOnSecondary" />
 
             <TextView
                 android:id="@+id/user_projects"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="20dp"
-                android:layout_marginTop="150dp"
+                android:layout_marginTop="50dp"
                 android:fontFamily="sans-serif-medium"
                 android:text="Projects"
                 android:textColor="?attr/colorOnPrimary"
@@ -151,7 +202,7 @@
                 android:id="@+id/ownedRecycler"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:visibility="invisible"
+                android:visibility="visible"
                 android:layout_marginLeft="16dp"
                 android:layout_marginRight="16dp"
                 app:layout_constraintTop_toBottomOf="@id/user_projects"

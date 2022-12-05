@@ -17,19 +17,25 @@ import android.widget.Toast;
 
 import com.example.campuscollab.R;
 import com.example.campuscollab.databinding.FeedPageBinding;
+import com.example.campuscollab.domain.Project;
 import com.example.campuscollab.domain.Request;
 import com.example.campuscollab.domain.User;
 import com.example.campuscollab.service.AuthService;
+import com.example.campuscollab.service.ProjectService;
 import com.example.campuscollab.service.RequestService;
 import com.example.campuscollab.service.UserService;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.concurrent.ExecutionException;
 
 public class FeedActivity extends AppCompatActivity {
 
     private final UserService userService = UserService.getInstance();
     private final RequestService requestService = RequestService.getInstance();
+    private final ProjectService projectService = ProjectService.getInstance();
+    private List<Project> projectList;
 
     SearchView searchBar;
 
@@ -59,6 +65,8 @@ public class FeedActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
 
         searchBar = binding.searchBar;
+        searchBar.clearFocus();
+
         addProjectButton = binding.addProjectButton;
         profileIcon = binding.profilePicture;
         messageIcon = binding.chatIcon;
@@ -78,6 +86,7 @@ public class FeedActivity extends AppCompatActivity {
 
         try {
             User currentUser = userService.getCurrentUser();
+            projectList = projectService.getAllProjects().get();
             List<Request> incomingRequestsList = requestService.getSentRequests().get();
 
             if (incomingRequestsList.size() != 0)
@@ -117,9 +126,32 @@ public class FeedActivity extends AppCompatActivity {
             transaction.commit();
         }
 
+        searchBar.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String newText) {
+                Bundle text = new Bundle();
+                text.putString("search_text", newText);
+
+                lowerOpacity();
+
+                FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+                FeedFragment feedFragment = new FeedFragment();
+                feedFragment.setArguments(text);
+                transaction.replace(R.id.fragment_container, feedFragment);
+                transaction.commit();
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                return false;
+            }
+        });
+
         addProjectButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                searchBar.clearFocus();
                 lowerOpacity();
                 userService.isFromSettings = false;
 
@@ -133,6 +165,7 @@ public class FeedActivity extends AppCompatActivity {
         profileIcon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                searchBar.clearFocus();
                 Intent feed_transition = new Intent(getApplicationContext(), ProfileActivity.class);
                 feed_transition.putExtra("user_id", userService.getCurrentUser().getId());
                 startActivity(feed_transition);
@@ -142,6 +175,7 @@ public class FeedActivity extends AppCompatActivity {
         messageIcon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                searchBar.clearFocus();
                 userService.isFromSettings = false;
                 Intent messageThreads = new Intent(getApplicationContext(), MessageThreadsActivity.class);
                 startActivity(messageThreads);
@@ -151,6 +185,8 @@ public class FeedActivity extends AppCompatActivity {
         homeIcon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                searchBar.clearFocus();
+                searchBar.setQuery("", false);
                 changeOpacity(homeIcon, homeText);
                 userService.isFromSettings = false;
 
@@ -164,6 +200,7 @@ public class FeedActivity extends AppCompatActivity {
         projectIcon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                searchBar.clearFocus();
                 changeOpacity(projectIcon, projectText);
                 userService.isFromSettings = false;
 
@@ -177,6 +214,7 @@ public class FeedActivity extends AppCompatActivity {
         requestIcon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                searchBar.clearFocus();
                 changeOpacity(requestIcon, requestText);
                 userService.isFromSettings = false;
 
@@ -190,6 +228,7 @@ public class FeedActivity extends AppCompatActivity {
         settingsIcon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                searchBar.clearFocus();
                 changeOpacity(settingsIcon, settingsText);
                 userService.isFromSettings = false;
 
@@ -204,7 +243,6 @@ public class FeedActivity extends AppCompatActivity {
     private void changeOpacity(ImageView image, TextView text)
     {
         lowerOpacity();
-
         image.setAlpha(1f);
         text.setAlpha(1f);
     }
@@ -229,6 +267,12 @@ public class FeedActivity extends AppCompatActivity {
     {
         return homeText;
     }
+
+    public String getSearchText()
+    {
+        return searchBar.getQuery().toString();
+    }
+
     public CardView getPendingRequestIcon() { return pendingRequestIcon; }
 
     @Override
