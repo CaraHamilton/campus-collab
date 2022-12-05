@@ -18,6 +18,15 @@
         android:theme="@style/Theme.CampusCollab"
         tools:targetApi="31">
         <activity
+            android:name=".view.MessageThreadsActivity"
+            android:exported="false"
+            android:label="MessageThreadsActivity"
+            android:theme="@style/Theme.CampusCollab.NoActionBar">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
             android:name=".view.MessageActivity"
             android:exported="false"
             android:label="@string/title_activity_messaging"

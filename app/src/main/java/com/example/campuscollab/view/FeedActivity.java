@@ -143,9 +143,8 @@ public class FeedActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 userService.isFromSettings = false;
-                Toast.makeText(getApplicationContext(), "Messages", Toast.LENGTH_SHORT).show();
-
-                //TODO Include switch to message activity
+                Intent messageThreads = new Intent(getApplicationContext(), MessageThreadsActivity.class);
+                startActivity(messageThreads);
             }
         });
 
